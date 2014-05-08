@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>SocialMediaPinnwand.html</welcome-file>
+  </welcome-file-list>
+
+  <servlet>
+<servlet-name>SocialMediaPinnwandServlet</servlet-name>
+<servlet-class> hdm.social.media.pinnwand.server.PinnwandAdministrationImpl </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>SocialMediaPinnwandServlet</servlet-name>
+<url-pattern>/socialmediapinnwand/pinnwandadministration</url-pattern>
+</servlet-mapping>
+ <!-- <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>socialmediapinnwand</web-resource-name>
+            <url-pattern>/socialmediapinnwand/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>*</role-name>
+        </auth-constraint>
+    </security-constraint> -->
+</web-app>

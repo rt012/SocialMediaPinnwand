@@ -2,6 +2,7 @@ package hdm.social.media.pinnwand.server;
 
 import hdm.social.media.pinnwand.client.PinnwandAdministration;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
+import hdm.social.media.pinnwand.server.db.NutzerMapper;
 import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.Kommentar;
@@ -174,6 +175,11 @@ public void saveAbo(Abo a) throws IllegalArgumentException {
 public void deleteAbo(Abo a) throws IllegalArgumentException {
 // TODO Auto-generated method stub
 
+}
+
+@Override
+public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException {
+	return NutzerMapper.nutzerMapper().getAllNutzer();
 }
 
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.FieldVerifier;
+import hdm.social.media.pinnwand.shared.Nutzer;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,6 +22,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -37,7 +40,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 	
 //	private PinnwandBeitrag panel_PinnwandBeitrag;
 	
-	final Label pinnwandName = new Label("");
+	private final Label pinnwandName = new Label("");
+	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -89,10 +94,25 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		pinnwandName.setStyleName("pinnwandName");
 		west.add(pinnwandName);
-		
-		final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox();
+
 		SuggestBoxPinnwandSuche.setStyleName("SuggestBoxPinnwandSuche");
 		west.add(SuggestBoxPinnwandSuche);
+		/**
+		 * Läd alle Nutzer in das Such-Feld
+		 */
+		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
+			 public void onFailure
+			 (Throwable caught) {
+			 // TODO: Do something with errors.
+			 }
+			 
+			@Override
+			public void onSuccess(ArrayList<Nutzer> result) {
+			 fillSuggestenBox(result);
+				
+			}
+		});
+		
 		
 		final FlexTable FlexTableAbonniertePinnwaende = new FlexTable();
 		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
@@ -187,5 +207,16 @@ public class SocialMediaPinnwand implements EntryPoint {
 		System.out.println(result.get(i).getInhalt()); }
 		
 	}
+	/**
+	 * Befüllt die SuggestenBox mit den Nutzern
+	 * 
+	 * @param nutzer Sämtliche Nutzer Objekte
+	 */
+	public void fillSuggestenBox(ArrayList<Nutzer> nutzer){		
+		for (Nutzer n : nutzer) {
+			oracle.add(n.getVorname() + " " + n.getName());
+		}	
+		SuggestBoxPinnwandSuche.ensureDebugId("cwSuggestBox");
 	}
+}
 	

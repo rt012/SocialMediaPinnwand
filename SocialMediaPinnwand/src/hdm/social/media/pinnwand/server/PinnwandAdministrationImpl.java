@@ -2,6 +2,7 @@ package hdm.social.media.pinnwand.server;
 
 import hdm.social.media.pinnwand.client.PinnwandAdministration;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
+
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
 import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Beitrag;

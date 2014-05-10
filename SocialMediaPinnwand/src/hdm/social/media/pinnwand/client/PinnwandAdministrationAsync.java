@@ -67,4 +67,6 @@ public interface PinnwandAdministrationAsync {
 
 	void updateNutzer(Nutzer n, AsyncCallback<Nutzer> callback);
 
+	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
+
 }

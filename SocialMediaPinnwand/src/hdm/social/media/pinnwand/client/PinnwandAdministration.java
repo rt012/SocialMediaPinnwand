@@ -83,6 +83,14 @@ public interface PinnwandAdministration extends RemoteService{
   public void saveNutzer(Nutzer n) throws IllegalArgumentException;
  
   /**
+   * Gebe alle Nutzer aus
+   * 
+   * @return ArrayList<Nutzer>
+   * @author Eric Schmidt
+   */
+  public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException;
+  
+  /**
    * Eine Pinnwand speichern.
    *
    * @param n Nutzer

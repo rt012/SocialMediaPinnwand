@@ -14,7 +14,7 @@ public class DBConnection {
 	
 	//Datenbank URL
 	//im Moment noch lokal später CloudSQL
-	private static String url = "jdbc:mysql://localhost/it-projekt";
+	private static String url = "jdbc:mysql://localhost/it_projekt";
 	
 	//Nutzerdaten für DB-login
 	private static String name="root";

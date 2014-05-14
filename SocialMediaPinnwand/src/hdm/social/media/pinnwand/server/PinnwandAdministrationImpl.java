@@ -1,8 +1,8 @@
 package hdm.social.media.pinnwand.server;
 
 import hdm.social.media.pinnwand.client.PinnwandAdministration;
-import hdm.social.media.pinnwand.server.db.BeitragMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
+import hdm.social.media.pinnwand.server.db.*;
 import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.Kommentar;
@@ -179,7 +179,15 @@ public void deleteAbo(Abo a) throws IllegalArgumentException {
 
 @Override
 public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException {
-	return NutzerMapper.nutzerMapper().getAllNutzer();
+	return NutzerMapper.nutzerMapper().getAllNutzer();	
+}
+
+/*public ArrayList<Abo> getAboByNutzer(Nutzer n){ 
+	return AboMapper.aboMapper().getAboByNutzer(n.getId());
+}*/
+
+public ArrayList<Abo> getAboByNutzer(){ 
+	return AboMapper.aboMapper().getAboByNutzer(1);
 }
 
 }

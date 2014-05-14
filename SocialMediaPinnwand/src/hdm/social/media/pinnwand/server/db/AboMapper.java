@@ -94,7 +94,7 @@ public class AboMapper {
 		        a.setLieferant(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("lieferant_ID")));
 		             
 		        
-		        //LikeObjekt zu LikeListe hinzufügen
+		        //AboObjekt zu AboListe hinzufügen
 		        aboListe.add(a);
 		       
 		      }

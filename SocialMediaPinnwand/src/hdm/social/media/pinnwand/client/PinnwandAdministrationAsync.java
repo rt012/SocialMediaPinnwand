@@ -6,6 +6,7 @@ import hdm.social.media.pinnwand.shared.Kommentar;
 import hdm.social.media.pinnwand.shared.Like;
 import hdm.social.media.pinnwand.shared.Nutzer;
 import hdm.social.media.pinnwand.shared.Pinnwand;
+import hdm.social.media.pinnwand.server.db.NutzerMapper;
 
 import java.util.ArrayList;
 
@@ -68,5 +69,8 @@ public interface PinnwandAdministrationAsync {
 	void updateNutzer(Nutzer n, AsyncCallback<Nutzer> callback);
 
 	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
+	
+	//got to add Nutzer n als attribut	: void getAboByNutzer (Nutzer n, AsyncCallback<ArrayList<Abo>> callback);
+	void getAboByNutzer (AsyncCallback<ArrayList<Abo>> callback);
 
 }

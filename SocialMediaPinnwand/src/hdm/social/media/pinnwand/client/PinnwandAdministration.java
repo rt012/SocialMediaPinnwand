@@ -1,6 +1,7 @@
 package hdm.social.media.pinnwand.client;
 
 import hdm.social.media.pinnwand.shared.Abo;
+import hdm.social.media.pinnwand.server.db.NutzerMapper;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.Kommentar;
 import hdm.social.media.pinnwand.shared.Like;
@@ -259,5 +260,15 @@ public interface PinnwandAdministration extends RemoteService{
    * @throws IllegalArgumentException
    */
   public void deleteAbo(Abo a) throws IllegalArgumentException;
+  
+  /**
+   * Gebe alle Abos zu einem Nutzer aus.
+   *
+   * @param n Nutzer
+   * @return ArrayList<Abo>
+   * @throws IllegalArgumentException
+   */
+  //public ArrayList<Abo> getAboByNutzer(Nutzer n) throws IllegalArgumentException;
+  public ArrayList<Abo> getAboByNutzer() throws IllegalArgumentException;
 
 }

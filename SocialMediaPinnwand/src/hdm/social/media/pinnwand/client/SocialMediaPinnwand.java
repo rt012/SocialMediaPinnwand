@@ -3,6 +3,9 @@ package hdm.social.media.pinnwand.client;
 import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
+import hdm.social.media.pinnwand.server.db.AboMapper;
+import hdm.social.media.pinnwand.server.db.NutzerMapper;
+import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.FieldVerifier;
 import hdm.social.media.pinnwand.shared.Nutzer;
@@ -101,7 +104,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 * Läd alle Nutzer in das Such-Feld
 		 */
 		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-			 public void onFailure
+			public void onFailure
 			 (Throwable caught) {
 			 // TODO: Do something with errors.
 			 }
@@ -118,8 +121,22 @@ public class SocialMediaPinnwand implements EntryPoint {
 		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
 		west.add(FlexTableAbonniertePinnwaende);
 		
-		FlexTableAbonniertePinnwaende.setText(0, 0, "Name");
-		FlexTableAbonniertePinnwaende.setText(1, 0, "Remi");
+		PinnwandAdministration.getAboByNutzer(new AsyncCallback<ArrayList<Abo>>() {
+			public void onFailure
+			 (Throwable caught) {
+			 // TODO: Do something with errors.
+			 }
+			
+			@Override
+			public void onSuccess(ArrayList<Abo> result) {
+				for (int i=0; i <result.size(); i++){
+					FlexTableAbonniertePinnwaende.setText(i, 0, result.get(i).getLieferant().getVorname()+ " "+ 
+							result.get(i).getLieferant().getName());	
+				}
+				
+			}
+		});
+		
 		
 		/**
 		 * Widgets der rechten Seite 

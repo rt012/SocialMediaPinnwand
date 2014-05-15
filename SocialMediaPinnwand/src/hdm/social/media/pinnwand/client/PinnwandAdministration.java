@@ -250,7 +250,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @throws IllegalArgumentException
    */
   public void deleteAbo(Abo a) throws IllegalArgumentException;
-
-Nutzer getNutzerById();
+  
+  public Nutzer getNutzerById(int i) throws IllegalArgumentException;
 
 }

@@ -22,6 +22,7 @@ public PinnwandAdministrationImpl() throws IllegalArgumentException {}
 
 public void init() throws IllegalArgumentException {}
 @Override
+
 public Nutzer createNutzer() throws IllegalArgumentException {
 // TODO Auto-generated method stub
 return null;

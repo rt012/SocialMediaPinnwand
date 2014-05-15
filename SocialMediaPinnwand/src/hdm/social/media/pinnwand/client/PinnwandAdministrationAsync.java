@@ -43,8 +43,6 @@ public interface PinnwandAdministrationAsync {
 
 	void getAllLikeJeBeitrag(Beitrag b, AsyncCallback<ArrayList<Like>> callback);
 
-	void getNutzerById(AsyncCallback<Nutzer> callback);
-
 	void getPinnwandById(int id, AsyncCallback<Pinnwand> callback);
 
 	void init(AsyncCallback<Void> callback);
@@ -68,6 +66,8 @@ public interface PinnwandAdministrationAsync {
 	void updateNutzer(Nutzer n, AsyncCallback<Nutzer> callback);
 
 	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
+
+	void getNutzerById(int i, AsyncCallback<Nutzer> callback);
 
 
 

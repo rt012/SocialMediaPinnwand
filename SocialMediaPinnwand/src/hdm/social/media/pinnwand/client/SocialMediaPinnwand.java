@@ -128,7 +128,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandName.setStyleName("pinnwandName");
 		east_up.add(pinnwandName);
 		
-		PinnwandAdministration.getNutzerById(new AsyncCallback<Nutzer>() {
+		
+		//1 muss entfernt werden und mit nutzer objekt ersetzt
+		PinnwandAdministration.getNutzerById(1, new AsyncCallback<Nutzer>() {
 			 public void onFailure
 			 (Throwable caught) {
 			 // TODO: Do something with errors.

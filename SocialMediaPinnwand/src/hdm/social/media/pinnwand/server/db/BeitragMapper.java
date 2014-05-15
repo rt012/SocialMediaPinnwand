@@ -149,7 +149,7 @@ public class BeitragMapper {
 			    b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 			    b.setInhalt((rs.getString("inhalt")));
 			    b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
-			        
+			    b.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("pinnwand_ID")));
 			    //Aufruf des KommentarMappers um alle zum Beitrag gehörigen Kommentare als ArrayList zuzuweisen
 			    b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
 			        

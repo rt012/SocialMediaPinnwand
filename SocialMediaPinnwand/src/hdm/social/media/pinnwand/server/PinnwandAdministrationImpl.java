@@ -2,7 +2,9 @@ package hdm.social.media.pinnwand.server;
 
 import hdm.social.media.pinnwand.client.PinnwandAdministration;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
+import hdm.social.media.pinnwand.server.db.LikeMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
+import hdm.social.media.pinnwand.server.db.PinnwandMapper;
 import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.Kommentar;
@@ -36,6 +38,8 @@ return null;
 
 @Override
 public Nutzer getNutzerById(int id) throws IllegalArgumentException {
+
+// TODO Auto-generated method stub
 return NutzerMapper.nutzerMapper().getNutzerById(id);
 }
 
@@ -60,7 +64,7 @@ public void savePinnwand(Pinnwand p) throws IllegalArgumentException {
 @Override
 public Pinnwand getPinnwandById(int id) throws IllegalArgumentException {
 // TODO Auto-generated method stub
-return null;
+return PinnwandMapper.pinnwandMapper().getPinnwandById(id);
 }
 
 @Override
@@ -136,7 +140,7 @@ return null;
 @Override
 public Like createLike(Like l) throws IllegalArgumentException {
 // TODO Auto-generated method stub
-return null;
+return LikeMapper.likeMapper().insertLike(l);
 }
 
 @Override
@@ -177,9 +181,17 @@ public void deleteAbo(Abo a) throws IllegalArgumentException {
 
 }
 
+
 @Override
 public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException {
 	return NutzerMapper.nutzerMapper().getAllNutzer();
 }
+
+public int countLikeByBeitrag(int id) throws IllegalArgumentException {
+	return LikeMapper.likeMapper().countLikeByBeitrag(id);
+	// TODO Auto-generated method stub
+
+	}
+
 
 }

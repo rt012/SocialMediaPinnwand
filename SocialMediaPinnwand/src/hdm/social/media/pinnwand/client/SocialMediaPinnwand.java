@@ -6,7 +6,7 @@ import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.FieldVerifier;
 import hdm.social.media.pinnwand.shared.Nutzer;
-
+import hdm.social.media.pinnwand.shared.Pinnwand;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,6 +18,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
@@ -43,6 +44,12 @@ public class SocialMediaPinnwand implements EntryPoint {
 	private final Label pinnwandName = new Label("");
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
+
+	//private PinnwandBeitrag panel_PinnwandBeitrag;
+	private FlexTable FlexTableBeitraege;
+	int likeAnzahl;
+	int pinnwandId;
+	Nutzer nutzer;
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -62,8 +69,12 @@ public class SocialMediaPinnwand implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-	//	panel_PinnwandBeitrag = new PinnwandBeitrag();
+	
+
 		
+		//dummy Nutzer
+		nutzer = new Nutzer("Rémi", "Tessier", "remasico@web.de","pimmel" );
+		nutzer.setId(5);
 		
 		SplitLayoutPanel split = new SplitLayoutPanel();
 		split.setStyleName("rootSplitPanel");
@@ -82,10 +93,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		HorizontalPanel east_down = new HorizontalPanel();
 		
 		 
-		split.addWest(west, (rootWidthSize/2));
-		split.addEast(vsplit, (rootWidthSize/2));
-		vsplit.addNorth(east_up, (rootHeightSize/2));
-		vsplit.addSouth(east_down, (rootHeightSize/2));
+	
 		
 		
 		/**
@@ -167,51 +175,23 @@ public class SocialMediaPinnwand implements EntryPoint {
 		LabelPinnwandInformation.setStyleName("LabelPinnwandInformation");
 		east_down.add(LabelPinnwandInformation);
 		
-		final FlexTable FlexTableBeitraege = new FlexTable();
+		FlexTableBeitraege = new FlexTable();
 		FlexTableBeitraege.setStyleName("FlexTableBeitraege");
-		east_down.add(FlexTableBeitraege);
-		
-		//FlexTableBeitraege.add(panel_PinnwandBeitrag);
-		
+	
+	
 		/**
 		 * Hinzufügen der Panels dem Rootpanel
-		 */
+		 */east_down.add(FlexTableBeitraege);
+		split.addWest(west, (rootWidthSize/2));
+		split.addEast(vsplit, (rootWidthSize/2));
+		vsplit.addNorth(east_up, (rootHeightSize/2));
+		vsplit.addSouth(east_down, (rootHeightSize/2));
+		rp.add(split);
+		 PinnwandAdministration.findAllBeitraege(callback);
+		 
+		 
 
-		 rp.add(split);
-		// PinnwandAdministration.findAllBeitraege(callback);
-		 
-		 /**
-		  * CustomLayout für Beiträge
-		  */
-//		 HorizontalPanel pinnwandBeitrag = new HorizontalPanel();
-		 /**
-		  * Elemente ( Widgets)  eines Beitrags
-		  */
-/*		 //Anzeige des Inhalts 
-		 final Label LabelBeitragsInhalt = new Label();
-		 LabelBeitragsInhalt.setStyleName("LabelBeitragsInhalt");
-		 pinnwandBeitrag.add(LabelBeitragsInhalt);
-		 
-		 // Autor + Erstellungszeitpunkt
-		 final Label LabelBeitragsAutor = new Label();
-		 LabelBeitragsAutor.setStyleName("LabelBeitragsAutor");
-		 pinnwandBeitrag.add(LabelBeitragsAutor);
-		 
-		 // Like Anzahl
-		 final Label LabelBeitragLikeAnzahl = new Label();
-		 LabelBeitragLikeAnzahl.setStyleName("LabelBeitragLikeAnzahl");
-		 pinnwandBeitrag.add(LabelBeitragLikeAnzahl);
-		 
-		 //Button für "Gefällt mir
-		 final Button ButtonBeitragGefälltMir = new Button("Gefällt mir");
-		 ButtonBeitragGefälltMir.setStyleName("ButtonBeitragGefälltMir");
-		 pinnwandBeitrag.add(ButtonBeitragGefälltMir);
-		 
-		 //Button für Kommentieren
-		 final Button ButtonBeitragKommentieren = new Button("Kommentieren");
-		 ButtonBeitragKommentieren.setStyleName("ButtonBeitragKommentieren");
-		 pinnwandBeitrag.add(ButtonBeitragKommentieren);
-		 */
+
 	}
 	
 		 AsyncCallback<ArrayList<Beitrag>> callback
@@ -227,13 +207,84 @@ public class SocialMediaPinnwand implements EntryPoint {
 			
 		}
 		 };
+		 
+		 AsyncCallback<Integer> callbackCountLikesById
+		 = new AsyncCallback<Integer>() {
+		 public void onFailure
+		 (Throwable caught) {
+		 // TODO: Do something with errors.
+		 }
+
+		@Override
+		public void onSuccess(Integer result) {
+			getLikesByBeitrag(result);
+			
+		}
+		 };
+		 
+		 AsyncCallback<Pinnwand> callbackGetPinnwandById
+		 = new AsyncCallback<Pinnwand>() {
+		 public void onFailure
+		 (Throwable caught) {
+		 // TODO: Do something with errors.
+		 }
+
+		@Override
+		public void onSuccess(Pinnwand result) {
+			getPinnwandById(result);
+			
+		}
+		 };
+		 
+		 AsyncCallback<Nutzer> callbackNutzerbyId
+		 = new AsyncCallback<Nutzer>() {
+		 public void onFailure
+		 (Throwable caught) {
+		 // TODO: Do something with errors.
+		 }
+
+		@Override
+		public void onSuccess(Nutzer result1) {
+			getNutzerById(result1);
+			
+		}
+		 };
 
 	
+		private void getLikesByBeitrag(Integer result) {
+		likeAnzahl = result;// TODO Auto-generated method stub
+		System.out.println(likeAnzahl);
+	}
+	
+	private void getPinnwandById(Pinnwand result) {
+		pinnwandId = result.getId();
+	}
+	private void getNutzerById(Nutzer result1) {
+		nutzer = result1;
+		System.out.println(nutzer.getName());
+	}
+		 
 	public void printOutAll(ArrayList<Beitrag> result) {
+		int aktuelleRow = 0;
 		for(int i= 0; i < result.size(); i++){
-		System.out.println(result.get(i).getInhalt()); }
+		
+		PinnwandAdministration.getNutzerById(result.get(i).getPinnwand().getId(), callbackNutzerbyId);
+		PinnwandAdministration.countLikeByBeitrag(result.get(i).getId(), callbackCountLikesById);
+		FlexTableBeitraege.setWidget(aktuelleRow, 0, new PinnwandBeitrag(result.get(i).getInhalt(), "von "+ result.get(i).getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),  + result.get(i).getLikeList().size()  + " Personen gefaellt das.", result.get(i),nutzer ));
+		aktuelleRow += 1;
+		for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
+			
+			FlexTableBeitraege.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
+			aktuelleRow += 1;
+			
+		}
+	
+		
+		System.out.println(result.get(i).getInhalt());
+		System.out.println(result.get(i).getKommentarListe().get(i).getInhalt());}
 		
 	}
+	
 	/**
 	 * Befüllt die SuggestenBox mit den Nutzern
 	 * 
@@ -244,6 +295,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 			oracle.add(n.getVorname() + " " + n.getName());
 		}	
 		SuggestBoxPinnwandSuche.ensureDebugId("cwSuggestBox");
+
 	}
 }
 	

@@ -251,6 +251,10 @@ public interface PinnwandAdministration extends RemoteService{
    */
   public void deleteAbo(Abo a) throws IllegalArgumentException;
   
+
   public Nutzer getNutzerById(int i) throws IllegalArgumentException;
+
+  public int countLikeByBeitrag(int id)throws IllegalArgumentException;
+
 
 }

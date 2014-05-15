@@ -256,5 +256,6 @@ public interface PinnwandAdministration extends RemoteService{
 
   public int countLikeByBeitrag(int id)throws IllegalArgumentException;
 
+  public ArrayList<Abo> getAboByNutzer() throws IllegalArgumentException;
 
 }

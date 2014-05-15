@@ -1,6 +1,7 @@
 package hdm.social.media.pinnwand.server;
 
 import hdm.social.media.pinnwand.client.PinnwandAdministration;
+import hdm.social.media.pinnwand.server.db.AboMapper;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
 import hdm.social.media.pinnwand.server.db.LikeMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
@@ -185,6 +186,15 @@ public void deleteAbo(Abo a) throws IllegalArgumentException {
 @Override
 public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException {
 	return NutzerMapper.nutzerMapper().getAllNutzer();
+}
+
+/*public ArrayList<Abo> getAboByNutzer(Nutzer n) {
+  return AboMapper.aboMapper().getAboByNutzer(n.getId());
+ }
+ */
+
+public ArrayList<Abo> getAboByNutzer(){
+	return AboMapper.aboMapper().getAboByNutzer(1);
 }
 
 public int countLikeByBeitrag(int id) throws IllegalArgumentException {

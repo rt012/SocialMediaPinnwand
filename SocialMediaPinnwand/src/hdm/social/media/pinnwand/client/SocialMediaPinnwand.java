@@ -3,10 +3,12 @@ package hdm.social.media.pinnwand.client;
 import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
+import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.FieldVerifier;
 import hdm.social.media.pinnwand.shared.Nutzer;
 import hdm.social.media.pinnwand.shared.Pinnwand;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -126,8 +128,19 @@ public class SocialMediaPinnwand implements EntryPoint {
 		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
 		west.add(FlexTableAbonniertePinnwaende);
 		
-		FlexTableAbonniertePinnwaende.setText(0, 0, "Name");
-		FlexTableAbonniertePinnwaende.setText(1, 0, "Remi");
+		PinnwandAdministration.getAboByNutzer(new AsyncCallback<ArrayList<Abo>>() {
+			public void onFailure
+			(Throwable caught) {
+				// TODO: DO something with errors.
+			}
+			@Override
+			public void onSuccess(ArrayList<Abo> result) {
+				for (int i=0; i<result.size(); i++){
+					FlexTableAbonniertePinnwaende.setText(i, 0, result.get(i).getLieferant().getVorname()+" "+
+							result.get(i).getLieferant().getName());
+				}
+			}
+		});
 		
 		/**
 		 * Widgets der rechten Seite 

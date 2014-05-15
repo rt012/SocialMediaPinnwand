@@ -56,16 +56,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @throws IllegalArgumentException
    */
   public Nutzer updateNutzer(Nutzer n) throws IllegalArgumentException;
- 
-  /**
-   * Einen Nutzer durch dessen ID finden.
-   *
-   * @param id int
-   * @return Ein Nutzer-Objekt.
-   * @throws IllegalArgumentException
-   */
-  public Nutzer getNutzerById(int id) throws IllegalArgumentException;
- 
+  
   /**
    * Einen Nutzer löschen.
    *
@@ -259,5 +250,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @throws IllegalArgumentException
    */
   public void deleteAbo(Abo a) throws IllegalArgumentException;
+
+Nutzer getNutzerById();
 
 }

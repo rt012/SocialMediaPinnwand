@@ -125,9 +125,34 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 * Widgets der rechten Seite 
 		 * Rechts-Oben:
 		 */
+		pinnwandName.setStyleName("pinnwandName");
+		east_up.add(pinnwandName);
+		
+		PinnwandAdministration.getNutzerById(new AsyncCallback<Nutzer>() {
+			 public void onFailure
+			 (Throwable caught) {
+			 // TODO: Do something with errors.
+			 }
+			@Override
+			public void onSuccess(Nutzer result) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		//Button für Abonnement
+		
+		 final Button AboButton = new Button("+");
+		 AboButton.setStyleName("aboButton");
+		 east_up.add(AboButton);
+		 
+		//Textfeld für Beitrag
+
 		final TextArea TextAreaBeitragVerfassen = new TextArea();
 		TextAreaBeitragVerfassen.setStyleName("TextAreaBeitragVerfassen");
 		east_up.add(TextAreaBeitragVerfassen);
+		
+		//Button zum Absenden von Textbeitrag
 		
 		final Button ButtonBeitragSenden = new Button("Senden");
 		ButtonBeitragSenden.setStyleName("beitragSenden");

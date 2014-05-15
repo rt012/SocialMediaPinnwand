@@ -35,8 +35,7 @@ return null;
 
 @Override
 public Nutzer getNutzerById(int id) throws IllegalArgumentException {
-// TODO Auto-generated method stub
-return null;
+return NutzerMapper.nutzerMapper().getNutzerById(id);
 }
 
 @Override

@@ -22,7 +22,7 @@ public interface PinnwandAdministrationAsync {
 
 	void createLike(Like l, AsyncCallback<Like> callback);
 
-	void createNutzer(AsyncCallback<Nutzer> callback);
+	void createNutzer(Nutzer n, AsyncCallback<Nutzer> callback);
 
 	void deleteAbo(Abo a, AsyncCallback<Void> callback);
 
@@ -69,4 +69,5 @@ public interface PinnwandAdministrationAsync {
 
 	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
 
+	void login(String requestUri, AsyncCallback<LoginInfo> callback);
 }

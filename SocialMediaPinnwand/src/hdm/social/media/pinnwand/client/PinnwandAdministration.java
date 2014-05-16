@@ -46,7 +46,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @return Ein fertiges Nutzer-Objekt.
    * @throws IllegalArgumentException
    */
-  public Nutzer createNutzer() throws IllegalArgumentException;
+  public Nutzer createNutzer(Nutzer n) throws IllegalArgumentException;
  
   /**
    * Einen Nutzer aktualisieren.
@@ -260,4 +260,13 @@ public interface PinnwandAdministration extends RemoteService{
    */
   public void deleteAbo(Abo a) throws IllegalArgumentException;
 
+  /**
+   * Login der Applikation
+   * 
+   * @param requestUri
+   * @return
+   * @author Eric Schmidt
+   */
+  public LoginInfo login(String requestUri);
+  
 }

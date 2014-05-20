@@ -37,8 +37,8 @@ public class NutzerMapper{
 	 
 	 
 	/*
-	 * @see 	getNutzrById(int id): Sucht Nutzer anhand der id 
-	 * @param 	int id
+	 * @see 	getNutzrById(int id): Sucht Nutzer anhand der email 
+	 * @param 	String email
 	 * @return 	1 Nutzerobjekt entweder mit Ergebnis oder leer 
 	 */
 	 public Nutzer getNutzerByEmail(String email){

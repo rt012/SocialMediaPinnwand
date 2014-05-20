@@ -7,6 +7,7 @@ import hdm.social.media.pinnwand.shared.*;
 /*
  * Methoden:
  * getNutzerById(int id)
+ * getNutzerByEmail(String email)
  * getAllNutzer()
  * countNutzer()
  * insertNutzer(Nutzer n)
@@ -40,7 +41,7 @@ public class NutzerMapper{
 	 * @param 	int id
 	 * @return 	1 Nutzerobjekt entweder mit Ergebnis oder leer 
 	 */
-	 public Nutzer getNutzerById(int id){
+	 public Nutzer getNutzerByEmail(String email){
 		
 		//Aufbau der DBVerbindung
 		Connection con = DBConnection.connection();
@@ -49,7 +50,7 @@ public class NutzerMapper{
 		try{
 			Statement stmt = con.createStatement();
 			//Suche alle Felder der Nutzertabelle anhand von ID
-			ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE nutzer_ID=" + id );
+			ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE email=" + email);
 
 		    //Maximal ein Rückgabewert da Id Primärschlüssel
 			if (rs.next()) {
@@ -79,6 +80,50 @@ public class NutzerMapper{
 	return null;
 	}
 	 
+	 
+	/*
+	 * @see 	getNutzrById(int id): Sucht Nutzer anhand der id 
+	 * @param 	int id
+	 * @return 	1 Nutzerobjekt entweder mit Ergebnis oder leer 
+	 */
+	 public Nutzer getNutzerById(int id){
+			
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+			
+			//Versuch der Abfrage
+			try{
+				Statement stmt = con.createStatement();
+				//Suche alle Felder der Nutzertabelle anhand von ID
+				ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE nutzer_ID=" + id );
+
+			    //Maximal ein Rückgabewert da Id Primärschlüssel
+				if (rs.next()) {
+			        // Ergebnis in Nutzer- Objekt umwandeln
+			        Nutzer n = new Nutzer();
+			        n.setId(rs.getInt("nutzer_ID"));
+			        n.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+			        n.setVorname(rs.getString("vorname"));
+			        n.setName(rs.getString("name"));
+			        n.setEmail(rs.getString("email"));
+			        n.setNickname(rs.getString("nickname"));
+			        /*
+			        //Verweis auf PinnwandMapper um zugehörige Pinnwand herauszufinden
+			        n.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(rs.getInt("nutzer_ID")));
+			        //Verweis auf AbonnementMapper um zugehörige Abos herauszufinden
+			        n.setAbonnementListe(AboMapper.aboMapper().getAboByNutzer(rs.getInt("nutzer_ID")));
+			        */	
+			        return n;
+			      }
+			}
+			
+		    catch (SQLException e) {
+	    		e.printStackTrace();
+	    		return null;
+		    }
+		//Falls keines gefunden leere Liste
+		return null;
+		}
 	 
 	 /*
 	 * @see 	getAllNutzer(): Sucht alle Nutzer

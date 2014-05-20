@@ -206,6 +206,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		HorizontalPanel east_up = new HorizontalPanel();
 		HorizontalPanel east_down = new HorizontalPanel();
 		
+		
 		 
 	
 		
@@ -311,13 +312,14 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 		/**
 		 * Hinzufügen der Panels dem Rootpanel
-		 */east_down.add(FlexTableBeitraege);
+		 */
+		east_down.add(FlexTableBeitraege);
 		split.addWest(west, (rootWidthSize/2));
 		split.addEast(vsplit, (rootWidthSize/2));
 		vsplit.addNorth(east_up, (rootHeightSize/2));
 		vsplit.addSouth(east_down, (rootHeightSize/2));
 		rp.add(split);
-		PinnwandAdministration.findAllBeitraege(callback);
+		//PinnwandAdministration.findAllBeitraege(callback);
 		rp.add(split);
 
 
@@ -330,7 +332,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 
 		@Override
 		public void onSuccess(ArrayList<Beitrag> result) {
-		 printOutAll(result);
+		 //printOutAll(result);
 			
 		}
 		 };
@@ -390,26 +392,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		System.out.println(nutzer.getName());
 	}
 		 
-	public void printOutAll(ArrayList<Beitrag> result) {
-		int aktuelleRow = 0;
-		for(int i= 0; i < result.size(); i++){
-		
-		PinnwandAdministration.getNutzerById(result.get(i).getPinnwand().getId(), callbackNutzerbyId);
-		PinnwandAdministration.countLikeByBeitrag(result.get(i).getId(), callbackCountLikesById);
-		FlexTableBeitraege.setWidget(aktuelleRow, 0, new PinnwandBeitrag(result.get(i).getInhalt(), "von "+ result.get(i).getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),  + result.get(i).getLikeList().size()  + " Personen gefaellt das.", result.get(i),nutzer ));
-		aktuelleRow += 1;
-		for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-			
-			FlexTableBeitraege.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
-			aktuelleRow += 1;
-			
-		}
 	
-		
-		System.out.println(result.get(i).getInhalt());
-		System.out.println(result.get(i).getKommentarListe().get(i).getInhalt());}
-		
-	}
 	
 	/**
 	 * Befüllt die SuggestenBox mit den Nutzern

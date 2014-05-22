@@ -226,6 +226,14 @@ public interface PinnwandAdministration extends RemoteService{
   public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b) throws IllegalArgumentException;
  
   /**
+   * Prüfen ob Nutzer einen Beitrag geliked hat
+   * @param n Nutzer
+   * @param b Beitrag 
+   * @return true / false 
+   * @throws IllegalArgumentException
+   */
+  public boolean checkIfliked(Nutzer n, Beitrag b) throws IllegalArgumentException;
+  /**
    * Einen Abonnement Beziehung erstellen.
    *
    * @param abonnement Nutzer

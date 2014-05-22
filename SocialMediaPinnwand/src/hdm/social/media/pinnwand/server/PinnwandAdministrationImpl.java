@@ -4,6 +4,7 @@ import hdm.social.media.pinnwand.client.LoginInfo;
 import hdm.social.media.pinnwand.client.PinnwandAdministration;
 import hdm.social.media.pinnwand.server.db.AboMapper;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
+import hdm.social.media.pinnwand.server.db.KommentarMapper;
 import hdm.social.media.pinnwand.server.db.LikeMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
 import hdm.social.media.pinnwand.server.db.PinnwandMapper;
@@ -81,7 +82,7 @@ return null;
 
 @Override
 public void saveBeitrag(Beitrag b) throws IllegalArgumentException {
-// TODO Auto-generated method stub
+BeitragMapper.beitragMapper().insertBeitrag(b);
 
 }
 
@@ -93,7 +94,7 @@ return null;
 
 @Override
 public void deleteBeitrag(Beitrag b) throws IllegalArgumentException {
-// TODO Auto-generated method stub
+BeitragMapper.beitragMapper().deleteBeitrag(b);
 
 }
 
@@ -114,7 +115,7 @@ return null;
 public Kommentar createKommentar(Kommentar k)
 throws IllegalArgumentException {
 // TODO Auto-generated method stub
-return null;
+return KommentarMapper.kommentarMapper().insertKommentar(k);
 }
 
 @Override
@@ -132,8 +133,7 @@ return null;
 
 @Override
 public void deleteKommentar(Kommentar k) throws IllegalArgumentException {
-// TODO Auto-generated method stub
-
+KommentarMapper.kommentarMapper().deleteKommentar(k);
 }
 
 @Override
@@ -157,7 +157,7 @@ public void saveLike(Like l) throws IllegalArgumentException {
 
 @Override
 public void deleteLike(Like l) throws IllegalArgumentException {
-// TODO Auto-generated method stub
+LikeMapper.likeMapper().deleteLike(l);
 
 }
 
@@ -213,7 +213,7 @@ public int countLikeByBeitrag(int id) throws IllegalArgumentException {
 
 
 /**
- * Die Klasse ist dafür zuständig Userlogin zu bestimmen
+ * Die Methode ist dafür zuständig Userlogin zu bestimmen
  * Wenn eingeloggt: Überträgt infos von Userservice auf Login info
  * Wenn nicht: 	Set Login auf false
  * 				Set login url auf request Uri -> rückleitung
@@ -236,6 +236,16 @@ public LoginInfo login(String requestUri) {
 	}
 		return loginInfo;
 	}
+
+
+
+
+@Override
+public boolean checkIfliked(Nutzer n, Beitrag b)
+		throws IllegalArgumentException {
+	
+	return LikeMapper.likeMapper().checIfLiked(n, b);
 }
 
+}
 

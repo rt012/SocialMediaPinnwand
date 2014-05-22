@@ -1,0 +1,2 @@
+serviceClass: hdm.social.media.pinnwand.client.PinnwandAdministration
+path: F2737BF9209CCC60C4F3B91DA51EBAA6.gwt.rpc

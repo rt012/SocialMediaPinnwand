@@ -12,8 +12,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 
 public class Nutzer extends BusinessObject implements IsSerializable {
+	
+	
 public Nutzer(String vorname, String name, String email, String nickname) {
 	super();
+	
 	this.vorname = vorname;
 	this.name = name;
 	this.email = email;

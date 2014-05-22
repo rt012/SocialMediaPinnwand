@@ -208,8 +208,9 @@ public class BeitragMapper {
 	  * @param 	Beitragobjekt
 	  * @return Das gespeicherte Beitragobjekt
 	  */ 
-	 public Beitrag insertBeitrag(Beitrag b){
+	 public void insertBeitrag(Beitrag b){
 		//Aufbau der DBVerbindung
+		
 		Connection con = DBConnection.connection();
 		int maxid = 0;
 						
@@ -227,14 +228,18 @@ public class BeitragMapper {
 	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
 	    	  	//b erhält um 1 höhere ID als das maximale Element in der Tabelle
+	    	  	System.out.println(rs.getInt("maxid"));
 	    	  	maxid=rs.getInt("maxid");
 		        b.setId(rs.getInt("maxid") + 1);
-	
+		        System.out.print(rs.getInt("maxid") +1);
 		        stmt = con.createStatement();
-	
+		        System.out.println("after con create");
 		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        System.out.println(b.getId() + b.getInhalt());
+		        System.out.println(b.getPinnwand().getId());
 		        stmt.executeUpdate("INSERT INTO beitrag (beitrag_ID, inhalt, pinnwand_ID) "
 		            + "VALUES (" + b.getId() + ",'"  + b.getInhalt() + "','" + b.getPinnwand().getId() +"')");
+		        System.out.println("after exe");
 	      }
 	    }
 		
@@ -242,7 +247,7 @@ public class BeitragMapper {
 	      e.printStackTrace();
 	    }
 
-	    return getBeitragById(maxid+1);
+	   // return getBeitragById(maxid+1);
 	}
 
 	

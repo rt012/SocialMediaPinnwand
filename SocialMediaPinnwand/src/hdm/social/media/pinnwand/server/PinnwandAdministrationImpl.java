@@ -212,7 +212,13 @@ public int countLikeByBeitrag(int id) throws IllegalArgumentException {
 }
 
 
-
+/**
+ * Die Klasse ist dafür zuständig Userlogin zu bestimmen
+ * Wenn eingeloggt: Überträgt infos von Userservice auf Login info
+ * Wenn nicht: 	Set Login auf false
+ * 				Set login url auf request Uri -> rückleitung
+ * 
+ */
 @Override
 public LoginInfo login(String requestUri) {
 	UserService userService = UserServiceFactory.getUserService();

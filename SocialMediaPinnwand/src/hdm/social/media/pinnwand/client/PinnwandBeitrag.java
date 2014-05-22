@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
@@ -27,18 +28,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class PinnwandBeitrag extends HorizontalPanel {
 	
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
-	/**
-	   * Jedes GWT Widget muss diese Methode implementieren. Sie gibt an, was
-	   * geschehen soll, wenn eine Widget-Instanz zur Anzeige gebracht wird.
-	   */
+	
 	private Label LabelBeitragsInhalt;
 	private Label LabelBeitragsAutor;
 	private Label LabelBeitragLikeAnzahl;
 	private Button ButtonBeitragGefaelltMir;
 	private Button ButtonBeitragKommentieren;
-	
-	private  Beitrag beitrag;
+	private Button ButtonBeitragLoeschen;
+	private Beitrag beitrag;
 	private Nutzer nutzer;
+	
 	
 	
 	 public PinnwandBeitrag(String Inhalt, String Beitragsautor, String LikeAnzahl, final Beitrag beitrag, final Nutzer nutzer) {   
@@ -63,29 +62,52 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		 LabelBeitragLikeAnzahl = new Label(LikeAnzahl);
 		 LabelBeitragLikeAnzahl.setStyleName("LabelBeitragLikeAnzahl");
 		 this.add(LabelBeitragLikeAnzahl);
-		 
-		 //Button für "Gefällt mir
-		 ButtonBeitragGefaelltMir = new Button("Gefaellt mir");
-		 ButtonBeitragGefaelltMir.setStyleName("ButtonBeitragGefälltMir");
-		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
-			 
+		 LabelBeitragLikeAnzahl.addClickHandler(new ClickHandler() {
+		 // Bei Klick auf die Likeanzahl, öffnet sich eine Dialogbox, welche die likenden Nutzer anzeigt
 				public void onClick(ClickEvent event) {
-					Like l = new Like();
-					l.setBeitrag(beitrag);
-					l.setNutzer(nutzer);
-					
-					
-					PinnwandAdministration.createLike(l, callback); 
-							
+					final LikeListe dialog = new LikeListe(beitrag.getLikeList());
+					DialogBox dlb = dialog;
+					dlb.center();
 				}
 		});
+		
 		 
+	
+		 //Button für "Gefällt mir
+		 ButtonBeitragGefaelltMir = new Button("");
+		 ButtonBeitragGefaelltMir.setStyleName("ButtonBeitragGefälltMir");
 		 this.add(ButtonBeitragGefaelltMir);
+		 // Methode welche überprüft ob der Nutzer den Beitrag schon geliked hat oder nicht
+		 PinnwandAdministration.checkIfliked(this.nutzer, this.beitrag, callbackBoolean);
 		 
 		 //Button für Kommentieren
 		  ButtonBeitragKommentieren = new Button("Kommentieren");
 		  ButtonBeitragKommentieren.setStyleName("ButtonBeitragKommentieren");
 		  this.add(ButtonBeitragKommentieren);
+		  ButtonBeitragKommentieren.addClickHandler(new ClickHandler() {
+				// Öffnet eine Dialog Box mit einer TextArea, um einen Kommentar zu schreiben
+				public void onClick(ClickEvent event) {
+					final KommentarPosten dialog = new KommentarPosten(nutzer, beitrag);
+					DialogBox dlb = dialog;
+					dlb.center();
+				}
+		});
+		
+	  //Button um Beitrag zu löschen
+		  
+		  ButtonBeitragLoeschen = new Button("Beitrag löschen");
+		  ButtonBeitragLoeschen.setStyleName("ButtonBeitragLöschen");
+		  this.add(ButtonBeitragLoeschen);
+		  ButtonBeitragLoeschen.addClickHandler(new ClickHandler() {
+				 // Nach click auf den "Beitrag Löschen"-Button wird der ausgewählte Beitrag gelöscht
+				public void onClick(ClickEvent event) {
+				PinnwandAdministration.deleteBeitrag(beitrag, callbackVoid);	
+				SocialMediaPinnwand sp = new SocialMediaPinnwand();
+				sp.refresh();
+				
+				}
+		});
+		 
 	    
 	 }
 	public Label getLabelBeitragsInhalt() {
@@ -119,6 +141,20 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		ButtonBeitragKommentieren = buttonBeitragKommentieren;
 	}
 	
+	AsyncCallback<Void> callbackVoid
+	 = new AsyncCallback<Void>() {
+	 public void onFailure
+	 (Throwable caught) {
+	 // TODO: Do something with errors.
+	 }
+	 
+	@Override
+	public void onSuccess(Void result) {
+	
+		
+	}
+	 };
+	
 	 AsyncCallback<Like> callback
 	 = new AsyncCallback<Like>() {
 	 public void onFailure
@@ -132,4 +168,66 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		
 	}
 	 };
+	 
+	 AsyncCallback<Boolean> callbackBoolean
+	 = new AsyncCallback<Boolean>() {
+	 public void onFailure
+	 (Throwable caught) {
+	 // TODO: Do something with errors.
+	 }
+	 
+	@Override
+	public void onSuccess(Boolean result) {
+	/**
+	 * Bearbeitet das Ergebnis von CheckifLiked Methode von PinnwandAdministration
+	 */
+		// true bedeutet der Nutzer hat den Beitrag noch nicht geliked
+		if(result == true) { 
+		setButtonToLike();
+		
+		}
+		
+		else{ setButtonToDislike();
+					
+			}
+	
+	}
+	 };
+	 
+	 // Methode welche den Button zu einem "Gefällt mir" - Button macht
+	 public void setButtonToLike() {
+		 ButtonBeitragGefaelltMir.setText("Gefällt mir"); 
+		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
+			 // Beim Click auf den Button wird der Like hinzugefügt und die Methode setButtonToDislike aufgerufen 
+				public void onClick(ClickEvent event) {
+					Like l = new Like();
+					l.setBeitrag(beitrag);
+					l.setNutzer(nutzer);
+					
+					
+					PinnwandAdministration.createLike(l, callback); 
+					setButtonToDislike();	
+				}
+		});
+		 
+	 }
+	 
+	 // Methode welche aus dem Button ein "Gefällt mir nicht mehr" - Button macht
+	public void setButtonToDislike() {
+		 
+		 ButtonBeitragGefaelltMir.setText("Gefällt mir nicht mehr");
+		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
+			 // Löscht den Like und setzt den Button wieder auf "Gefällt mir"
+				public void onClick(ClickEvent event) {
+					Like l = new Like();
+					l.setBeitrag(beitrag);
+					l.setNutzer(nutzer);
+					
+					
+					PinnwandAdministration.deleteLike(l, callbackVoid); 
+					setButtonToLike();
+				}
+		 });
+		 
+	 }
 }

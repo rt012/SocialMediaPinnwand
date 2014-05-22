@@ -203,11 +203,28 @@ public class LikeMapper {
 	    try {
 	      Statement stmt = con.createStatement();
 	      //Lösche Like mit gleicher ID aus Tabelle
-	      stmt.executeUpdate("DELETE FROM `like` WHERE like_ID=" + l.getId());
+	      stmt.executeUpdate("DELETE FROM `like` WHERE `nutzer_ID`=" + l.getNutzer().getId() + " AND `beitrag_ID`=" + l.getBeitrag().getId());
 	    }
 	    catch (SQLException e) {
 	      e.printStackTrace();
 	    } 
+	}
+	
+	public boolean checIfLiked(Nutzer n, Beitrag b) {
+		Connection con = DBConnection.connection();
+		try {
+			Statement stmt = con.createStatement();
+			 ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE nutzer_ID="+ n.getId() +" AND beitrag_ID=" + b.getId());
+			 if(rs.next() == true) {
+				 return false;
+				
+			 } else return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 }

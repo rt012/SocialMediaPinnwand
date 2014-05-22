@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
 import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.FieldVerifier;
+import hdm.social.media.pinnwand.shared.Like;
 import hdm.social.media.pinnwand.shared.Nutzer;
 import hdm.social.media.pinnwand.shared.Pinnwand;
 
@@ -42,9 +43,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 	//private PinnwandBeitrag panel_PinnwandBeitrag;
 	private FlexTable FlexTableBeitraege;
 	final Label pinnwandName = new Label("");
-	int likeAnzahl;
 	int pinnwandId;
 	Nutzer nutzer;
+	Pinnwand pinnwand;
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -68,13 +69,18 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 		
 		//dummy Nutzer
-		nutzer = new Nutzer("Rémi", "Tessier", "remasico@web.de","pimmel" );
-		nutzer.setId(5);
+		nutzer = new Nutzer("Ferdinand", "Grüner", "fg035@hdm-stuttgart.de","suenos" );
+		nutzer.setId(2);
+		 pinnwand = new Pinnwand();
+		 pinnwand.setId(2);
+		 pinnwand.setNutzer(nutzer);
+		nutzer.setPinnwand(pinnwand);
+		
 		
 		SplitLayoutPanel split = new SplitLayoutPanel();
 		split.setStyleName("rootSplitPanel");
 		
-		SplitLayoutPanel vsplit = new SplitLayoutPanel();
+		SplitLayoutPanel vsplit = new SplitLayoutPanel();	
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		int rootWidthSize = rp.getOffsetWidth();
 		int rootHeightSize = rp.getOffsetHeight();
@@ -119,8 +125,27 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		final Button ButtonBeitragSenden = new Button("Senden");
 		ButtonBeitragSenden.setStyleName("beitragSenden");
-		east_up.add(ButtonBeitragSenden);
 		
+		
+		/**
+		 * Beitrag posten
+		 */
+		ButtonBeitragSenden.addClickHandler(new ClickHandler() {
+			 /**
+			  *  Beitrag wird der Pinnwand hinzugefügt
+			  *  Anschließend wird die Beitragsliste aktualisiert. 
+			  */
+				public void onClick(ClickEvent event) {
+					Beitrag b = new Beitrag();					
+					b.setInhalt(TextAreaBeitragVerfassen.getValue());
+					b.setPinnwand(pinnwand);
+					
+					PinnwandAdministration.saveBeitrag(b, callbackBeitrag);
+					PinnwandAdministration.findAllBeitraege(callback);
+					
+				}
+		});
+		east_up.add(ButtonBeitragSenden);
 		/**
 		 * Rechts-unten:
 		 */
@@ -161,19 +186,6 @@ public class SocialMediaPinnwand implements EntryPoint {
 		}
 		 };
 		 
-		 AsyncCallback<Integer> callbackCountLikesById
-		 = new AsyncCallback<Integer>() {
-		 public void onFailure
-		 (Throwable caught) {
-		 // TODO: Do something with errors.
-		 }
-
-		@Override
-		public void onSuccess(Integer result) {
-			getLikesByBeitrag(result);
-			
-		}
-		 };
 		 
 		 AsyncCallback<Pinnwand> callbackGetPinnwandById
 		 = new AsyncCallback<Pinnwand>() {
@@ -202,12 +214,20 @@ public class SocialMediaPinnwand implements EntryPoint {
 			
 		}
 		 };
+		 
+		 AsyncCallback<Void> callbackBeitrag
+		 = new AsyncCallback<Void>() {
+		 public void onFailure
+		 (Throwable caught) {
+		 // TODO: Do something with errors.
+		 }
 
-	
-		private void getLikesByBeitrag(Integer result) {
-		likeAnzahl = result;// TODO Auto-generated method stub
-		System.out.println(likeAnzahl);
-	}
+		@Override
+		public void onSuccess(Void result1) {
+			
+			
+		}
+		 };
 	
 	private void getPinnwandById(Pinnwand result) {
 		pinnwandId = result.getId();
@@ -216,28 +236,37 @@ public class SocialMediaPinnwand implements EntryPoint {
 		nutzer = result1;
 		System.out.println(nutzer.getName());
 	}
-		 
+	
+	// Methode welche alle Beiträge ausgibt
 	public void printOutAll(ArrayList<Beitrag> result) {
+		// Hilfvariable um festzuhalten in welcher Row man sich befindet
 		int aktuelleRow = 0;
 		for(int i= 0; i < result.size(); i++){
-		
+		// Hilfsmethode welche den Nutzer sucht ( braucht man nicht mehr nach Erik seinem Stand) 
 		PinnwandAdministration.getNutzerById(result.get(i).getPinnwand().getId(), callbackNutzerbyId);
-		PinnwandAdministration.countLikeByBeitrag(result.get(i).getId(), callbackCountLikesById);
+		
+		// Hinzufügen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefügt
 		FlexTableBeitraege.setWidget(aktuelleRow, 0, new PinnwandBeitrag(result.get(i).getInhalt(), "von "+ result.get(i).getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),  + result.get(i).getLikeList().size()  + " Personen gefaellt das.", result.get(i),nutzer ));
+		// nachdem ein Beitrag der FlexTable hinzugefügt wurde wird die aktuelle Zeile um 1 erhöht.
 		aktuelleRow += 1;
+		// Nun werden alle Kommentare des zuvor hinzugefügten Beitrages der FlexTable hinzugefügt
 		for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
 			
-			FlexTableBeitraege.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
+			FlexTableBeitraege.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
 			aktuelleRow += 1;
 			
 		}
-	
-		
-		System.out.println(result.get(i).getInhalt());
-		System.out.println(result.get(i).getKommentarListe().get(i).getInhalt());}
+		}
 		
 	}
 
+	public void refresh() {
+		PinnwandAdministration.findAllBeitraege(callback);
+		
+	}
+	
+	
+	
 	
 	}
 	

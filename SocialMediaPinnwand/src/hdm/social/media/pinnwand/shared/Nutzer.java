@@ -22,6 +22,7 @@ public Nutzer(String vorname, String name, String email, String nickname) {
 	this.email = email;
 	this.nickname = nickname;
 }
+
 public Nutzer(){};
 //	private static final long serialVersionUID = 1L;
 /**

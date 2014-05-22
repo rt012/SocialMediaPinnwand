@@ -41,16 +41,22 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class SocialMediaPinnwand implements EntryPoint {
 	
-//	private PinnwandBeitrag panel_PinnwandBeitrag;
+	//	private PinnwandBeitrag panel_PinnwandBeitrag;
 	
+	// Widgets zur Realisierung des Logins für Anzeige
 	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Please sign in to your Google Account to access the StockWatcher application.");
 	private Anchor signInLink = new Anchor("Sign In");
+	
+	//Aktiver/Aktueller Nutzer
 	private Nutzer aktuellerNutzer = null;
 	
+	//
 	private final Label pinnwandName = new Label("");
-	private CustomOracle oracle = new CustomOracle();;
+	
+	//Verweis auf CustomOracle -> Verwaltungder Suggestionbox um Nutzerobjekte zu speichern
+	private CustomOracle oracle = new CustomOracle();
 	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
 
 	//private PinnwandBeitrag panel_PinnwandBeitrag;
@@ -58,6 +64,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 	int likeAnzahl;
 	int pinnwandId;
 	Nutzer nutzer;
+	
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -69,7 +76,6 @@ public class SocialMediaPinnwand implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	
 	/**
@@ -97,9 +103,6 @@ public class SocialMediaPinnwand implements EntryPoint {
 		        }
 			}
 	    });	
-		
-
-
 	}	
 
 	/**
@@ -141,7 +144,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 		
 		/**
-		 * Vordert den Nutzer auf Vor-, Nachname und Nickname einzugeben,
+		 * Fordert den Nutzer auf Vor-, Nachname und Nickname einzugeben,
 		 * da diese Information nicht über die Google API bezogen werden kann
 		 * bzw. geändert werden soll
 		 * 
@@ -176,7 +179,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 							 
 							@Override
 							public void onSuccess(ArrayList<Nutzer> result) {
-							 fillSuggestenBox(result);
+							 fillSuggestBox(result);
 							}
 						});
 					}
@@ -199,6 +202,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		SplitLayoutPanel vsplit = new SplitLayoutPanel();
 		RootLayoutPanel rp = RootLayoutPanel.get();
+		//Anpassen der rootGröße anhand von Fenstergröße
 		int rootWidthSize = rp.getOffsetWidth();
 		int rootHeightSize = rp.getOffsetHeight();
 		
@@ -207,18 +211,18 @@ public class SocialMediaPinnwand implements EntryPoint {
 		HorizontalPanel east_down = new HorizontalPanel();
 		
 		
-		 
-	
-		
-		
 		/**
 		 * Widgets der linken Seite 
 		 */
 		
+		//Überschrift etwa: "Ferdis SocialMediaPinnwand"
 		pinnwandName.setStyleName("pinnwandName");
 		west.add(pinnwandName);
 		
+		//Suggestbox zum Suchen nach Mitgliedern
 		SuggestBoxPinnwandSuche.setStyleName("SuggestBoxPinnwandSuche");
+		
+		//Einfügen in Layout
 		west.add(SuggestBoxPinnwandSuche);
 		SuggestBoxPinnwandSuche.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>(){
 			public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event){
@@ -228,9 +232,12 @@ public class SocialMediaPinnwand implements EntryPoint {
 		        dlg.center();
 			}
 		});
+		
+		
 		/**
-		 * Läd alle Nutzer in das Such-Feld
+		 * Lädt alle Nutzer in das Such-Feld
 		 */
+		
 		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
 			 public void onFailure
 			 (Throwable caught) {
@@ -239,9 +246,10 @@ public class SocialMediaPinnwand implements EntryPoint {
 			 
 			@Override
 			public void onSuccess(ArrayList<Nutzer> result) {
-			 fillSuggestenBox(result);
+			 fillSuggestBox(result);
 			}
 		});
+		
 		final FlexTable FlexTableAbonniertePinnwaende = new FlexTable();
 		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
 		west.add(FlexTableAbonniertePinnwaende);
@@ -399,7 +407,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 	 * 
 	 * @param nutzer Sämtliche Nutzer Objekte
 	 */
-	public void fillSuggestenBox(ArrayList<Nutzer> nutzer){
+	public void fillSuggestBox(ArrayList<Nutzer> nutzer){
 		ArrayList<CustomSuggest> suggestList = new ArrayList<CustomSuggest>();
 		for (Nutzer n : nutzer) {
 			CustomSuggest suggest = new CustomSuggest(n);

@@ -167,6 +167,25 @@ public Nutzer(){};
 		return "Nutzer [vorname=" + vorname + " \n, name=" + name + ", email="
 				+ email + ", nickname=" + nickname + " \n abonnentenListe=" + getAllAbos() + "]";
 	}
+	
+	/**
+	 * Überschriebene equals Methode welche false zurück gibt,
+	 * wenn das beide Objekte unterschiedlich sind und true wenn
+	 * sie gleich sind
+	 * 
+	 * @param n Das zu vergleichende Nutzer Objekt
+	 * @author Eric Schmidt
+	 */
+	@Override
+	public boolean equals(Object n){
+		if (n instanceof Nutzer){
+			Nutzer vgl = (Nutzer) n;
+			if (vgl.getId() == this.getId()){
+				return true;
+			}			
+		}
+		return false;
+	}
 
 	
 	

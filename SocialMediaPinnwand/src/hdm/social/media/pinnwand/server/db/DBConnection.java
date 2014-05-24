@@ -7,26 +7,26 @@ public class DBConnection {
 	//Singleton Variable damit es nur eine DB Verbindung gibt
 	private static Connection con = null;
 	
-	//Geschützter Konstruktor zum verhindern einer Instanziierung via new
+	//Geschï¿½tzter Konstruktor zum verhindern einer Instanziierung via new
 	protected DBConnection(){
 	}
 	
 	
 	//Datenbank URL
-	//im Moment noch lokal später CloudSQL
+	//im Moment noch lokal spï¿½ter CloudSQL
 	private static String url = "jdbc:mysql://localhost/it_projekt";
 	
-	//Nutzerdaten für DB-login
+	//Nutzerdaten fï¿½r DB-login
 	private static String name="root";
-	private static String password="";
+	private static String password="root";
 	
-	//Ersatz für Konstruktor zum erstellen einer Verbindung
+	//Ersatz fï¿½r Konstruktor zum erstellen einer Verbindung
 	public static Connection connection()  {
 		// Wenn es bisher keine Conncetion zur DB gab, ... 
 		if ( con == null ) {
 			try {
 				//Installieren des geeigneten DB-Treibers
-				//im Moment noch standard sql-Treiber, später AppEngine Treiber
+				//im Moment noch standard sql-Treiber, spï¿½ter AppEngine Treiber
 				DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
 				
 				con = DriverManager.getConnection(url, name, password);
@@ -41,7 +41,7 @@ public class DBConnection {
 			}
 		}
 		
-		// Zurückgegeben der Verbindung
+		// Zurï¿½ckgegeben der Verbindung
 		return con;
 	}
 }

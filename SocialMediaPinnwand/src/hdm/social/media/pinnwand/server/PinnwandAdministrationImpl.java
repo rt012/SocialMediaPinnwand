@@ -247,14 +247,17 @@ public LoginInfo login(String requestUri) {
 		return loginInfo;
 	}
 
-
-
-
 @Override
 public boolean checkIfliked(Nutzer n, Beitrag b)
 		throws IllegalArgumentException {
 	
 	return LikeMapper.likeMapper().checIfLiked(n, b);
+}
+
+
+@Override
+public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
+	return AboMapper.aboMapper().getAboByNutzer(id);
 }
 
 }

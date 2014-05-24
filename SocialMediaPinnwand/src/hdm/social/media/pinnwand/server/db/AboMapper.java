@@ -83,7 +83,7 @@ public class AboMapper {
 		try{
 			Statement stmt = con.createStatement();
 			//Suche alle Abonnements von einem Nutzer
-			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE abonnent_ID="+id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE lieferant_ID="+id);
 
 			while (rs.next()) {
 		        // Ergebnis in Abo- Objekt umwandeln

@@ -264,8 +264,15 @@ public interface PinnwandAdministration extends RemoteService{
 
   public int countLikeByBeitrag(int id)throws IllegalArgumentException;
 
-  public ArrayList<Abo> getAboByNutzer() throws IllegalArgumentException;
-
+  /**
+   * Gibt s�mtliche Abos eines Nutzers aus
+   * 
+   * @param id der Nutzers
+   * @return ArrayList der Abos des Nutzers
+   * @throws IllegalArgumentException
+   */
+  public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException;
+  
   /**
    * Login der Applikation
    * 
@@ -273,8 +280,10 @@ public interface PinnwandAdministration extends RemoteService{
    * @return
    * @author Eric Schmidt
    */
-  public LoginInfo login(String requestUri) throws IllegalArgumentException;;
+  public LoginInfo login(String requestUri) throws IllegalArgumentException;
   
   public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException;
+
+
   
 }

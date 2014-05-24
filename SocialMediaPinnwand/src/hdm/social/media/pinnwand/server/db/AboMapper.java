@@ -45,7 +45,7 @@ public class AboMapper {
 			//Suche alle Felder der Abotabelle anhand von ID
 			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE abonnement_ID=" + id );
 			
-			//Maximal ein Rückgabewert da Id Primärschlüssel
+			//Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			if (rs.next()) {
 		        // Ergebnis in Abo- Objekt umwandeln
 		        Abo a = new Abo();
@@ -54,7 +54,7 @@ public class AboMapper {
 		        a.setAbonnent(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("abonnent_ID")));
 		        a.setLieferant(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("lieferant_ID")));
 		        
-		        //Abo Objekt zurückgeben
+		        //Abo Objekt zurï¿½ckgeben
 		        return a;
 			}
 		}
@@ -70,7 +70,7 @@ public class AboMapper {
 	
 	
 	/*
-	* @see 		getAboBNutzer(int id): gibt komplette Liste an Abonnements zurück die ein Nutzer besitzt
+	* @see 		getAboBNutzer(int id): gibt komplette Liste an Abonnements zurï¿½ck die ein Nutzer besitzt
 	* @param 	Nutzer Id
 	* @return 	ArrayList mit Abo objekten
 	*/ 
@@ -83,7 +83,7 @@ public class AboMapper {
 		try{
 			Statement stmt = con.createStatement();
 			//Suche alle Abonnements von einem Nutzer
-			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE lieferant_ID="+id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE abonnent_ID="+id);
 
 			while (rs.next()) {
 		        // Ergebnis in Abo- Objekt umwandeln
@@ -94,7 +94,7 @@ public class AboMapper {
 		        a.setLieferant(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("lieferant_ID")));
 		             
 		        
-		        //LikeObjekt zu LikeListe hinzufügen
+		        //LikeObjekt zu LikeListe hinzufï¿½gen
 		        aboListe.add(a);
 		       
 		      }
@@ -125,24 +125,24 @@ public class AboMapper {
 			Statement stmt = con.createStatement();
 
 	      /*
-	       * Zunächst schauen wir nach, welches der momentan höchste
-	       * Primärschlüsselwert ist.
+	       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+	       * Primï¿½rschlï¿½sselwert ist.
 	       */
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(abonnement_ID) AS maxid "
 	          + "FROM abonnement ");
 
-	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
 		        /*
-		         * c erhält den bisher maximalen, nun um 1 inkrementierten
-		         * Primärschlüssel.
+		         * c erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+		         * Primï¿½rschlï¿½ssel.
 		         */
 	    	  	maxid=rs.getInt("maxid");
 		        a.setId(rs.getInt("maxid") + 1);
 	
 		        stmt = con.createStatement();
 	
-		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 		        stmt.executeUpdate("INSERT INTO abonnement (abonnement_ID, abonnent_ID, lieferant_ID) "
 		            + "VALUES (" + a.getId() + ",'" + a.getAbonnent().getId() + "','"
 		            + a.getLieferant().getId() +"')");
@@ -158,7 +158,7 @@ public class AboMapper {
 	
 	
 	/*
-	* @see 		deleteAbo(Abo a): Löscht Abonnement aus der Datenbank
+	* @see 		deleteAbo(Abo a): Lï¿½scht Abonnement aus der Datenbank
 	* @param 	Abonnementobjekt
 	* @return 		-
 	*/ 
@@ -169,7 +169,7 @@ public class AboMapper {
 		//Versuch der Abfrage
 	    try {
 	      Statement stmt = con.createStatement();
-	      //Lösche Abonnement aus Tabelle mit gleicher ID
+	      //Lï¿½sche Abonnement aus Tabelle mit gleicher ID
 	      stmt.executeUpdate("DELETE FROM abonnement WHERE abonnement_ID=" + a.getId());
 	    }
 	    catch (SQLException e) {

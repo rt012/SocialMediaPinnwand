@@ -169,9 +169,9 @@ return null;
 }
 
 @Override
-public Abo createAbo(Nutzer abonnement, Nutzer lieferant) throws IllegalArgumentException {
+public Abo createAbo(Nutzer abonnent, Nutzer lieferant) throws IllegalArgumentException {
 	Abo a = new Abo();
-	a.setAbonnent(abonnement);
+	a.setAbonnent(abonnent);
 	a.setLieferant(lieferant);
 	a.setErstellungsZeitpunkt(new Date());
 	return AboMapper.aboMapper().insertAbo(a);

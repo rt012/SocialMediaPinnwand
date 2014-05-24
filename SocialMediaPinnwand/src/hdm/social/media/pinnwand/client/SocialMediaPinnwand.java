@@ -1,5 +1,6 @@
 package hdm.social.media.pinnwand.client;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -17,6 +18,7 @@ import hdm.social.media.pinnwand.client.gui.CustomSuggest;
 import hdm.social.media.pinnwand.client.gui.LoginCustomDialog;
 import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Nutzer;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -56,13 +58,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 	// Widgets zur Realisierung des Logins f�r Anzeige
 	private LoginInfo loginInfo = null;
 
-	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Please sign in to your Google Account to access the StockWatcher application.");
-	private Anchor signInLink = new Anchor("Sign In");
-
 	//Aktiver/Aktueller Nutzer
 	private Nutzer aktuellerNutzer = null;
-	
 
 	//Verweis auf CustomOracle -> Verwaltungder Suggestionbox um Nutzerobjekte zu speichern
 
@@ -105,7 +102,6 @@ public class SocialMediaPinnwand implements EntryPoint {
 		        loginInfo = result;
 		        if(loginInfo.isLoggedIn()) {
 		        	nutzerInDatenbank(result);
-		        	loadSocialMediaPinnwand();
 		        } else {
 		        	loadLogin();
 		        }
@@ -118,8 +114,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 	 * 
 	 * @author Eric Schmidt
 	 */
+	
 	public void nutzerInDatenbank(final LoginInfo googleNutzer){
-		//getNutzerByEmail w�re hier sch�ner!
 		PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
 			public void onFailure
 			 (Throwable caught) {
@@ -130,15 +126,17 @@ public class SocialMediaPinnwand implements EntryPoint {
 			public void onSuccess(Nutzer result) {
 				if (result.getEmail() == googleNutzer.getEmailAddress()){
 						aktuellerNutzer = result;
+						loadSocialMediaPinnwand();
 				}
 		
 				else{
 					createNutzer(googleNutzer);
 				}
+				
 			}
 		});
 	}
-
+	
 	/**
 	 * Legt den Nutzer in der Datenbank an
 	 * 
@@ -178,6 +176,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 						* Update die SuggestBox mit neuen Nutzer
 						*/
 						fillSuggestBox();
+						loadSocialMediaPinnwand();
 					}
 					
 				});
@@ -213,6 +212,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		//�berschrift etwa: "Ferdis SocialMediaPinnwand"
 		pinnwandName.setStyleName("pinnwandName");
+		pinnwandName.setText("Social MediaPinnwand von "+aktuellerNutzer.getName());
 		west.add(pinnwandName);
 		
 		/**
@@ -269,15 +269,6 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 * Widgets der rechten Seite 
 		 * Rechts-Oben:
 		 */
-		
-		pinnwandName.setStyleName("pinnwandName");
-		east_up.add(pinnwandName);
-		
-		//Button f�r Abonnement
-		
-		final Button AboButton = new Button("+");
-		AboButton.setStyleName("aboButton");
-		east_up.add(AboButton);
 		 
 		//Textfeld f�r Beitrag
 
@@ -289,6 +280,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		final Button ButtonBeitragSenden = new Button("Senden");
 		ButtonBeitragSenden.setStyleName("beitragSenden");
+		east_up.add(ButtonBeitragSenden);
 		
 		
 		/**
@@ -319,7 +311,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 			}
 		});
 		
-		east_up.add(ButtonBeitragSenden);
+		
 		
 		/**
 		 * Rechts-unten:
@@ -329,19 +321,18 @@ public class SocialMediaPinnwand implements EntryPoint {
 		LabelPinnwandInformation.setStyleName("LabelPinnwandInformation");
 		east_down.add(LabelPinnwandInformation);
 		
-		FlexTableBeitraege = new FlexTable();
+		final FlexTable FlexTableBeitraege = new FlexTable();
 		FlexTableBeitraege.setStyleName("FlexTableBeitraege");
 		east_down.add(FlexTableBeitraege);
 
 		/**
 		 * Hinzuf�gen der Panels dem Rootpanel
 		 */
-		east_down.add(FlexTableBeitraege);
+		
 		split.addWest(west, (rootWidthSize/2));
 		split.addEast(vsplit, (rootWidthSize/2));
 		vsplit.addNorth(east_up, (rootHeightSize/2));
 		vsplit.addSouth(east_down, (rootHeightSize/2));
-		rp.add(split);
 		rp.add(split);
 	};
 
@@ -394,14 +385,15 @@ public class SocialMediaPinnwand implements EntryPoint {
 				public void onSuccess(ArrayList<Abo> result) {
 					boolean existiert = false;
 					for (Abo a : result){
-						if (a.getAbonnent().equals(n) && a.getLieferant().equals(aktuellerNutzer)){
+						if (a.getAbonnent().equals(aktuellerNutzer) && a.getLieferant().equals(n)){
 							existiert = true;
 						}
 					}
 					if (!existiert){
 						DialogBox dlg = new AbonnementCustomDialog("Abonnieren", "Pinnwand von"
-					    		+ n.getVorname() + " wirklich abonnieren?", n, aktuellerNutzer);
+					    		+ n.getVorname() + " wirklich abonnieren?", aktuellerNutzer, n);
 				        dlg.center();
+				        loadSocialMediaPinnwand();
 					}else{
 						Window.alert("Sie sind bereits eine Abonnementbeziehung mit diesem Nutzer eingegangen");
 					}

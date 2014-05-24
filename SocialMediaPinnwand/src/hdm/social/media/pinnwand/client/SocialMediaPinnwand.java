@@ -48,7 +48,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 	
 	//	private PinnwandBeitrag panel_PinnwandBeitrag;
 	
-	// Widgets zur Realisierung des Logins für Anzeige
+	// Widgets zur Realisierung des Logins fï¿½r Anzeige
 	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Please sign in to your Google Account to access the StockWatcher application.");
@@ -83,9 +83,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 	 */
 	public void onModuleLoad() {		
 		/**
-		 * <code>UserLogin</code> gibt den aktuell eingeloggten Nutzer zurück
+		 * <code>UserLogin</code> gibt den aktuell eingeloggten Nutzer zurï¿½ck
 		 * Wenn der Nutzer nicht bei Google angemeldet ist, gibt die Methode
-		 * <code> UserLogin().getUser() null zurück
+		 * <code> UserLogin().getUser() null zurï¿½ck
 		 * 
 		 * @author Eric Schmidt 
 		 */
@@ -106,26 +106,25 @@ public class SocialMediaPinnwand implements EntryPoint {
 	}	
 
 	/**
-	 * Prüft anhand der Email-Adresse ob der angemeldete Nutzer bereits in der Datenbank ist
+	 * Prï¿½ft anhand der Email-Adresse ob der angemeldete Nutzer bereits in der Datenbank ist
 	 * 
 	 * @author Eric Schmidt
 	 */
 	public void nutzerInDatenbank(final LoginInfo googleNutzer){
-		//getNutzerByEmail wäre hier schöner!
-		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-			 public void onFailure
+		//getNutzerByEmail wï¿½re hier schï¿½ner!
+		PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
+			public void onFailure
 			 (Throwable caught) {
 			 // TODO: Do something with errors.
 			 }
 			 
 			@Override
-			public void onSuccess(ArrayList<Nutzer> result) {
-				for (Nutzer n : result){
-					if (n.getEmail() == googleNutzer.getEmailAddress()){
-						aktuellerNutzer = n;
-					}
+			public void onSuccess(Nutzer result) {
+				if (result.getEmail() == googleNutzer.getEmailAddress()){
+						aktuellerNutzer = result;
 				}
-				if (aktuellerNutzer == null){
+		
+				else{
 					createNutzer(googleNutzer);
 				}
 			}
@@ -145,8 +144,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 		/**
 		 * Fordert den Nutzer auf Vor-, Nachname und Nickname einzugeben,
-		 * da diese Information nicht über die Google API bezogen werden kann
-		 * bzw. geändert werden soll
+		 * da diese Information nicht ï¿½ber die Google API bezogen werden kann
+		 * bzw. geï¿½ndert werden soll
 		 * 
 		 * @author Eric Schmidt
 		 */
@@ -202,7 +201,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		SplitLayoutPanel vsplit = new SplitLayoutPanel();	
 		RootLayoutPanel rp = RootLayoutPanel.get();
-		//Anpassen der rootGröße anhand von Fenstergröße
+		//Anpassen der rootGrï¿½ï¿½e anhand von Fenstergrï¿½ï¿½e
 		int rootWidthSize = rp.getOffsetWidth();
 		int rootHeightSize = rp.getOffsetHeight();
 		
@@ -215,14 +214,14 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 * Widgets der linken Seite 
 		 */
 		
-		//Überschrift etwa: "Ferdis SocialMediaPinnwand"
+		//ï¿½berschrift etwa: "Ferdis SocialMediaPinnwand"
 		pinnwandName.setStyleName("pinnwandName");
 		west.add(pinnwandName);
 		
 		//Suggestbox zum Suchen nach Mitgliedern
 		SuggestBoxPinnwandSuche.setStyleName("SuggestBoxPinnwandSuche");
 		
-		//Einfügen in Layout
+		//Einfï¿½gen in Layout
 		west.add(SuggestBoxPinnwandSuche);
 		SuggestBoxPinnwandSuche.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>(){
 			public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event){
@@ -235,7 +234,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		
 		/**
-		 * Lädt alle Nutzer in das Such-Feld
+		 * Lï¿½dt alle Nutzer in das Such-Feld
 		 */
 		
 		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
@@ -278,13 +277,13 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandName.setStyleName("pinnwandName");
 		east_up.add(pinnwandName);
 		
-		//Button für Abonnement
+		//Button fï¿½r Abonnement
 		
 		final Button AboButton = new Button("+");
 		AboButton.setStyleName("aboButton");
 		east_up.add(AboButton);
 		 
-		//Textfeld für Beitrag
+		//Textfeld fï¿½r Beitrag
 
 		final TextArea TextAreaBeitragVerfassen = new TextArea();
 		TextAreaBeitragVerfassen.setStyleName("TextAreaBeitragVerfassen");
@@ -302,8 +301,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		ButtonBeitragSenden.addClickHandler(new ClickHandler() {
 			/**
-			 *  Beitrag wird der Pinnwand hinzugefügt
-			 *  Anschließend wird die Beitragsliste aktualisiert. 
+			 *  Beitrag wird der Pinnwand hinzugefï¿½gt
+			 *  Anschlieï¿½end wird die Beitragsliste aktualisiert. 
 			 */
 			public void onClick(ClickEvent event) {
 				Beitrag b = new Beitrag();					
@@ -339,7 +338,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		east_down.add(FlexTableBeitraege);
 
 		/**
-		 * Hinzufügen der Panels dem Rootpanel
+		 * Hinzufï¿½gen der Panels dem Rootpanel
 		 */
 		east_down.add(FlexTableBeitraege);
 		split.addWest(west, (rootWidthSize/2));
@@ -352,9 +351,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 	
 	/**
-	 * Befüllt die SuggestBox mit den Nutzern
+	 * Befï¿½llt die SuggestBox mit den Nutzern
 	 * 
-	 * @param nutzer Sämtliche Nutzer Objekte
+	 * @param nutzer Sï¿½mtliche Nutzer Objekte
 	 */
 	public void fillSuggestBox(ArrayList<Nutzer> nutzer){
 		ArrayList<CustomSuggest> suggestList = new ArrayList<CustomSuggest>();
@@ -368,16 +367,16 @@ public class SocialMediaPinnwand implements EntryPoint {
 	}
 	
 	
-	// Methode welche alle Beiträge ausgibt
+	// Methode welche alle Beitrï¿½ge ausgibt
 	public void printOutAll(ArrayList<Beitrag> result) {
 		// Hilfvariable um festzuhalten in welcher Row man sich befindet
 		int aktuelleRow = 0;
 		for(int i= 0; i < result.size(); i++){
-			// Hinzufügen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefügt
+			// Hinzufï¿½gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefï¿½gt
 			FlexTableBeitraege.setWidget(aktuelleRow, 0, new PinnwandBeitrag(result.get(i).getInhalt(), "von "+ result.get(i).getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),  + result.get(i).getLikeList().size()  + " Personen gefaellt das.", result.get(i),aktuellerNutzer ));
-			// nachdem ein Beitrag der FlexTable hinzugefügt wurde wird die aktuelle Zeile um 1 erhöht.
+			// nachdem ein Beitrag der FlexTable hinzugefï¿½gt wurde wird die aktuelle Zeile um 1 erhï¿½ht.
 			aktuelleRow += 1;
-			// Nun werden alle Kommentare des zuvor hinzugefügten Beitrages der FlexTable hinzugefügt
+			// Nun werden alle Kommentare des zuvor hinzugefï¿½gten Beitrages der FlexTable hinzugefï¿½gt
 			
 			for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
 				FlexTableBeitraege.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));

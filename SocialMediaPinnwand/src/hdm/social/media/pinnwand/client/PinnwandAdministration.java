@@ -226,7 +226,7 @@ public interface PinnwandAdministration extends RemoteService{
   public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b) throws IllegalArgumentException;
  
   /**
-   * Prüfen ob Nutzer einen Beitrag geliked hat
+   * Prï¿½fen ob Nutzer einen Beitrag geliked hat
    * @param n Nutzer
    * @param b Beitrag 
    * @return true / false 
@@ -273,6 +273,8 @@ public interface PinnwandAdministration extends RemoteService{
    * @return
    * @author Eric Schmidt
    */
-  public LoginInfo login(String requestUri);
+  public LoginInfo login(String requestUri) throws IllegalArgumentException;;
+  
+  public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException;
   
 }

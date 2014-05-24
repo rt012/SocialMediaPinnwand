@@ -69,13 +69,13 @@ public interface PinnwandAdministrationAsync {
 	void getNutzerById(int i, AsyncCallback<Nutzer> callback);
 
 	void countLikeByBeitrag(int id, AsyncCallback<Integer> callback);
-
 	
 	void getAboByNutzer (AsyncCallback<ArrayList<Abo>> callback);
 
 	void login(String requestUri, AsyncCallback<LoginInfo> callback);
 
 	void checkIfliked(Nutzer n, Beitrag b, AsyncCallback<Boolean> callback);
-
+	
+	void getNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
 
 }

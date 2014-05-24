@@ -211,12 +211,22 @@ public int countLikeByBeitrag(int id) throws IllegalArgumentException {
 
 }
 
+/**
+ * Diese Methode gibt einen Nutzer Anhand einer Email zurÃ¼ck
+ * -> fÃ¼r login
+ */
+
+@Override
+public Nutzer getNutzerByEmail(String email){
+	return NutzerMapper.nutzerMapper().getNutzerByEmail("'"+email+"'");
+}
+
 
 /**
- * Die Methode ist dafür zuständig Userlogin zu bestimmen
- * Wenn eingeloggt: Überträgt infos von Userservice auf Login info
+ * Die Methode ist dafï¿½r zustï¿½ndig Userlogin zu bestimmen
+ * Wenn eingeloggt: ï¿½bertrï¿½gt infos von Userservice auf Login info
  * Wenn nicht: 	Set Login auf false
- * 				Set login url auf request Uri -> rückleitung
+ * 				Set login url auf request Uri -> rï¿½ckleitung
  * 
  */
 @Override

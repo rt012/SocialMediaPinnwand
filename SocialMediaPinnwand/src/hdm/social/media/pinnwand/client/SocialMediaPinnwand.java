@@ -8,6 +8,7 @@ import hdm.social.media.pinnwand.client.gui.AbonnementCustomDialog;
 import hdm.social.media.pinnwand.client.gui.CustomOracle;
 import hdm.social.media.pinnwand.client.gui.CustomSuggest;
 import hdm.social.media.pinnwand.client.gui.LoginCustomDialog;
+import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Nutzer;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -16,13 +17,16 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
@@ -30,6 +34,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -39,13 +44,10 @@ public class SocialMediaPinnwand implements EntryPoint {
 //	private PinnwandBeitrag panel_PinnwandBeitrag;
 	
 	private LoginInfo loginInfo = null;
-	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Please sign in to your Google Account to access the StockWatcher application.");
-	private Anchor signInLink = new Anchor("Sign In");
 	private Nutzer aktuellerNutzer = null;
 	
 	private final Label pinnwandName = new Label("");
-	private CustomOracle oracle = new CustomOracle();;
+	private CustomOracle oracle = new CustomOracle();
 	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
 	/**
 	 * The message displayed to the user when the server cannot be reached or
@@ -72,8 +74,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 * 
 		 * @author Eric Schmidt 
 		 */
-		 // Check login status using login service.
-		PinnwandAdministration.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+		 // Check login status using login service. --> Nach Deploy: GWT.getHostPageBaseURL() 
+		PinnwandAdministration.login("http://127.0.0.1:8888/SocialMediaPinnwand.html?gwt.codesvr=127.0.0.1:9997", new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {}
 
 			public void onSuccess(LoginInfo result) {
@@ -128,7 +130,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		
 		/**
-		 * Vordert den Nutzer auf Vor-, Nachname und Nickname einzugeben,
+		 * Fordert den Nutzer auf Vor-, Nachname und Nickname einzugeben,
 		 * da diese Information nicht über die Google API bezogen werden kann
 		 * bzw. geändert werden soll
 		 * 
@@ -138,9 +140,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 		DialogBox dlb = dialog;
 		dlb.center();
 		
-		dlb.addCloseHandler(new CloseHandler(){
+		dlb.addCloseHandler(new CloseHandler<PopupPanel>(){
 			@Override
-			public void onClose(CloseEvent event) {
+			public void onClose(CloseEvent<PopupPanel> event) {
 				nutzer.setVorname(dialog.getVorname());
 				nutzer.setName(dialog.getNachname());
 				nutzer.setNickname(dialog.getNickname());
@@ -150,22 +152,11 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 					@Override
 					public void onSuccess(Nutzer result) {
-						aktuellerNutzer = result;
-						
+						aktuellerNutzer = result;	
 						/**
-						 * Update die SuggestBox
+						 * Update die SuggestBox mit neuen Nutzer
 						 */
-						PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-							 public void onFailure
-							 (Throwable caught) {
-							 // TODO: Do something with errors.
-							 }
-							 
-							@Override
-							public void onSuccess(ArrayList<Nutzer> result) {
-							 fillSuggestenBox(result);
-							}
-						});
+						fillSuggestenBox();
 					}
 					
 				});
@@ -207,30 +198,36 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandName.setStyleName("pinnwandName");
 		west.add(pinnwandName);
 		
+		/**
+		 * Block für SuggestBox
+		 * 
+		 * @author Eric Schmidt
+		 */
 		SuggestBoxPinnwandSuche.setStyleName("SuggestBoxPinnwandSuche");
+		Button b = new Button("LogOut Temp");
+		b.addClickListener(new ClickListener(){
+
+			@Override
+			public void onClick(Widget sender) {
+				 loadLogout();
+				
+			}
+			
+		});
+		west.add(b);
 		west.add(SuggestBoxPinnwandSuche);
 		SuggestBoxPinnwandSuche.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>(){
 			public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event){
 				Nutzer n = ((CustomSuggest)event.getSelectedItem()).getNutzer();
-				DialogBox dlg = new AbonnementCustomDialog("Abonnieren", "Pinnwand von"
-			    		+ n.getVorname() + " wirklich abonnieren?", n, aktuellerNutzer);
-		        dlg.center();
+				abonniereNutzer(n);
 			}
 		});
+	
+		fillSuggestenBox();
+		
 		/**
-		 * Läd alle Nutzer in das Such-Feld
+		 * Block für Abonnement FlexTable
 		 */
-		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-			 public void onFailure
-			 (Throwable caught) {
-			 // TODO: Do something with errors.
-			 }
-			 
-			@Override
-			public void onSuccess(ArrayList<Nutzer> result) {
-			 fillSuggestenBox(result);
-			}
-		});
 		final FlexTable FlexTableAbonniertePinnwaende = new FlexTable();
 		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
 		west.add(FlexTableAbonniertePinnwaende);
@@ -268,32 +265,86 @@ public class SocialMediaPinnwand implements EntryPoint {
 	}
 	
 	/**
-	 * Befüllt die SuggestenBox mit den Nutzern
+	 * Befüllt die SuggestenBox mit allen Nutzern der Anwendung
 	 * 
-	 * @param nutzer Sämtliche Nutzer Objekte
+	 * @author Eric Schmidt
 	 */
-	public void fillSuggestenBox(ArrayList<Nutzer> nutzer){
-		ArrayList<CustomSuggest> suggestList = new ArrayList<CustomSuggest>();
-		for (Nutzer n : nutzer) {
-			CustomSuggest suggest = new CustomSuggest(n);
-			suggestList.add(suggest);
+	public void fillSuggestenBox(){
+		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
+			 public void onFailure
+			 (Throwable caught) {
+			 // TODO: Do something with errors.
+			 }
+			 
+			@Override
+			public void onSuccess(ArrayList<Nutzer> result) {
+				ArrayList<CustomSuggest> suggestList = new ArrayList<CustomSuggest>();
+				for (Nutzer n : result) {
+					CustomSuggest suggest = new CustomSuggest(n);
+					suggestList.add(suggest);
+				}
+				Collection<CustomSuggest> nutzerCollection = suggestList;
+				oracle.setCollection(nutzerCollection);
+				SuggestBoxPinnwandSuche.ensureDebugId("cwSuggestBox");
+			}
+		});
+	}
+	
+	/**
+	 * Schließt ein Abonnement zwischen dem Eingeloggtem Nutzer (aktuellerNutzer) 
+	 * und dem übergeben Nutzer. Dabei wird geprüft, ob es sich bei dem zu abonnierendem 
+	 * Nutzer um sich selbst handelt oder ob die Abonnement Beziehung bereits eingegangen 
+	 * wurde.
+	 * 
+	 * @param n Nutzer mit welchem ein Abonnement eingegangen werden soll
+	 * @author Eric Schmidt
+	 */
+	public void abonniereNutzer(final Nutzer n){
+		if (!n.equals(aktuellerNutzer)){
+			PinnwandAdministration.getAboByNutzer(aktuellerNutzer.getId(), new AsyncCallback<ArrayList<Abo>>(){
+	
+				@Override
+				public void onFailure(Throwable caught) {}
+	
+				@Override
+				public void onSuccess(ArrayList<Abo> result) {
+					boolean existiert = false;
+					for (Abo a : result){
+						if (a.getAbonnent().equals(n) && a.getLieferant().equals(aktuellerNutzer)){
+							existiert = true;
+						}
+					}
+					if (!existiert){
+						DialogBox dlg = new AbonnementCustomDialog("Abonnieren", "Pinnwand von"
+					    		+ n.getVorname() + " wirklich abonnieren?", n, aktuellerNutzer);
+				        dlg.center();
+					}else{
+						Window.alert("Sie sind bereits eine Abonnementbeziehung mit diesem Nutzer eingegangen");
+					}
+				}	
+			});
+		}else{
+			Window.alert("Es kann keine Abonnementbeziehung mit sich selbst eingegangen werden");
 		}
-		Collection<CustomSuggest> nutzerCollection = suggestList;
-		oracle.setCollection(nutzerCollection);
-		SuggestBoxPinnwandSuche.ensureDebugId("cwSuggestBox");
 	}
 	
 	/**
 	 * Sollte der User nicht bei Google angemeldet sein, 
 	 * verlinke auf login Seite von Google
 	 * 
+	 * @author Eric Schmidt
 	 */
-	  private void loadLogin() {
-		    // Assemble login panel.
-		    signInLink.setHref(loginInfo.getLoginUrl());
-		    loginPanel.add(loginLabel);
-		    loginPanel.add(signInLink);
-		    RootPanel.get().add(loginPanel);
+	  private void loadLogin() {	  
+		  Window.Location.assign(loginInfo.getLoginUrl());
+	  }
+	  
+	  /**
+	   * Logge den aktuellen Nutzer aus und verlinke auf das Login Fenster
+	   * 
+	   * @author Eric Schmidt
+	   */
+	  private void loadLogout() {	  
+		  Window.Location.assign(loginInfo.getLogoutUrl());
 	  }
 }
 	

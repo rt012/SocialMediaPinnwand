@@ -206,5 +206,10 @@ public LoginInfo login(String requestUri) {
 	}
 		return loginInfo;
 	}
+
+@Override
+public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
+	return AboMapper.aboMapper().getAboByNutzer(id);
+}
 }
 

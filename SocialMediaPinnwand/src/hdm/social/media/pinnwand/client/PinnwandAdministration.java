@@ -261,12 +261,21 @@ public interface PinnwandAdministration extends RemoteService{
   public void deleteAbo(Abo a) throws IllegalArgumentException;
 
   /**
+   * Gibt sämtliche Abos eines Nutzers aus
+   * 
+   * @param id der Nutzers
+   * @return ArrayList der Abos des Nutzers
+   * @throws IllegalArgumentException
+   */
+  public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException;
+  
+  /**
    * Login der Applikation
    * 
    * @param requestUri
    * @return
    * @author Eric Schmidt
    */
-  public LoginInfo login(String requestUri);
+  public LoginInfo login(String requestUri)throws IllegalArgumentException;
   
 }

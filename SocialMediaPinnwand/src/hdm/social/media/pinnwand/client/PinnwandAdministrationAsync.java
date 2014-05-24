@@ -70,4 +70,6 @@ public interface PinnwandAdministrationAsync {
 	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
 
 	void login(String requestUri, AsyncCallback<LoginInfo> callback);
+
+	void getAboByNutzer(int id, AsyncCallback<ArrayList<Abo>> callback);
 }

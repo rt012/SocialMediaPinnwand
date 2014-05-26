@@ -3,11 +3,13 @@ package hdm.social.media.pinnwand.client;
 import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
-import hdm.social.media.pinnwand.shared.Beitrag;
-import hdm.social.media.pinnwand.shared.FieldVerifier;
-import hdm.social.media.pinnwand.shared.Like;
-import hdm.social.media.pinnwand.shared.Nutzer;
-import hdm.social.media.pinnwand.shared.Pinnwand;
+import hdm.social.media.pinnwand.shared.PinnwandAdministration;
+import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.FieldVerifier;
+import hdm.social.media.pinnwand.shared.bo.Like;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
+import hdm.social.media.pinnwand.shared.bo.Pinnwand;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -71,9 +73,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 		//dummy Nutzer
 		nutzer = new Nutzer("Ferdinand", "Grüner", "fg035@hdm-stuttgart.de","suenos" );
 		nutzer.setId(2);
-		 pinnwand = new Pinnwand();
-		 pinnwand.setId(2);
-		 pinnwand.setNutzer(nutzer);
+		pinnwand = new Pinnwand();
+		pinnwand.setId(2);
+		pinnwand.setNutzer(nutzer);
 		nutzer.setPinnwand(pinnwand);
 		
 		

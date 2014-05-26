@@ -2,7 +2,11 @@ package hdm.social.media.pinnwand.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import hdm.social.media.pinnwand.shared.*;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Like;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 /*
  * Methoden:
@@ -225,6 +229,24 @@ public class LikeMapper {
 			return false;
 		}
 		
+	}
+	
+	public int getLikeCountByNutzer(Nutzer n) {
+		Connection con = DBConnection.connection();
+		int anzahl = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(`like_ID`) FROM `like` WHERE `nutzer_ID` = " + n.getId());
+			if(rs.next()) {
+				anzahl = rs.getInt(0);
+			}
+			return anzahl;
+		}
+		catch  (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		return anzahl;
 	}
 
 }

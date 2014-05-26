@@ -1,7 +1,9 @@
 package hdm.social.media.pinnwand.server.db;
 
 import java.sql.*;
+
 import hdm.social.media.pinnwand.shared.*;
+import hdm.social.media.pinnwand.shared.bo.Pinnwand;
 
 /*
  * Methoden:

@@ -185,8 +185,7 @@ public void saveAbo(Abo a) throws IllegalArgumentException {
 
 @Override
 public void deleteAbo(Abo a) throws IllegalArgumentException {
-// TODO Auto-generated method stub
-
+AboMapper.aboMapper().deleteAbo(a);
 }
 
 

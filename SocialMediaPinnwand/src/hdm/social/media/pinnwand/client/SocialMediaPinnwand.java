@@ -246,6 +246,11 @@ public class SocialMediaPinnwand implements EntryPoint {
 	
 		fillSuggestBox();
 		
+		/**
+		 * Anzeigen einer Liste mit den bereits abonnierten Pinnwänden
+		 */
+		
+		
 		final FlexTable FlexTableAbonniertePinnwaende = new FlexTable();
 		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
 		west.add(FlexTableAbonniertePinnwaende);
@@ -256,12 +261,11 @@ public class SocialMediaPinnwand implements EntryPoint {
 				// TODO: DO something with errors.
 			}
 			@Override
-			public void onSuccess(ArrayList<Abo> result) {
+			public void onSuccess(final ArrayList<Abo> result) {
 				for (int i=0; i<result.size(); i++){
-					FlexTableAbonniertePinnwaende.setText(i, 0, result.get(i).getLieferant().getVorname()+" "+
-							result.get(i).getLieferant().getName());
-				}
-			}
+					FlexTableAbonniertePinnwaende.setWidget(i,0, new Abozeile(result.get(i)));
+			}}
+			
 		});
 		
 		

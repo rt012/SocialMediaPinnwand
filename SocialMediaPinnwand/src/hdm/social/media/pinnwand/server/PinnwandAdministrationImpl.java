@@ -259,5 +259,31 @@ public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
 	return AboMapper.aboMapper().getAboByNutzer(id);
 }
 
+@Override
+public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException{
+	return PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getBeitraege();
 }
+
+@Override
+public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException{
+	//Aufgabe als erstes result array festlegen
+	//Dann Eigene Beiträge abfragen
+	//Dann Abobeiträge abfragen
+	//Arrayliste sortieren nach Datum TODO
+	
+	ArrayList<Beitrag> result = null;
+	
+	result.addAll(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getBeitraege());
+	ArrayList<Abo> Abonnenten= n.getAbonnentenListe();
+	
+	for(Abo a: Abonnenten){
+		result.addAll(result.size(),PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant().getId()).getBeitraege());
+	}
+	
+	return result;
+}
+
+
+}
+
 

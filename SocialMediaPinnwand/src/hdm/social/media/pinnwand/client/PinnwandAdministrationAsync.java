@@ -77,5 +77,9 @@ public interface PinnwandAdministrationAsync {
 	void getNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
 
 	void getAboByNutzer(int id, AsyncCallback<ArrayList<Abo>> callback);
+	
+	void getAllBeitragByNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
+	
+	void getAllBeitragByAktuellerNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
 
 }

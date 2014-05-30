@@ -282,6 +282,10 @@ public interface PinnwandAdministration extends RemoteService{
   public LoginInfo login(String requestUri) throws IllegalArgumentException;
   
   public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException;
+  
+  public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException;
+  
+  public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException;
 
 
   

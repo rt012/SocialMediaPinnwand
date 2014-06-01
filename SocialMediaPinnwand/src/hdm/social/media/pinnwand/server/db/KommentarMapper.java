@@ -97,7 +97,7 @@ public class KommentarMapper {
 		        k.setId(rs.getInt("kommentar_ID"));
 		        k.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        k.setInhalt(rs.getString("inhalt"));
-		        k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
+		        //k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
 		        k.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
 		        
 		        //Kommentar Objekte der ArrayList hinzuf�gen

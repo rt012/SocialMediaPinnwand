@@ -56,7 +56,7 @@ public class LikeMapper {
 		        l.setId(rs.getInt("like_ID"));
 		        l.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        l.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
-		        l.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
+		        //l.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
 		             
 		        
 		        //LikeObjekt zur�ckgeben

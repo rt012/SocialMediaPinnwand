@@ -106,10 +106,10 @@ public class BeitragMapper {
 		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 		        
 		        //Aufruf des KommentarMappers um alle zum Beitrag geh�rigen Kommentare als ArrayList zuzuweisen
-		        //b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
+		        b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
 		        
 		        //Aufruf des LikeMappers um alle zum Beitrag geh�rigen Likes als ArrayList zuzuweisen
-		        //b.setLikeListe(LikeMapper.likeMapper().getLikesByBeitrag(rs.getInt("beitrag_ID")));			       
+		        b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(rs.getInt("beitrag_ID")));			       
 		        
 		        //BeitragObjekte der ArrayList hinzuf�gen
 		        beitragListe.add(b);

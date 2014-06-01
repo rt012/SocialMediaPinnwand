@@ -49,7 +49,7 @@ public class LikeMapper {
 			//Suche alle Felder der Liketabelle anhand von ID
 			ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE like_ID=" + id );
 			
-			//Maximal ein Rückgabewert da Id Primärschlüssel
+			//Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			if (rs.next()) {
 		        // Ergebnis in Like- Objekt umwandeln
 		        Like l = new Like();
@@ -59,7 +59,7 @@ public class LikeMapper {
 		        l.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
 		             
 		        
-		        //LikeObjekt zurückgeben
+		        //LikeObjekt zurï¿½ckgeben
 		        return l;
 			}
 		}
@@ -74,7 +74,7 @@ public class LikeMapper {
 	
 	 
 	 /*
-	 * @see 	getLikeByBeitrag(int id): Sucht alle Likes die zu einem Beitrag gehören
+	 * @see 	getLikeByBeitrag(int id): Sucht alle Likes die zu einem Beitrag gehï¿½ren
 	 * @param	Beitrag ID
 	 * @return 	ArrayList mit Like Objekten
 	 */
@@ -95,10 +95,10 @@ public class LikeMapper {
 		        l.setId(rs.getInt("like_ID"));
 		        l.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        l.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
-		        l.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
+		        //l.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
 		             
 		        
-		        //LikeObjekt zu LikeListe hinzufügen
+		        //LikeObjekt zu LikeListe hinzufï¿½gen
 		        likeListe.add(l);
 		       
 		      }
@@ -114,7 +114,7 @@ public class LikeMapper {
 	 
 	 
 	 /*
-	 * @see 	countLikeByBeitrag(int id): Zählt alle Likes zu einem Beitrag
+	 * @see 	countLikeByBeitrag(int id): Zï¿½hlt alle Likes zu einem Beitrag
 	 * @param 	Beitrag ID
 	 * @return 	int mit Anzahl
 	 */
@@ -130,7 +130,7 @@ public class LikeMapper {
 			//Suche alle Likes zu einem Beitrag
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM `like` WHERE beitrag_ID=" + id);
 
-		    //Maximal ein Rückgabewert da Id Primärschlüssel
+		    //Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			while (rs.next()) {
 		        count=rs.getInt(1);
 		      }
@@ -141,7 +141,7 @@ public class LikeMapper {
 	    		e.printStackTrace();
 	    }
 		
-		//Falls keines gefunden Rückgabe 0, sonst Rückgabe -1
+		//Falls keines gefunden Rï¿½ckgabe 0, sonst Rï¿½ckgabe -1
 		return count;
 	}
 	 
@@ -162,21 +162,21 @@ public class LikeMapper {
 			Statement stmt = con.createStatement();
 
 	      /*
-	       * Zunächst schauen wir nach, welches der momentan höchste
-	       * Primärschlüsselwert ist.
+	       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+	       * Primï¿½rschlï¿½sselwert ist.
 	       */
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(like_ID) AS maxid "
 	          + "FROM `like`");
 
-	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
-	    	  	//b erhält um 1 höhere ID als das maximale Element in der Tabelle
+	    	  	//b erhï¿½lt um 1 hï¿½here ID als das maximale Element in der Tabelle
 	    	  	maxid=rs.getInt("maxid");
 		        l.setId(rs.getInt("maxid") + 1);
 	
 		        stmt = con.createStatement();
 	
-		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 		        stmt.executeUpdate("INSERT INTO `like` (like_ID, beitrag_ID, nutzer_ID) "
 		            + "VALUES ('" + l.getId() + "','"  + l.getBeitrag().getId() + "','" + l.getNutzer().getId() +"')");
 	      }
@@ -191,7 +191,7 @@ public class LikeMapper {
 	
 	
 	 /*
-	 * @see 	deleteLike(Like l): Löscht einen Like aus der Datenbank
+	 * @see 	deleteLike(Like l): Lï¿½scht einen Like aus der Datenbank
 	 * @param 	Objekt von Typ Like
 	 * @return 		-
 	 */
@@ -202,7 +202,7 @@ public class LikeMapper {
 		//Versuch der Abfrage
 	    try {
 	      Statement stmt = con.createStatement();
-	      //Lösche Like mit gleicher ID aus Tabelle
+	      //Lï¿½sche Like mit gleicher ID aus Tabelle
 	      stmt.executeUpdate("DELETE FROM `like` WHERE `nutzer_ID`=" + l.getNutzer().getId() + " AND `beitrag_ID`=" + l.getBeitrag().getId());
 	    }
 	    catch (SQLException e) {

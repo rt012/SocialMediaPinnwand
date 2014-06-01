@@ -64,7 +64,8 @@ public void saveNutzer(Nutzer n) throws IllegalArgumentException {
 
 @Override
 public void savePinnwand(Pinnwand p) throws IllegalArgumentException {
-// TODO Auto-generated method stub
+// TODO Auto-generated method stubFlexTableBeitraege.setWidget(aktuelleRow, 0, new PinnwandBeitrag(result.get(i).getInhalt(), "von "+ result.get(i).getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),  + result.get(i).getLikeList().size()  + " Personen gefaellt das.", result.get(i),aktuellerNutzer ));
+	
 
 }
 
@@ -137,10 +138,9 @@ KommentarMapper.kommentarMapper().deleteKommentar(k);
 }
 
 @Override
-public ArrayList<Kommentar> getAllKommentarJeBeitrag(Beitrag b)
-throws IllegalArgumentException {
-// TODO Auto-generated method stub
-return null;
+public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag b) throws IllegalArgumentException {
+
+return KommentarMapper.kommentarMapper().getKommentarByBeitrag(b.getId());
 }
 
 @Override
@@ -162,10 +162,9 @@ LikeMapper.likeMapper().deleteLike(l);
 }
 
 @Override
-public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b)
+public ArrayList<Like> getLikeByBeitrag(Beitrag b)
 throws IllegalArgumentException {
-// TODO Auto-generated method stub
-return null;
+	return LikeMapper.likeMapper().getLikeByBeitrag(b.getId());
 }
 
 @Override
@@ -261,7 +260,8 @@ public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
 
 @Override
 public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException{
-	return PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getBeitraege();
+	ArrayList<Beitrag> a = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
+	return a;
 }
 
 @Override
@@ -271,13 +271,14 @@ public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws Illega
 	//Dann Abobeiträge abfragen
 	//Arrayliste sortieren nach Datum TODO
 	
-	ArrayList<Beitrag> result = null;
-	
-	result.addAll(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getBeitraege());
-	ArrayList<Abo> Abonnenten= n.getAbonnentenListe();
-	
-	for(Abo a: Abonnenten){
-		result.addAll(result.size(),PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant().getId()).getBeitraege());
+	ArrayList<Beitrag> result = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
+	ArrayList<Abo> Abonnenten= getAboByNutzer(n.getId());
+	if(Abonnenten!=null){
+		for(Abo a: Abonnenten){
+			if(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant().getId()).getId())!=null){
+				result.addAll(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant().getId()).getId()));
+			}
+		}
 	}
 	
 	return result;

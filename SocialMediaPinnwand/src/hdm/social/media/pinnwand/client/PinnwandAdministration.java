@@ -189,7 +189,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @return ArrayList<Kommentar>
    * @throws IllegalArgumentException
    */
-  public ArrayList<Kommentar> getAllKommentarJeBeitrag(Beitrag b) throws IllegalArgumentException;
+  public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag b) throws IllegalArgumentException;
  
   /**
    * Einen Like erstellen.
@@ -223,7 +223,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @return ArrayList<Like>
    * @throws IllegalArgumentException
    */
-  public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b) throws IllegalArgumentException;
+  public ArrayList<Like> getLikeByBeitrag(Beitrag b) throws IllegalArgumentException;
  
   /**
    * Pr�fen ob Nutzer einen Beitrag geliked hat

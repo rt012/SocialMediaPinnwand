@@ -51,7 +51,7 @@ public class BeitragMapper {
 			//Suche alle Felder der Beitragtabelle anhand von ID
 			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE beitrag_ID=" + id );
 			
-			//Maximal ein Rückgabewert da Id Primärschlüssel
+			//Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			if (rs.next()) {
 		        // Ergebnis in Beitrag- Objekt umwandeln
 		        Beitrag b = new Beitrag();
@@ -60,13 +60,13 @@ public class BeitragMapper {
 		        b.setInhalt(rs.getString("inhalt"));
 		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 		        
-		        //Aufruf des KommentarMappers um alle zum Beitrag gehörigen Kommentare als ArrayList zuzuweisen
-		        //b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
+		        //Aufruf des KommentarMappers um alle zum Beitrag gehï¿½rigen Kommentare als ArrayList zuzuweisen
+		        b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
 		        
-		        //Aufruf des LikeMappers um alle zum Beitrag gehörigen Likes als ArrayList zuzuweisen
-		        //b.setLikeListe(LikeMapper.likeMapper().getLikeByBeitrag(rs.getInt("beitrag_ID")));			       
+		        //Aufruf des LikeMappers um alle zum Beitrag gehï¿½rigen Likes als ArrayList zuzuweisen
+		        b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(rs.getInt("beitrag_ID")));			       
 		        
-		        //BeitragObjekt zurückgeben
+		        //BeitragObjekt zurï¿½ckgeben
 		        return b;
 			}
 		}
@@ -81,7 +81,7 @@ public class BeitragMapper {
 	 
 	 
 	 /*
-	 * @see		getBeittragByPinnwand(int id): Sucht alle Beiträge die zu einer Pinnwand gehören
+	 * @see		getBeittragByPinnwand(int id): Sucht alle Beitrï¿½ge die zu einer Pinnwand gehï¿½ren
 	 * @param 	Pinnwand Id
 	 * @return	ArrayList mit Beitragobjekten
 	 */
@@ -105,13 +105,13 @@ public class BeitragMapper {
 		        b.setInhalt((rs.getString("inhalt")));
 		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 		        
-		        //Aufruf des KommentarMappers um alle zum Beitrag gehörigen Kommentare als ArrayList zuzuweisen
+		        //Aufruf des KommentarMappers um alle zum Beitrag gehï¿½rigen Kommentare als ArrayList zuzuweisen
 		        //b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
 		        
-		        //Aufruf des LikeMappers um alle zum Beitrag gehörigen Likes als ArrayList zuzuweisen
+		        //Aufruf des LikeMappers um alle zum Beitrag gehï¿½rigen Likes als ArrayList zuzuweisen
 		        //b.setLikeListe(LikeMapper.likeMapper().getLikesByBeitrag(rs.getInt("beitrag_ID")));			       
 		        
-		        //BeitragObjekte der ArrayList hinzufügen
+		        //BeitragObjekte der ArrayList hinzufï¿½gen
 		        beitragListe.add(b);
 		      }
 			return beitragListe;
@@ -126,7 +126,7 @@ public class BeitragMapper {
 	 
 	 
 	/*
-	* @see		getAllBeitrag: Sucht alle Beiträge die zu einer Pinnwand gehören
+	* @see		getAllBeitrag: Sucht alle Beitrï¿½ge die zu einer Pinnwand gehï¿½ren
 	* @param 	Pinnwand Id
 	* @return 	ArrayList mit Beitragobjekten
 	*/
@@ -150,13 +150,13 @@ public class BeitragMapper {
 			    b.setInhalt((rs.getString("inhalt")));
 			    b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 			    b.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("pinnwand_ID")));
-			    //Aufruf des KommentarMappers um alle zum Beitrag gehörigen Kommentare als ArrayList zuzuweisen
+			    //Aufruf des KommentarMappers um alle zum Beitrag gehï¿½rigen Kommentare als ArrayList zuzuweisen
 			    b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
 			        
-			    //Aufruf des LikeMappers um alle zum Beitrag gehörigen Likes als ArrayList zuzuweisen
+			    //Aufruf des LikeMappers um alle zum Beitrag gehï¿½rigen Likes als ArrayList zuzuweisen
 			    b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(rs.getInt("beitrag_ID")));			       
 			        
-			    //BeitragObjekte der ArrayList hinzufügen
+			    //BeitragObjekte der ArrayList hinzufï¿½gen
 			    beitragListe.add(b);
 			}
 			return beitragListe;
@@ -171,9 +171,9 @@ public class BeitragMapper {
 	 
 	 
 	 /*
-	 * @see		countBeitraege(): Zählt alle Beiträge
+	 * @see		countBeitraege(): Zï¿½hlt alle Beitrï¿½ge
 	 * @param 	-
-	 * @return 	Anzahl der Beiträge als int
+	 * @return 	Anzahl der Beitrï¿½ge als int
 	 */
 	 public int countBeitraege(){
 		
@@ -187,7 +187,7 @@ public class BeitragMapper {
 			//Suche alle Beitrag
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM beitrag");
 
-		    //Maximal ein Rückgabewert da Id Primärschlüssel
+		    //Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			while (rs.next()) {
 		        count=rs.getInt(1);
 		      }
@@ -198,7 +198,7 @@ public class BeitragMapper {
 	    		e.printStackTrace();
 	    }
 		
-		//Falls keines gefunden Rückgabe 0, sonst Rückgabe der Anzahl oder bei Fehler -1
+		//Falls keines gefunden Rï¿½ckgabe 0, sonst Rï¿½ckgabe der Anzahl oder bei Fehler -1
 		return count;
 	} 
 	
@@ -219,22 +219,22 @@ public class BeitragMapper {
 			Statement stmt = con.createStatement();
 
 	      /*
-	       * Zunächst schauen wir nach, welches der momentan höchste
-	       * Primärschlüsselwert ist.
+	       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+	       * Primï¿½rschlï¿½sselwert ist.
 	       */
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(beitrag_ID) AS maxid "
 	          + "FROM beitrag ");
 
-	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
-	    	  	//b erhält um 1 höhere ID als das maximale Element in der Tabelle
+	    	  	//b erhï¿½lt um 1 hï¿½here ID als das maximale Element in der Tabelle
 	    	  	System.out.println(rs.getInt("maxid"));
 	    	  	maxid=rs.getInt("maxid");
 		        b.setId(rs.getInt("maxid") + 1);
 		        System.out.print(rs.getInt("maxid") +1);
 		        stmt = con.createStatement();
 		        System.out.println("after con create");
-		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 		        System.out.println(b.getId() + b.getInhalt());
 		        System.out.println(b.getPinnwand().getId());
 		        stmt.executeUpdate("INSERT INTO beitrag (beitrag_ID, inhalt, pinnwand_ID) "
@@ -252,7 +252,7 @@ public class BeitragMapper {
 
 	
 	/*
-	* @see 		deleteBeitrag(Beitrag b): Löscht Beitrag aus der Datenbank
+	* @see 		deleteBeitrag(Beitrag b): Lï¿½scht Beitrag aus der Datenbank
 	* @param 	Beitragobjekt
 	* @return 		-
 	*/ 
@@ -263,7 +263,7 @@ public class BeitragMapper {
 		//Versuch der Abfrage
 	    try {
 	      Statement stmt = con.createStatement();
-	      //Lösche Beitrag mit gleicher ID aus Tabelle
+	      //Lï¿½sche Beitrag mit gleicher ID aus Tabelle
 	      stmt.executeUpdate("DELETE FROM beitrag WHERE beitrag_ID=" + b.getId());
 	    }
 	    catch (SQLException e) {
@@ -292,7 +292,7 @@ public class BeitragMapper {
 		      e.printStackTrace();
 		    }
 
-		    // Zurückgeben des aktuellen Beitragobjektes
+		    // Zurï¿½ckgeben des aktuellen Beitragobjektes
 		    return getBeitragById(b.getId());
 		 }
 

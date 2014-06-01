@@ -38,9 +38,9 @@ public interface PinnwandAdministrationAsync {
 
 	void findAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
 
-	void getAllKommentarJeBeitrag(Beitrag b, AsyncCallback<ArrayList<Kommentar>> callback);
+	void getKommentarByBeitrag(Beitrag b, AsyncCallback<ArrayList<Kommentar>> callback);
 
-	void getAllLikeJeBeitrag(Beitrag b, AsyncCallback<ArrayList<Like>> callback);
+	void getLikeByBeitrag(Beitrag b, AsyncCallback<ArrayList<Like>> callback);
 
 	void getPinnwandById(int id, AsyncCallback<Pinnwand> callback);
 

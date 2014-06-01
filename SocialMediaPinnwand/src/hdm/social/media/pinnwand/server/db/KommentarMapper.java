@@ -49,18 +49,18 @@ public class KommentarMapper {
 			//Suche alle Felder der Kommentartabelle anhand von ID
 			ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE kommentar_ID=" + id );
 			
-			//Maximal ein Rückgabewert da Id Primärschlüssel
+			//Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			if (rs.next()) {
 		        // Ergebnis in Beitrag- Objekt umwandeln
 		        Kommentar k = new Kommentar();
 		        k.setId(rs.getInt("kommentar_ID"));
 		        k.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        k.setInhalt(rs.getString("inhalt"));
-		        k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
+		        //k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
 		        k.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
 		        
 		        
-		        //Kommentar Objekt zurückgeben
+		        //Kommentar Objekt zurï¿½ckgeben
 		        return k;
 			}
 		}
@@ -100,7 +100,7 @@ public class KommentarMapper {
 		        k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
 		        k.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
 		        
-		        //Kommentar Objekte der ArrayList hinzufügen
+		        //Kommentar Objekte der ArrayList hinzufï¿½gen
 		        kommentarListe.add(k);
 		      }
 			return kommentarListe;
@@ -115,7 +115,7 @@ public class KommentarMapper {
 	 
 	 
 	 /*
-	 * @see 	countKommentarByBeitrag(int id): Zählt alle Kommentare zu einem Beitrag
+	 * @see 	countKommentarByBeitrag(int id): Zï¿½hlt alle Kommentare zu einem Beitrag
 	 * @pram 	Beitrag ID
 	 * @return 	int mit Anzahl
 	 */
@@ -130,7 +130,7 @@ public class KommentarMapper {
 			//Suche alle Beitrag
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM kommentar WHERE beitrag_ID=" +id);
 
-		    //Maximal ein Rückgabewert da Id Primärschlüssel
+		    //Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			while (rs.next()) {
 		        count=rs.getInt(1);
 		      }
@@ -141,7 +141,7 @@ public class KommentarMapper {
 	    		e.printStackTrace();
 	    }
 		
-		//Falls keines gefunden Rückgabe 0, sonst Rückgabe der Anzahl oder bei Fehler -1
+		//Falls keines gefunden Rï¿½ckgabe 0, sonst Rï¿½ckgabe der Anzahl oder bei Fehler -1
 		return count;
 	 }
 	 
@@ -161,21 +161,21 @@ public class KommentarMapper {
 			Statement stmt = con.createStatement();
 
 	      /*
-	       * Zunächst schauen wir nach, welches der momentan höchste
-	       * Primärschlüsselwert ist.
+	       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+	       * Primï¿½rschlï¿½sselwert ist.
 	       */
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(kommentar_ID) AS maxid "
 	          + "FROM kommentar ");
 
-	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
-	    	  	//k erhält um 1 höhere ID als das maximale Element in der Tabelle
+	    	  	//k erhï¿½lt um 1 hï¿½here ID als das maximale Element in der Tabelle
 	    	  	maxid=rs.getInt("maxid");
 		        k.setId(rs.getInt("maxid") + 1);
 	
 		        stmt = con.createStatement();
 	
-		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 		        stmt.executeUpdate("INSERT INTO kommentar (kommentar_ID, inhalt, nutzer_ID, beitrag_ID) "
 		            + "VALUES (" + k.getId() + ",'"  + k.getInhalt() + "','" + k.getNutzer().getId()+ "','" 
 		        	+ k.getBeitrag().getId() +"')");
@@ -192,7 +192,7 @@ public class KommentarMapper {
 	 
 	 
 	 /*
-	 * @see 	deleteKommentar(Kommentar k): Löscht Kommentar Objekt aus Datenbank
+	 * @see 	deleteKommentar(Kommentar k): Lï¿½scht Kommentar Objekt aus Datenbank
 	 * @param	Kommentar Objekt
 	 * @return 		-
 	 */
@@ -203,7 +203,7 @@ public class KommentarMapper {
 		//Versuch der Abfrage
 	    try {
 	      Statement stmt = con.createStatement();
-	      //Lösche Beitrag mit gleicher ID aus Tabelle
+	      //Lï¿½sche Beitrag mit gleicher ID aus Tabelle
 	      stmt.executeUpdate("DELETE FROM kommentar WHERE kommentar_ID=" + k.getId());
 	    }
 	    catch (SQLException e) {
@@ -232,7 +232,7 @@ public class KommentarMapper {
 		      e.printStackTrace();
 		    }
 
-	    // Zurückgeben des aktuellen Beitragobjektes
+	    // Zurï¿½ckgeben des aktuellen Beitragobjektes
 	    return getKommentarById(k.getId());
 		 
 	 }

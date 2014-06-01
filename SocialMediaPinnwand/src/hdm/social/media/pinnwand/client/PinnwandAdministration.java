@@ -287,6 +287,7 @@ public interface PinnwandAdministration extends RemoteService{
   
   public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException;
 
+  public Pinnwand getPinnwandByNutzer(Nutzer n) throws IllegalArgumentException;
 
   
 }

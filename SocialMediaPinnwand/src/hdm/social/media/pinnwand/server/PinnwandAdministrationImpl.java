@@ -284,6 +284,10 @@ public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws Illega
 	return result;
 }
 
+@Override
+public Pinnwand getPinnwandByNutzer(Nutzer n){
+	return PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId());
+}
 
 }
 

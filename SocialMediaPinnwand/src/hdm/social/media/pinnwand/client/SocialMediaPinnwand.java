@@ -27,6 +27,7 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -218,15 +219,18 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandName.setText("Social MediaPinnwand von "+aktuellerNutzer.getName());
 		west.add(pinnwandName);
 		
-		/**
-		 * Block f�r SuggestBox
-		 * 
-		 * @author Eric Schmidt
-		 */
-		SuggestBoxPinnwandSuche.setStyleName("SuggestBoxPinnwandSuche");
-
+		//Eigener Pinnwand Button
+		Button eigenePinnwand = new Button("Eigene Pinnwand");
+		eigenePinnwand.addStyleName("buttonEigenePinnwand");
+		west.add(eigenePinnwand);
+		eigenePinnwand.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){
+				refresh(aktuellerNutzer);
+			}
+		});
 		
-		//Einf�gen in Layout
+		
+		//Logout Button
 		Button b = new Button("LogOut Temp");
 		b.addClickListener(new ClickListener(){
 
@@ -238,6 +242,16 @@ public class SocialMediaPinnwand implements EntryPoint {
 			
 		});
 		west.add(b);
+		
+		
+		
+		
+		/**
+		 * Block f�r SuggestBox
+		 * 
+		 * @author Eric Schmidt
+		 */
+		SuggestBoxPinnwandSuche.setStyleName("SuggestBoxPinnwandSuche");
 		west.add(SuggestBoxPinnwandSuche);
 		SuggestBoxPinnwandSuche.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>(){
 			public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event){
@@ -286,21 +300,26 @@ public class SocialMediaPinnwand implements EntryPoint {
 			 *  Anschlie�end wird die Beitragsliste aktualisiert. 
 			 */
 			public void onClick(ClickEvent event) {
-				Beitrag b = new Beitrag();					
-				b.setInhalt(TextAreaBeitragVerfassen.getValue());
-				b.setPinnwand(aktuellerNutzer.getPinnwand());
 				
-				PinnwandAdministration.saveBeitrag(b, new AsyncCallback<Void>(){	
-				
-					public void onFailure (Throwable caught) {
-						// TODO: Do something with errors.
+				PinnwandAdministration.getPinnwandByNutzer(aktuellerNutzer, new AsyncCallback<Pinnwand>(){
+					public void onFailure(Throwable caught){}
+					public void onSuccess(Pinnwand result){
+						Beitrag b = new Beitrag();					
+						b.setInhalt(TextAreaBeitragVerfassen.getValue());
+						b.setPinnwand(result);
+						PinnwandAdministration.saveBeitrag(b, new AsyncCallback<Void>(){	
+							
+							public void onFailure (Throwable caught) {
+								// TODO: Do something with errors.
+							}
+							 
+							@Override
+							public void onSuccess(Void result) {
+								refresh(aktuellerNutzer);
+							}
+						});
 					}
-					 
-					@Override
-					public void onSuccess(Void result) {
-						//TODO: Liste aktualisieren
-					}
-				});
+				});				
 			}
 		});
 		
@@ -386,7 +405,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 						DialogBox dlg = new AbonnementCustomDialog("Abonnieren", "Pinnwand von"
 					    		+ n.getVorname() + " wirklich abonnieren?", aktuellerNutzer, n);
 				        dlg.center();
-				        loadSocialMediaPinnwand();
+				        refresh(aktuellerNutzer);
 					}else{
 						Window.alert("Sie sind bereits eine Abonnementbeziehung mit diesem Nutzer eingegangen");
 					}
@@ -491,6 +510,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 	  private void loadLogout() {	  
 		  Window.Location.assign(loginInfo.getLogoutUrl());
 	  }
+	  
 	  public void fillAboList(){
 	  PinnwandAdministration.getAboByNutzer(aktuellerNutzer.getId(), new AsyncCallback<ArrayList<Abo>>() {
 			public void onFailure
@@ -500,10 +520,33 @@ public class SocialMediaPinnwand implements EntryPoint {
 			@Override
 			public void onSuccess(final ArrayList<Abo> result) {
 				for (int i=0; i<result.size(); i++){
+					
+					final int x=i;
+					Button buttonZeigePinnwand = new Button("Zur Pinnwand");
+					buttonZeigePinnwand.setStyleName("buttonZeigePinnwand");
+					buttonZeigePinnwand.addClickHandler(new ClickHandler(){
+						public void onClick(ClickEvent event) {
+							FlexTableBeitraege.removeAllRows();
+							printOutBeitragJeNutzer(result.get(x).getLieferant());
+						}
+					});
+					
 					FlexTableAbonniertePinnwaende.setWidget(i,0, new Abozeile(result.get(i)));
+					FlexTableAbonniertePinnwaende.setWidget(i,1, buttonZeigePinnwand);
+					
+					
+					
+					
 			}}
 			
 		});
 	  }
+	  
+	  public void refresh(Nutzer n){
+		  FlexTableBeitraege.removeAllRows();
+		  printOutBeitragJeNutzer(aktuellerNutzer);
+		  fillAboList(); 
+	  }
+	  
 }
 	

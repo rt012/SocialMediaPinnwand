@@ -81,5 +81,7 @@ public interface PinnwandAdministrationAsync {
 	void getAllBeitragByNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
 	
 	void getAllBeitragByAktuellerNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
+	
+	void getPinnwandByNutzer(Nutzer n, AsyncCallback<Pinnwand> callback);
 
 }

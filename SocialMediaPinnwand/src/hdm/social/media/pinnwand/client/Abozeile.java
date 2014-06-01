@@ -1,6 +1,7 @@
 package hdm.social.media.pinnwand.client;
 
 import hdm.social.media.pinnwand.shared.Abo;
+import hdm.social.media.pinnwand.shared.Nutzer;
 import hdm.social.media.pinnwand.client.PinnwandAdministration;
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
 import hdm.social.media.pinnwand.client.PinnwandAdministrationAsync;
@@ -44,6 +45,6 @@ public class Abozeile extends HorizontalPanel{
 			public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteAbo(a, callbackVoid);
 			}
-		});
+		});		
 	}
 }

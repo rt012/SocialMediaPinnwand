@@ -127,7 +127,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 			 
 			@Override
 			public void onSuccess(Nutzer result) {
-				if (result.getEmail() == googleNutzer.getEmailAddress()){
+				if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
 						aktuellerNutzer = result;
 						loadSocialMediaPinnwand();
 				}

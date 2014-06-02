@@ -1,12 +1,17 @@
-package hdm.social.media.pinnwand.client;
+package hdm.social.media.pinnwand.shared;
 
-import hdm.social.media.pinnwand.shared.Abo;
-import hdm.social.media.pinnwand.shared.Beitrag;
-import hdm.social.media.pinnwand.shared.Kommentar;
-import hdm.social.media.pinnwand.shared.Like;
-import hdm.social.media.pinnwand.shared.Nutzer;
-import hdm.social.media.pinnwand.shared.Pinnwand;
+import hdm.social.media.pinnwand.client.LoginInfo;
+import hdm.social.media.pinnwand.shared.bo.Abo;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Kommentar;
+import hdm.social.media.pinnwand.shared.bo.Like;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
+import hdm.social.media.pinnwand.shared.bo.Pinnwand;
+
 import java.util.ArrayList;
+
+
+
 
 
 
@@ -277,5 +282,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @author Eric Schmidt
    */
   public LoginInfo login(String requestUri)throws IllegalArgumentException;
+  
+  public int getLikeCountByNutzer(Nutzer n) throws IllegalArgumentException;
   
 }

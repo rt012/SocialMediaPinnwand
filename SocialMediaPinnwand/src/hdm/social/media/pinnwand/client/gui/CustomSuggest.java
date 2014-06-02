@@ -1,8 +1,10 @@
 package hdm.social.media.pinnwand.client.gui;
 
 import java.io.Serializable;
+
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
-import hdm.social.media.pinnwand.shared.Nutzer;
+
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 /**
  * Custome Suggest um Nutzer Objekte anzuzeigen

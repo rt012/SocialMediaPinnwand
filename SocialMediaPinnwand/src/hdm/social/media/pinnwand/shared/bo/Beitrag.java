@@ -1,4 +1,4 @@
-package hdm.social.media.pinnwand.shared;
+package hdm.social.media.pinnwand.shared.bo;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -27,6 +27,16 @@ public class Beitrag extends Document implements IsSerializable{
 	 */
 	private Pinnwand pinnwand;
 	
+	private Nutzer nutzer;
+	
+	public Nutzer getNutzer() {
+		return nutzer;
+	}
+
+	public void setNutzer(Nutzer nutzer) {
+		this.nutzer = nutzer;
+	}
+
 	/*
 	 * Auslesen einer Liste von Likes 
 	 */

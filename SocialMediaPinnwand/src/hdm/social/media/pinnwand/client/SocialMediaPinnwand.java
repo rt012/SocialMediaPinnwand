@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
+import hdm.social.media.pinnwand.shared.ReportGenerator;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAsync;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.FieldVerifier;
 import hdm.social.media.pinnwand.shared.bo.Like;
@@ -18,6 +20,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -27,16 +31,22 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.TabBar.Tab;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
-
+import com.google.gwt.user.client.ui.TabBar;
+import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
+import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -67,7 +77,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-	
+		
+	    
 
 		
 		//dummy Nutzer
@@ -87,15 +98,55 @@ public class SocialMediaPinnwand implements EntryPoint {
 		int rootWidthSize = rp.getOffsetWidth();
 		int rootHeightSize = rp.getOffsetHeight();
 		
+		 // Create a tab bar with three items.
+	    TabBar bar = new TabBar();
+	    bar.addTab("foo");
+	    bar.addTab("bar");
+	    bar.addTab("baz");
+
+	    // Hook up a tab listener to do something when the user selects a tab.
+	    bar.addSelectionHandler(new SelectionHandler<Integer>() {
+	      public void onSelection(SelectionEvent<Integer> event) {
+	        // Let the user know what they just did.
+	        Window.alert("You clicked tab " + event.getSelectedItem());
+	      }
+	    });
+
+	    // Just for fun, let's disallow selection of 'bar'.
+	    bar.addBeforeSelectionHandler(new BeforeSelectionHandler<Integer>() {
+	      public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {
+	        if (event.getItem().intValue() == 1) {
+	          event.cancel();
+	        }
+	      }
+	    });
+
+	    // Add it to the root panel.
+	    RootPanel.get().add(bar);
+	  
 		
 		
-		
-		
-		VerticalPanel west = new VerticalPanel();
+		final VerticalPanel west = new VerticalPanel();
 		HorizontalPanel east_up = new HorizontalPanel();
 		HorizontalPanel east_down = new HorizontalPanel();
 		
-		 
+		ReportGeneratorAsync reportGenerator = GWT.create(ReportGenerator.class);
+		reportGenerator.CreateNutzerReport(nutzer, new AsyncCallback<String>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				HTML html = new HTML(result);
+				west.add(html);
+			}
+			
+		}); 
 	
 		
 		

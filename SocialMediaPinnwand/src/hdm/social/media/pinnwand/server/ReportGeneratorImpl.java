@@ -7,6 +7,7 @@ import java.util.Date;
 import hdm.social.media.pinnwand.report.BeitragReport;
 import hdm.social.media.pinnwand.report.Column;
 import hdm.social.media.pinnwand.report.CompositeParagraph;
+import hdm.social.media.pinnwand.report.HTMLReportWriter;
 import hdm.social.media.pinnwand.report.NutzerReport;
 import hdm.social.media.pinnwand.report.Report;
 import hdm.social.media.pinnwand.report.Row;
@@ -82,7 +83,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	   * @param c das Kundenobjekt bzgl. dessen der Report erstellt werden soll.
 	   * @return der fertige Report
 	   */
-	  public BeitragReport createBeitragReport(
+	  public String createBeitragReport(
 	      Beitrag b) throws IllegalArgumentException {
 
 	    if (this.getPinnwandVerwaltung() == null)
@@ -166,105 +167,116 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	      accountRow.addColumn(new Column(String.valueOf(beitrag.getKommentarListe().size())));
 
 	      // und schließlich die Zeile dem Report hinzufügen.
-	      result.addRow(accountRow);
+	      result.addRow(accountRow); 
 	    }
-
+	    
+	    HTMLReportWriter writer = new HTMLReportWriter();
+	    writer.process(result);
 	    /*
 	     * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
 	     */
-	    return result;
+	    return writer.getReportText();
 	  }
 	  
 	  
-	  /**
-	   * Erstellen von <code>AllAccountsOfCustomerReport</code>-Objekten.
-	   * 
-	   * @param c das Kundenobjekt bzgl. dessen der Report erstellt werden soll.
-	   * @return der fertige Report
-	   */
-	  public NutzerReport createNutzerReport(
-	      Nutzer n) throws IllegalArgumentException {
-
-	    if (this.getPinnwandVerwaltung() == null)
-	      return null;
-
-	    /*
-	     * Zunächst legen wir uns einen leeren Report an.
-	     */
-	    NutzerReport result = new NutzerReport();
-
-	    // Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-	    result.setTitle("Alle Informationen eines Nutzer");
-
-
-	    /*
-	     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
-	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
-	     */
-	    result.setCreated(new Date());
-
-	    /*
-	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
-	     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
-	     * die Verwendung von CompositeParagraph.
-	     */
-	    CompositeParagraph header = new CompositeParagraph();
-
-	    // Name und Vorname des Kunden aufnehmen
-	    header.addSubParagraph(new SimpleParagraph(n.getName() + ", "
-	        + n.getVorname()));
-
-	    // Kundennummer aufnehmen
-	    header.addSubParagraph(new SimpleParagraph("Email:" + n.getEmail()));
-
-	    // Hinzufügen der zusammengestellten Kopfdaten zu dem Report
-	    result.setHeaderData(header);
-
-	    /*
-	     * Ab hier erfolgt ein zeilenweises Hinzufügen von Konto-Informationen.
-	     */
-	    
-	    /*
-	     * Zunächst legen wir eine Kopfzeile für die Konto-Tabelle an.
-	     */
-	    Row headline = new Row();
-
-	    /*
-	     * Wir wollen Zeilen mit 2 Spalten in der Tabelle erzeugen. In die erste
-	     * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
-	     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
-	     * Überschriften ab.
-	     */
-	    headline.addColumn(new Column("Abonnentenanzahl"));
-	    headline.addColumn(new Column("Beitragsanzahl"));
-	    headline.addColumn(new Column("Likes bekommen"));
-	    headline.addColumn(new Column("Likes gegeben"));
-
-	    // Hinzufügen der Kopfzeile
-	    result.addRow(headline);
-	    
-
-	    /*
-	     * Nun werden sämtliche Konten des Kunden ausgelesen und deren Kto.-Nr. und
-	     * Kontostand sukzessive in die Tabelle eingetragen.
-	     */
-	    
-	    Row accountRow = new Row();
-	    
-	    accountRow.addColumn(new Column(String.valueOf(n.getAbonnentenListe().size())));
-	    accountRow.addColumn(new Column(String.valueOf(n.getPinnwand().getBeitraege().size())));
-	    int likeAnzahl = 0;
-	    for (Beitrag beitrag : n.getPinnwand().getBeitraege()) {
-	      likeAnzahl += beitrag.getLikeList().size();
-	    }
-	    accountRow.addColumn(new Column(String.valueOf(likeAnzahl)));
-	    accountRow.addColumn(new Column(String.valueOf(this.administration.getLikeCountByNutzer(n))));
 	
-	    // und schließlich die Zeile dem Report hinzufügen.
-	    result.addRow(accountRow);
-	    /*
-	     * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
-	     */
-	    return result;
-	  }
+
+	@Override
+	public String CreateNutzerReport(Nutzer n) throws IllegalArgumentException {
+
+		if (this.getPinnwandVerwaltung() == null)
+		      return null;
+
+		    /*
+		     * Zunächst legen wir uns einen leeren Report an.
+		     */
+		    NutzerReport result = new NutzerReport();
+
+		    // Jeder Report hat einen Titel (Bezeichnung / Überschrift).
+		    result.setTitle("Alle Informationen eines Nutzer");
+
+
+		    /*
+		     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+		     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+		     */
+		    result.setCreated(new Date());
+
+		    /*
+		     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+		     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
+		     * die Verwendung von CompositeParagraph.
+		     */
+		    CompositeParagraph header = new CompositeParagraph();
+
+		    // Name und Vorname des Kunden aufnehmen
+		    header.addSubParagraph(new SimpleParagraph(n.getName() + ", "
+		        + n.getVorname()));
+
+		    // Kundennummer aufnehmen
+		    header.addSubParagraph(new SimpleParagraph("Email:" + n.getEmail()));
+
+		    // Hinzufügen der zusammengestellten Kopfdaten zu dem Report
+		    result.setHeaderData(header);
+
+		    /*
+		     * Ab hier erfolgt ein zeilenweises Hinzufügen von Konto-Informationen.
+		     */
+		    
+		    /*
+		     * Zunächst legen wir eine Kopfzeile für die Konto-Tabelle an.
+		     */
+		    Row headline = new Row();
+
+		    /*
+		     * Wir wollen Zeilen mit 2 Spalten in der Tabelle erzeugen. In die erste
+		     * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
+		     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
+		     * Überschriften ab.
+		     */
+		    headline.addColumn(new Column("Abonnentenanzahl"));
+		    headline.addColumn(new Column("Beitragsanzahl"));
+		    headline.addColumn(new Column("Likes bekommen"));
+		    headline.addColumn(new Column("Likes gegeben"));
+
+		    // Hinzufügen der Kopfzeile
+		    result.addRow(headline);
+		    
+
+		    /*
+		     * Nun werden sämtliche Konten des Kunden ausgelesen und deren Kto.-Nr. und
+		     * Kontostand sukzessive in die Tabelle eingetragen.
+		     */
+		    
+		    Row accountRow = new Row();
+		    if(n.getAbonnentenListe() != null)	accountRow.addColumn(new Column(String.valueOf(n.getAbonnentenListe().size())));
+		    else accountRow.addColumn(new Column("0"));
+		    
+		    if(n.getPinnwand().getBeitraege() != null) accountRow.addColumn(new Column(String.valueOf(n.getPinnwand().getBeitraege().size())));
+		    else accountRow.addColumn(new Column("0"));
+		    
+		    int likeAnzahl = 0;
+		    if(n.getPinnwand().getBeitraege() != null){
+		    	
+		    for (Beitrag beitrag : n.getPinnwand().getBeitraege()) {
+			    if(beitrag.getLikeList() != null)
+			    likeAnzahl += beitrag.getLikeList().size();
+		    }
+		    }
+		    
+		    accountRow.addColumn(new Column(String.valueOf(likeAnzahl)));
+		    accountRow.addColumn(new Column(String.valueOf(this.administration.getLikeCountByNutzer(n))));
+		
+		    // und schließlich die Zeile dem Report hinzufügen.
+		    result.addRow(accountRow);
+		    HTMLReportWriter writer = new HTMLReportWriter();
+		    writer.process(result);
+		    /*
+		     * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
+		     */
+		    return writer.getReportText();
+	}
+
+	
+	
 }

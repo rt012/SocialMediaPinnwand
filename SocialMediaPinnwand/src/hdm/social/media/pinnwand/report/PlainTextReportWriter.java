@@ -51,21 +51,21 @@ public class PlainTextReportWriter extends ReportWriter {
    * 
    * @param r der zu prozessierende Report
    */
-  public void process(AllAccountsOfCustomerReport r) {
+  /*public String process(SimpleReport r) {
 
     // Zunächst löschen wir das Ergebnis vorhergehender Prozessierungen.
     this.resetReportText();
 
-    /*
+    
      * In diesen Buffer schreiben wir während der Prozessierung sukzessive
      * unsere Ergebnisse.
-     */
+     
     StringBuffer result = new StringBuffer();
 
-    /*
+    
      * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
      * ausgelesen und in Text-Form übersetzt.
-     */
+     
     result.append("*** " + r.getTitle() + " ***\n\n");
     result.append(r.getHeaderData() + "\n");
     result.append("Erstellt am: " + r.getCreated().toString() + "\n\n");
@@ -82,13 +82,13 @@ public class PlainTextReportWriter extends ReportWriter {
     result.append("\n");
     result.append(r.getImprint() + "\n");
 
-    /*
+    
      * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
      * reportText-Variable zugewiesen. Dadurch wird es möglich, anschließend das
      * Ergebnis mittels getReportText() auszulesen.
-     */
+     
     this.reportText = result.toString();
-  }
+  }*/
 
   /**
    * Prozessieren des übergebenen Reports und Ablage im Zielformat. Ein Auslesen
@@ -96,21 +96,21 @@ public class PlainTextReportWriter extends ReportWriter {
    * 
    * @param r der zu prozessierende Report
    */
-  public void process(AllAccountsOfAllCustomersReport r) {
+ /* public void process(NutzerReport r) {
 
     // Zunächst löschen wir das Ergebnis vorhergehender Prozessierungen.
     this.resetReportText();
 
-    /*
+    
      * In diesen Buffer schreiben wir während der Prozessierung sukzessive
      * unsere Ergebnisse.
-     */
+     
     StringBuffer result = new StringBuffer();
 
-    /*
+    
      * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
      * ausgelesen und in Text-Form übersetzt.
-     */
+     
     result.append("*** " + r.getTitle() + " ***\n\n");
 
     if (r.getHeaderData() != null)
@@ -118,18 +118,18 @@ public class PlainTextReportWriter extends ReportWriter {
 
     result.append("Erstellt am: " + r.getCreated().toString() + "\n\n");
 
-    /*
+    
      * Da AllAccountsOfAllCustomersReport ein CompositeReport ist, enthält r
      * eine Menge von Teil-Reports des Typs AllAccountsOfCustomerReport. Für
      * jeden dieser Teil-Reports rufen wir processAllAccountsOfCustomerReport
      * auf. Das Ergebnis des jew. Aufrufs fügen wir dem Buffer hinzu.
-     */
+     
     for (int i = 0; i < r.getNumSubReports(); i++) {
-      /*
+      
        * AllAccountsOfCustomerReport wird als Typ der SubReports vorausgesetzt.
        * Sollte dies in einer erweiterten Form des Projekts nicht mehr gelten,
        * so müsste hier eine detailliertere Implementierung erfolgen.
-       */
+       
       AllAccountsOfCustomerReport subReport = (AllAccountsOfCustomerReport) r
           .getSubReportAt(i);
 
@@ -138,21 +138,21 @@ public class PlainTextReportWriter extends ReportWriter {
       // Ein Form Feed wäre hier statt der 5 Leerzeilen auch denkbar...
       result.append(this.reportText + "\n\n\n\n\n");
 
-      /*
+      
        * Nach jeder Übersetzung eines Teilreports und anschließendem Auslesen
        * sollte die Ergebnisvariable zurückgesetzt werden.
-       */
+       
       this.resetReportText();
     }
 
-    /*
+    
      * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
      * reportText-Variable zugewiesen. Dadurch wird es möglich, anschließend das
      * Ergebnis mittels getReportText() auszulesen.
-     */
+     
     this.reportText = result.toString();
   }
-
+*/
   /**
    * Auslesen des Ergebnisses der zuletzt aufgerufenen Prozessierungsmethode.
    * 
@@ -161,4 +161,10 @@ public class PlainTextReportWriter extends ReportWriter {
   public String getReportText() {
     return this.getHeader() + this.reportText + this.getTrailer();
   }
+
+@Override
+public String process(SimpleReport r) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

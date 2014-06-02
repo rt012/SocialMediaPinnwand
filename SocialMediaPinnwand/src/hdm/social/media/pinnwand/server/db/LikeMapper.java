@@ -238,7 +238,7 @@ public class LikeMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(`like_ID`) FROM `like` WHERE `nutzer_ID` = " + n.getId());
 			if(rs.next()) {
-				anzahl = rs.getInt(0);
+				anzahl = rs.getInt(1);
 			}
 			return anzahl;
 		}

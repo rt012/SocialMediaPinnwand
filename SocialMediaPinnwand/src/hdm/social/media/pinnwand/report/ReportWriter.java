@@ -23,14 +23,8 @@ public abstract class ReportWriter {
    * 
    * @param r der zu übersetzende Report
    */
-  public abstract void process(AllAccountsOfCustomerReport r);
+  public abstract String process(SimpleReport r);
 
-  /**
-   * Übersetzen eines <code>AllAccountsOfAllCustomersReport</code> in das
-   * Zielformat.
-   * 
-   * @param r der zu übersetzende Report
-   */
-  public abstract void process(AllAccountsOfAllCustomersReport r);
+ 
 
 }

@@ -8,6 +8,7 @@ import hdm.social.media.pinnwand.client.gui.AbonnementCustomDialog;
 import hdm.social.media.pinnwand.client.gui.CustomOracle;
 import hdm.social.media.pinnwand.client.gui.CustomSuggest;
 import hdm.social.media.pinnwand.client.gui.LoginCustomDialog;
+import hdm.social.media.pinnwand.client.gui.ReportRootPanel;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Abo;
@@ -15,6 +16,8 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
+import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -34,6 +37,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -84,7 +88,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 		        loginInfo = result;
 		        if(loginInfo.isLoggedIn()) {
 		        	nutzerInDatenbank(result);
-		        	loadSocialMediaPinnwand();
+		        	//loadSocialMediaPinnwand();
+		        	loadTabControl();
 		        } else {
 		        	loadLogin();
 		        }
@@ -92,7 +97,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 	    });	
 		
 	}	
-
+		
 	/**
 	 * Prüft anhand der Email-Adresse ob der angemeldete Nutzer bereits in der Datenbank ist
 	 * 
@@ -167,12 +172,55 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 	}
 	
+	public void loadTabControl(){
+		 // Create a tab bar with three items.
+		final SplitLayoutPanel splitMerge = new SplitLayoutPanel();
+	    final TabBar bar = new TabBar();
+	    bar.addTab("Social-Media-Pinnwand");
+	    bar.addTab("Report-Generator");
+
+	    // Hook up a tab listener to do something when the user selects a tab.
+	    bar.addSelectionHandler(new SelectionHandler<Integer>() {
+	      public void onSelection(SelectionEvent<Integer> event) {
+	        // Let the user know what they just did.
+	        switch(event.getSelectedItem().intValue()){
+	        case 0:
+	        	RootLayoutPanel.get().clear();
+	        	splitMerge.clear();
+	        	
+	        	SplitLayoutPanel split = loadSocialMediaPinnwand();
+	        	
+	        	splitMerge.addNorth(bar, 32);
+	        	splitMerge.add(split);
+	        	
+	        	RootLayoutPanel.get().add(splitMerge);
+
+	        	break;
+	        case 1:
+	        	RootLayoutPanel.get().clear();
+	        	splitMerge.clear();
+	        	
+	        	splitMerge.addNorth(bar, 32);
+	        	splitMerge.add(new ReportRootPanel());
+	        	
+	        	RootLayoutPanel.get().add(splitMerge);
+	        	break;
+	        }
+	      }
+	    });
+	    
+	    bar.selectTab(0); //Starte mit Social Media Pinnwand
+	    
+
+	}
+	
+	
 	/**
 	 * Lade die Widget Elemente der GWT Applikation
 	 * 
 	 * @author Eric Schmidt
 	 */
-	public void loadSocialMediaPinnwand(){
+	public SplitLayoutPanel loadSocialMediaPinnwand(){
 		
 		SplitLayoutPanel split = new SplitLayoutPanel();
 		split.setStyleName("rootSplitPanel");
@@ -263,7 +311,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 		/**
 		 * Hinzufügen der Panels dem Rootpanel
 		 */
-		 rp.add(split);
+		return split;
+		 //rp.add(split);
 	}
 	
 	/**

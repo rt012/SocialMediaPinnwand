@@ -17,9 +17,19 @@
 <servlet-class> hdm.social.media.pinnwand.server.PinnwandAdministrationImpl </servlet-class>
 </servlet>
 
-<servlet-mapping>
+ <servlet-mapping>
 <servlet-name>SocialMediaPinnwandServlet</servlet-name>
 <url-pattern>/socialmediapinnwand/pinnwandadministration</url-pattern>
+</servlet-mapping>
+  
+  <servlet>
+<servlet-name>ReportGeneratorServlet</servlet-name>
+<servlet-class> hdm.social.media.pinnwand.server.ReportGeneratorImpl </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>ReportGeneratorServlet</servlet-name>
+<url-pattern>/socialmediapinnwand/reportgenerator</url-pattern>
 </servlet-mapping>
  <!-- <security-constraint>
         <web-resource-collection>

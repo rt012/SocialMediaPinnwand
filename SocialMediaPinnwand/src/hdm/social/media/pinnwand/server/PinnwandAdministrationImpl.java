@@ -28,6 +28,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 public PinnwandAdministrationImpl() throws IllegalArgumentException {}
 
 public void init() throws IllegalArgumentException {}
+
 @Override
 public Nutzer createNutzer(Nutzer n) throws IllegalArgumentException {
 	return NutzerMapper.nutzerMapper().insertNutzer(n);

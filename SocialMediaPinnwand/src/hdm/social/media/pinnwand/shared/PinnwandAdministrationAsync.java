@@ -75,4 +75,7 @@ public interface PinnwandAdministrationAsync {
 	void getAboByNutzer(int id, AsyncCallback<ArrayList<Abo>> callback);
 	
 	void getLikeCountByNutzer(Nutzer n, AsyncCallback<Integer> callback);
+
+	void checkIfLiked (Nutzer n, Beitrag b,
+			AsyncCallback<Boolean> callbackBoolean);
 }

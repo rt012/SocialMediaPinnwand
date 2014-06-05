@@ -157,6 +157,12 @@ public void deleteLike(Like l) throws IllegalArgumentException {
 // TODO Auto-generated method stub
 
 }
+@Override
+public Boolean checkIfLiked(Nutzer n, Beitrag b)
+		throws IllegalArgumentException {
+
+	return LikeMapper.likeMapper().checIfLiked(n, b);
+}
 
 @Override
 public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b)
@@ -218,5 +224,7 @@ public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
 public int getLikeCountByNutzer(Nutzer n) throws IllegalArgumentException {
 	return LikeMapper.likeMapper().getLikeCountByNutzer(n);
 }
+
+
 }
 

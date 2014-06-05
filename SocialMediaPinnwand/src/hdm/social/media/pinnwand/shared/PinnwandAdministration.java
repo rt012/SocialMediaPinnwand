@@ -231,6 +231,14 @@ public interface PinnwandAdministration extends RemoteService{
   public void deleteLike(Like l) throws IllegalArgumentException;
  
   /**
+   * Checkt ob ein Beitrag geliked wurde
+   *
+   * @param n Nutzer , b Beitrag
+   * @return Boolean
+   * @throws IllegalArgumentException
+   */
+  public Boolean checkIfLiked (Nutzer n, Beitrag b) throws IllegalArgumentException;
+  /**
    * Gebe alle Likes je Beitrag aus.
    *
    * @param b Beitrag

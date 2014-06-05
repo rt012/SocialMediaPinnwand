@@ -2,13 +2,10 @@ package hdm.social.media.pinnwand.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import hdm.social.media.pinnwand.client.gui.AbonnementCustomDialog;
 import hdm.social.media.pinnwand.client.gui.CustomOracle;
 import hdm.social.media.pinnwand.client.gui.CustomSuggest;
-import hdm.social.media.pinnwand.client.gui.LoginCustomDialog;
-import hdm.social.media.pinnwand.client.gui.ReportRootPanel;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Abo;
@@ -16,40 +13,30 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
-import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
-import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class SocialMediaPinnwand implements EntryPoint {
 	
-//	private PinnwandBeitrag panel_PinnwandBeitrag;
-	
-	private LoginInfo loginInfo = null;
+	NutzerVerwaltung nutzerVerwaltung = null;
 	private Nutzer aktuellerNutzer = null;
 	
 	private final Label pinnwandName = new Label("");
@@ -85,13 +72,13 @@ public class SocialMediaPinnwand implements EntryPoint {
 			public void onFailure(Throwable error) {}
 
 			public void onSuccess(LoginInfo result) {
-		        loginInfo = result;
+		        LoginInfo loginInfo = result;
+		        nutzerVerwaltung = new NutzerVerwaltung(loginInfo);
 		        if(loginInfo.isLoggedIn()) {
-		        	nutzerInDatenbank(result);
-		        	//loadSocialMediaPinnwand();
-		        	loadTabControl();
+		        	nutzerVerwaltung.nutzerInDatenbank(loginInfo);
+		        	loadSocialMediaPinnwand();
 		        } else {
-		        	loadLogin();
+		        	nutzerVerwaltung.loadLogin();
 		        }
 			}
 	    });	
@@ -99,128 +86,11 @@ public class SocialMediaPinnwand implements EntryPoint {
 	}	
 		
 	/**
-	 * Prüft anhand der Email-Adresse ob der angemeldete Nutzer bereits in der Datenbank ist
-	 * 
-	 * @author Eric Schmidt
-	 */
-	public void nutzerInDatenbank(final LoginInfo googleNutzer){
-		//getNutzerByEmail wäre hier schöner!
-		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-			 public void onFailure
-			 (Throwable caught) {
-			 // TODO: Do something with errors.
-			 }
-			 
-			@Override
-			public void onSuccess(ArrayList<Nutzer> result) {
-				for (Nutzer n : result){
-					if (n.getEmail() == googleNutzer.getEmailAddress()){
-						aktuellerNutzer = n;
-					}
-				}
-				if (aktuellerNutzer == null){
-					createNutzer(googleNutzer);
-				}
-			}
-		});
-	}
-
-	/**
-	 * Legt den Nutzer in der Datenbank an
-	 * 
-	 * @author Eric Schmidt 
-	 */
-	public void createNutzer(final LoginInfo googleNutzer){
-		final Nutzer nutzer = new Nutzer();
-		nutzer.setEmail(googleNutzer.getEmailAddress());
-		nutzer.setErstellungsZeitpunkt(new Date());
-		
-		
-		/**
-		 * Fordert den Nutzer auf Vor-, Nachname und Nickname einzugeben,
-		 * da diese Information nicht über die Google API bezogen werden kann
-		 * bzw. geändert werden soll
-		 * 
-		 * @author Eric Schmidt
-		 */
-		final LoginCustomDialog dialog = new LoginCustomDialog(googleNutzer.getNickname());
-		DialogBox dlb = dialog;
-		dlb.center();
-		
-		dlb.addCloseHandler(new CloseHandler<PopupPanel>(){
-			@Override
-			public void onClose(CloseEvent<PopupPanel> event) {
-				nutzer.setVorname(dialog.getVorname());
-				nutzer.setName(dialog.getNachname());
-				nutzer.setNickname(dialog.getNickname());
-				PinnwandAdministration.createNutzer(nutzer, new AsyncCallback<Nutzer>(){
-					@Override
-					public void onFailure(Throwable caught) {}
-
-					@Override
-					public void onSuccess(Nutzer result) {
-						aktuellerNutzer = result;	
-						/**
-						 * Update die SuggestBox mit neuen Nutzer
-						 */
-						fillSuggestenBox();
-					}
-					
-				});
-			}
-		});
-
-	}
-	
-	public void loadTabControl(){
-		 // Create a tab bar with three items.
-		final SplitLayoutPanel splitMerge = new SplitLayoutPanel();
-	    final TabBar bar = new TabBar();
-	    bar.addTab("Social-Media-Pinnwand");
-	    bar.addTab("Report-Generator");
-
-	    // Hook up a tab listener to do something when the user selects a tab.
-	    bar.addSelectionHandler(new SelectionHandler<Integer>() {
-	      public void onSelection(SelectionEvent<Integer> event) {
-	        // Let the user know what they just did.
-	        switch(event.getSelectedItem().intValue()){
-	        case 0:
-	        	RootLayoutPanel.get().clear();
-	        	splitMerge.clear();
-	        	
-	        	SplitLayoutPanel split = loadSocialMediaPinnwand();
-	        	
-	        	splitMerge.addNorth(bar, 32);
-	        	splitMerge.add(split);
-	        	
-	        	RootLayoutPanel.get().add(splitMerge);
-
-	        	break;
-	        case 1:
-	        	RootLayoutPanel.get().clear();
-	        	splitMerge.clear();
-	        	
-	        	splitMerge.addNorth(bar, 32);
-	        	splitMerge.add(new ReportRootPanel());
-	        	
-	        	RootLayoutPanel.get().add(splitMerge);
-	        	break;
-	        }
-	      }
-	    });
-	    
-	    bar.selectTab(0); //Starte mit Social Media Pinnwand
-	    
-
-	}
-	
-	
-	/**
 	 * Lade die Widget Elemente der GWT Applikation
 	 * 
 	 * @author Eric Schmidt
 	 */
-	public SplitLayoutPanel loadSocialMediaPinnwand(){
+	public void loadSocialMediaPinnwand(){
 		
 		SplitLayoutPanel split = new SplitLayoutPanel();
 		split.setStyleName("rootSplitPanel");
@@ -255,11 +125,11 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 */
 		SuggestBoxPinnwandSuche.setStyleName("SuggestBoxPinnwandSuche");
 		Button b = new Button("LogOut Temp");
-		b.addClickListener(new ClickListener(){
+		b.addClickHandler(new ClickHandler(){
 
 			@Override
-			public void onClick(Widget sender) {
-				 loadLogout();
+			public void onClick(ClickEvent event) {
+				nutzerVerwaltung.loadLogout();
 				
 			}
 			
@@ -311,8 +181,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		/**
 		 * Hinzufügen der Panels dem Rootpanel
 		 */
-		return split;
-		 //rp.add(split);
+		rp.add(split);
 	}
 	
 	/**
@@ -379,23 +248,5 @@ public class SocialMediaPinnwand implements EntryPoint {
 		}
 	}
 	
-	/**
-	 * Sollte der User nicht bei Google angemeldet sein, 
-	 * verlinke auf login Seite von Google
-	 * 
-	 * @author Eric Schmidt
-	 */
-	  private void loadLogin() {	  
-		  Window.Location.assign(loginInfo.getLoginUrl());
-	  }
-	  
-	  /**
-	   * Logge den aktuellen Nutzer aus und verlinke auf das Login Fenster
-	   * 
-	   * @author Eric Schmidt
-	   */
-	  private void loadLogout() {	  
-		  Window.Location.assign(loginInfo.getLogoutUrl());
-	  }
 }
 	

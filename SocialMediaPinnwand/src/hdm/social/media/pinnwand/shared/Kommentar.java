@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 
-public class Kommentar extends Document implements IsSerializable {
+public class Kommentar extends Document implements IsSerializable, Comparable<Kommentar> {
 /**
  * Beitrag welcher einem Kommentar zugewiesen wird 
  */
@@ -59,4 +59,23 @@ public class Kommentar extends Document implements IsSerializable {
 	}
 	
 	
+	/**
+	 * Notwendig um Arraylisten ordnen zu können
+	 * Regulär würden Kommentar von ältestem zu neuestem geordnet werden, daher umdrehen der Rückgabewerte
+	 */	
+@Override
+public int compareTo(Kommentar k) {
+	if(this.getErstellungsZeitpunkt().compareTo(k.getErstellungsZeitpunkt())==1){
+		return -1;
+	}
+	if(this.getErstellungsZeitpunkt().compareTo(k.getErstellungsZeitpunkt())==-1){
+		return 1;
+	}
+	else{
+		return this.getErstellungsZeitpunkt().compareTo(k.getErstellungsZeitpunkt());
+		}
+	}
 }
+	
+	
+

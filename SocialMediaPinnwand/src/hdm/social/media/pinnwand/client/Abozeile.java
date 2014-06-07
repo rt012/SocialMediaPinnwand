@@ -2,10 +2,7 @@ package hdm.social.media.pinnwand.client;
 
 import hdm.social.media.pinnwand.shared.Abo;
 import hdm.social.media.pinnwand.shared.Nutzer;
-import hdm.social.media.pinnwand.client.PinnwandAdministration;
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
-import hdm.social.media.pinnwand.client.PinnwandAdministrationAsync;
-import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,6 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 
 public class Abozeile extends HorizontalPanel{
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
+	private SocialMediaPinnwand s=null;
 	private Label aboname;
 	private Button buttonAboLoeschen;
 	
@@ -28,10 +26,14 @@ public class Abozeile extends HorizontalPanel{
 	 
 		@Override
 		public void onSuccess(Void result) {
+			s.FlexTableAbonniertePinnwaende.clear();
+			s.FlexTableAbonniertePinnwaende.refresh(s.getAktuellerNutzer());
 		}
 	 };
 	
-	public Abozeile(final Abo a){
+	public Abozeile(final Abo a, final SocialMediaPinnwand s){
+		
+		this.s=s;
 		
 		aboname = new Label(a.getLieferant().getVorname()+" "+a.getLieferant().getName());
 		aboname.setStyleName("aboname");
@@ -44,6 +46,7 @@ public class Abozeile extends HorizontalPanel{
 		buttonAboLoeschen.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteAbo(a, callbackVoid);
+				s.FlexTableBeitraege.refresh(s.getAktuellerNutzer());
 			}
 		});		
 	}

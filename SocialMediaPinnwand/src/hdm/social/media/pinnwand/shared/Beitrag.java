@@ -1,5 +1,6 @@
 package hdm.social.media.pinnwand.shared;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -11,7 +12,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  * @author Blessing & Tessier
  */
-public class Beitrag extends Document implements IsSerializable{
+public class Beitrag extends Document implements IsSerializable , Comparable<Beitrag>{
 
 	private static final long serialVersionUID = 1L;
 	/**
@@ -57,6 +58,7 @@ public class Beitrag extends Document implements IsSerializable{
 	 * 
 	 */
 	public ArrayList<Kommentar> getKommentarListe() {
+		Collections.sort(kommentarListe);
 		return kommentarListe;
 	}
 	/**
@@ -100,7 +102,23 @@ public class Beitrag extends Document implements IsSerializable{
 	public String toString() {
 		return "Erstellungszeitpunnkt" + getErstellungsZeitpunkt() + "Beitrag:" + getInhalt() + "\n Autor:" + pinnwand.getNutzer() + "\n Benutzer die diesen Beitrag geliked haben:"+ getAllLikeNutzer();
 	}
-	
-	
-	
+
+	/**
+	 * Notwendig um Arraylisten ordnen zu können
+	 * Regulär würden Beiträge von ältestem zu neuestem geordnet werden, daher umdrehen der Rückgabewerte
+	 */
+	@Override
+	public int compareTo(Beitrag b) {
+		if(this.getErstellungsZeitpunkt().compareTo(b.getErstellungsZeitpunkt())==1){
+			return -1;
+		}
+		if(this.getErstellungsZeitpunkt().compareTo(b.getErstellungsZeitpunkt())==-1){
+			return 1;
+		}
+		else{
+			return this.getErstellungsZeitpunkt().compareTo(b.getErstellungsZeitpunkt());
+			}
+		}
 }
+	
+

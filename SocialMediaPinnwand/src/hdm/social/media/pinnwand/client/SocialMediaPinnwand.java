@@ -61,6 +61,10 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 	//Aktiver/Aktueller Nutzer
 	private Nutzer aktuellerNutzer = null;
+	
+	public Nutzer getAktuellerNutzer(){
+		return aktuellerNutzer;
+	}
 
 	//Verweis auf CustomOracle -> Verwaltungder Suggestionbox um Nutzerobjekte zu speichern
 
@@ -68,11 +72,11 @@ public class SocialMediaPinnwand implements EntryPoint {
 	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
 
 	//private PinnwandBeitrag panel_PinnwandBeitrag;
-	final FlexTable FlexTableBeitraege = new FlexTable();
+	ShowBeitraege FlexTableBeitraege;
 	final Label pinnwandName = new Label("");
 
 	// Flextable für die Abos
-	final FlexTable FlexTableAbonniertePinnwaende = new FlexTable();
+	Abolist FlexTableAbonniertePinnwaende;
 	
 	/**
 	 * The message displayed to the user when the server cannot be reached or
@@ -199,15 +203,16 @@ public class SocialMediaPinnwand implements EntryPoint {
 		SplitLayoutPanel split = new SplitLayoutPanel();
 		split.setStyleName("rootSplitPanel");
 		
-		SplitLayoutPanel vsplit = new SplitLayoutPanel();	
+		SplitLayoutPanel vsplit = new SplitLayoutPanel();
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		//Anpassen der rootGr��e anhand von Fenstergr��e
-		int rootWidthSize = rp.getOffsetWidth();
-		int rootHeightSize = rp.getOffsetHeight();
-		
+				
 		VerticalPanel west = new VerticalPanel();
+		west.setStyleName("layout_west");
 		HorizontalPanel east_up = new HorizontalPanel();
+		east_up.setStyleName("layout_east_up");
 		HorizontalPanel east_down = new HorizontalPanel();
+		east_down.setStyleName("layout_east_down");
 		
 		
 		/**
@@ -225,13 +230,14 @@ public class SocialMediaPinnwand implements EntryPoint {
 		west.add(eigenePinnwand);
 		eigenePinnwand.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event){
-				refresh(aktuellerNutzer);
+				FlexTableBeitraege.refresh(aktuellerNutzer);
 			}
 		});
 		
 		
 		//Logout Button
 		Button b = new Button("LogOut Temp");
+		b.setStyleName("buttonLogout");
 		b.addClickListener(new ClickListener(){
 
 			@Override
@@ -244,7 +250,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 		west.add(b);
 		
 		
-		
+		Label pinnwandSuche = new Label("Pinnwand suchen:");
+		pinnwandSuche.setStyleName("pinnwandSuche");
+		west.add(pinnwandSuche);
 		
 		/**
 		 * Block f�r SuggestBox
@@ -267,10 +275,13 @@ public class SocialMediaPinnwand implements EntryPoint {
 		/**
 		 * Anzeigen einer Liste mit den bereits abonnierten Pinnwänden
 		 */
-		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
+
+		FlexTableAbonniertePinnwaende=new Abolist(aktuellerNutzer, this);
+		FlexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");	
 		west.add(FlexTableAbonniertePinnwaende);
 		
-		fillAboList();
+		
+
 		
 		/**
 		 * Widgets der rechten Seite 
@@ -278,6 +289,10 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 */
 		 
 		//Textfeld f�r Beitrag
+		
+		Label beitragSchreiben = new Label("Beitrag schreiben:");
+		beitragSchreiben.setStyleName("beitragSchreiben");
+		east_up.add(beitragSchreiben);
 
 		final TextArea TextAreaBeitragVerfassen = new TextArea();
 		TextAreaBeitragVerfassen.setStyleName("TextAreaBeitragVerfassen");
@@ -315,7 +330,6 @@ public class SocialMediaPinnwand implements EntryPoint {
 							 
 							@Override
 							public void onSuccess(Void result) {
-								refresh(aktuellerNutzer);
 							}
 						});
 					}
@@ -333,18 +347,19 @@ public class SocialMediaPinnwand implements EntryPoint {
 		LabelPinnwandInformation.setStyleName("LabelPinnwandInformation");
 		east_down.add(LabelPinnwandInformation);
 		
+		FlexTableBeitraege = new ShowBeitraege(aktuellerNutzer, this); 
 		FlexTableBeitraege.setStyleName("FlexTableBeitraege");
 		east_down.add(FlexTableBeitraege);
-		printOutBeitragJeNutzer(aktuellerNutzer);
 
 		/**
 		 * Hinzuf�gen der Panels dem Rootpanel
 		 */
 		
-		split.addWest(west, (rootWidthSize/2));
-		split.addEast(vsplit, (rootWidthSize/2));
-		vsplit.addNorth(east_up, (rootHeightSize/2));
-		vsplit.addSouth(east_down, (rootHeightSize/2));
+		int rootHeightSize = rp.getOffsetHeight();
+		split.addWest(west, 300);
+		split.addEast(vsplit, 700);
+		vsplit.addNorth(east_up, rootHeightSize*3/10);
+		vsplit.addSouth(east_down, rootHeightSize*7/10);
 		rp.add(split);
 	};
 
@@ -405,7 +420,6 @@ public class SocialMediaPinnwand implements EntryPoint {
 						DialogBox dlg = new AbonnementCustomDialog("Abonnieren", "Pinnwand von"
 					    		+ n.getVorname() + " wirklich abonnieren?", aktuellerNutzer, n);
 				        dlg.center();
-				        refresh(aktuellerNutzer);
 					}else{
 						Window.alert("Sie sind bereits eine Abonnementbeziehung mit diesem Nutzer eingegangen");
 					}
@@ -418,79 +432,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 	
 	
 	// Methode welche alle Beitr�ge ausgibt
-	public void printOutBeitragJeNutzer(Nutzer n) {
-		
-		if(n!=aktuellerNutzer){
-			PinnwandAdministration.getAllBeitragByNutzer(n, new AsyncCallback<ArrayList<Beitrag>>(){
-				public void onFailure(Throwable caught) {}
-				
-				public void onSuccess(ArrayList<Beitrag> result){
-					// Hilfvariable um festzuhalten in welcher Row man sich befindet
-					int aktuelleRow = 0;
-					if(result!= null){
-						for(int i= 0; i < result.size(); i++){
-							// Hinzuf�gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugef�gt
-							FlexTableBeitraege.setWidget(
-									aktuelleRow,
-									0,
-									new PinnwandBeitrag(result.get(i).getInhalt(),
-														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
-														+ result.get(i).getLikeList().size()+" Personen gefaellt das.",
-														result.get(i),aktuellerNutzer ));
-							// nachdem ein Beitrag der FlexTable hinzugef�gt wurde wird die aktuelle Zeile um 1 erh�ht.
-							aktuelleRow += 1;
-							// Nun werden alle Kommentare des zuvor hinzugef�gten Beitrages der FlexTable hinzugef�gt
-							
-							for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-								FlexTableBeitraege.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
-								aktuelleRow += 1;
-							}
-						}
-					}
-				}
-			});
-		}
-		
-		else{
-			PinnwandAdministration.getAllBeitragByAktuellerNutzer(n, new AsyncCallback<ArrayList<Beitrag>>(){
-				public void onFailure(Throwable caught) {}
-				
-				public void onSuccess(ArrayList<Beitrag> result){
-					// Hilfvariable um festzuhalten in welcher Row man sich befindet
-					int aktuelleRow = 0;
-					if(result != null){
-						for(int i= 0; i < result.size(); i++){
-							// Hinzuf�gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugef�gt
-							
-							//Da Likelist evtl null ist muss hier die Abfrage ausgelagert werden
-							int likelistsize=0;
-							if (result.get(i).getLikeList() != null){
-								likelistsize = result.get(i).getLikeList().size();
-							}
-														
-							FlexTableBeitraege.setWidget(
-									aktuelleRow,
-									0,
-									new PinnwandBeitrag(result.get(i).getInhalt(),
-														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
-														+ likelistsize +" Personen gefaellt das.",
-														result.get(i),aktuellerNutzer ));
-							// nachdem ein Beitrag der FlexTable hinzugef�gt wurde wird die aktuelle Zeile um 1 erh�ht.
-							aktuelleRow += 1;
-							// Nun werden alle Kommentare des zuvor hinzugef�gten Beitrages der FlexTable hinzugef�gt
-							if(result.get(i).getKommentarListe() != null){
-								for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-									FlexTableBeitraege.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
-									aktuelleRow += 1;
-								}
-							}
-						}
-					}
-				}
-			});
-		}
-	}
-		
+	
+	
 
 	/**
 	 * Sollte der User nicht bei Google angemeldet sein, 
@@ -511,42 +454,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		  Window.Location.assign(loginInfo.getLogoutUrl());
 	  }
 	  
-	  public void fillAboList(){
-	  PinnwandAdministration.getAboByNutzer(aktuellerNutzer.getId(), new AsyncCallback<ArrayList<Abo>>() {
-			public void onFailure
-			(Throwable caught) {
-				// TODO: DO something with errors.
-			}
-			@Override
-			public void onSuccess(final ArrayList<Abo> result) {
-				for (int i=0; i<result.size(); i++){
-					
-					final int x=i;
-					Button buttonZeigePinnwand = new Button("Zur Pinnwand");
-					buttonZeigePinnwand.setStyleName("buttonZeigePinnwand");
-					buttonZeigePinnwand.addClickHandler(new ClickHandler(){
-						public void onClick(ClickEvent event) {
-							FlexTableBeitraege.removeAllRows();
-							printOutBeitragJeNutzer(result.get(x).getLieferant());
-						}
-					});
-					
-					FlexTableAbonniertePinnwaende.setWidget(i,0, new Abozeile(result.get(i)));
-					FlexTableAbonniertePinnwaende.setWidget(i,1, buttonZeigePinnwand);
-					
-					
-					
-					
-			}}
-			
-		});
-	  }
 	  
-	  public void refresh(Nutzer n){
-		  FlexTableBeitraege.removeAllRows();
-		  printOutBeitragJeNutzer(aktuellerNutzer);
-		  fillAboList(); 
-	  }
 	  
 }
 	

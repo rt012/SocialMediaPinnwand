@@ -5,7 +5,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * Mit Hilfe dieser Klasse werden Objekte der Klasse Kommentar instanziiert. Einem Kommentar wird ein {@link Beitrag} zugewiesen
  * und wird von einem {@link Nutzer} geschrieben.
- * @author remi
+ * 
+ * @author Blessing & Tessier
  *
  */
 

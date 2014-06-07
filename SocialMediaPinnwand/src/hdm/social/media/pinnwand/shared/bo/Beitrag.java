@@ -26,17 +26,38 @@ public class Beitrag extends Document implements IsSerializable{
 	 * Pinnwand, die einer Beitragsinstanz zugeordnet ist.
 	 */
 	private Pinnwand pinnwand;
-	
+	/**
+	 * Eindeutige Identifikation eines Beitrags
+	 */
+	private int BeitragId;
+	/**
+	 * Der Nutzer (Autor) Beitrags.
+	 */
 	private Nutzer nutzer;
-	
+	/**
+	 * Methode zum Aulesen eines Nutzers 
+	 */
 	public Nutzer getNutzer() {
 		return nutzer;
 	}
-
+	/**
+	 * Methode zum Setzen eines Nutzers 
+	 */
 	public void setNutzer(Nutzer nutzer) {
 		this.nutzer = nutzer;
 	}
-
+	/**
+	 * Methode zum Aulesen der Beitrags_Id
+	 */
+	public int getBeitragId() {
+		return BeitragId;
+	}
+	/**
+	 * Methode zum Setzen der Beitrags_Id
+	 */
+	public void setBeitragId(int beitragId) {
+		this.BeitragId = beitragId;
+	}
 	/*
 	 * Auslesen einer Liste von Likes 
 	 */
@@ -94,12 +115,14 @@ public class Beitrag extends Document implements IsSerializable{
 		return likeList1;
 	}
 	/**
-	 * Repräsentiert ein Beitragsobjekt als String. 
+	 * Wandelt ein Beitragsobjekt in ein Stringobjekt um. 
 	 */
 	@Override
 	public String toString() {
 		return "Erstellungszeitpunnkt" + getErstellungsZeitpunkt() + "Beitrag:" + getInhalt() + "\n Autor:" + pinnwand.getNutzer() + "\n Benutzer die diesen Beitrag geliked haben:"+ getAllLikeNutzer();
 	}
+
+	
 	
 	
 	

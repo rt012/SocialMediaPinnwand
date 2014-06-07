@@ -214,7 +214,7 @@ public class LikeMapper {
 	    } 
 	}
 	
-	public boolean checIfLiked(Nutzer n, Beitrag b) {
+	public boolean checkIfLiked(Nutzer n, Beitrag b) {
 		Connection con = DBConnection.connection();
 		try {
 			Statement stmt = con.createStatement();

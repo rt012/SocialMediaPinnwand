@@ -83,6 +83,76 @@ public class BeitragMapper {
 	 
 	 
 	 /*
+		 * @see		getBeitragbyDate gibt einen Beitrag für ein bestimmtes Datum aus
+		 * @param 	Beitrag id, Date x
+		 * @return	Beitragobjekt
+		 */
+	 
+	public Beitrag getBeitragbyDate(Beitrag id, Date x){
+		
+		//Aufbau der DBVerbindung
+		Connection con = DBConnection.connection();
+		
+		//Versuch der Abfrage
+		try{
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery
+					("SELECT * FROM Beitrag WHERE beitrag_ID="+ id +" AND erstellung=" + x);
+				//Maximal ein Rueckgabewert da Id Primï¿½rschlï¿½ssel
+				if (rs.next()) {
+		        // Ergebnis in Beitrag- Objekt umwandeln
+		        Beitrag b = new Beitrag();
+		        b.setId(rs.getInt("beitrag_ID"));
+		        
+		        return b;
+		}
+		
+	}
+					catch (SQLException e) {
+			    		e.printStackTrace();
+			    		return null;
+				    }
+				//Falls kein Beitrag gefunden gefunden wurde
+				return null;			
+					
+	}
+	
+	
+	/*
+	 * @see		getBeiträgeBetweenTwoDates gibt alle Beiträge zwischen einem Zeitraum aus
+	 * @param 	Beitrag id, Zeitraum = Date x, Date y
+	 * @return	ArrayList mit allen Beitragobjekten in einem Zeitraum
+	 */
+	 
+	public ArrayList<Beitrag> getBeiträgeBetweenTwoDates (int id, Date x, Date y){
+		//Aufbau der DBVerbindung
+				Connection con = DBConnection.connection();
+				ArrayList <Beitrag> beitragListe= new ArrayList<Beitrag>();
+				//Versuch der Abfrage
+				try{
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery
+							("SELECT * from Beitrag WHERE pinnwand_ID="+ id + "AND erstellung between" + x + "AND" + y);
+					
+					while (rs.next()) {
+						Beitrag b = new Beitrag();
+						b.setBeitragId(rs.getInt("beitrags_id"));
+						
+					}
+				
+				
+				}
+				   catch (SQLException e) {
+			    		e.printStackTrace();
+			    		return null;
+				    }
+				//Falls keines gefunden leere Liste
+				return null;	
+					
+	}
+	
+	 
+	 /*
 	 * @see		getBeittragByPinnwand(int id): Sucht alle Beitrï¿½ge die zu einer Pinnwand gehï¿½ren
 	 * @param 	Pinnwand Id
 	 * @return	ArrayList mit Beitragobjekten

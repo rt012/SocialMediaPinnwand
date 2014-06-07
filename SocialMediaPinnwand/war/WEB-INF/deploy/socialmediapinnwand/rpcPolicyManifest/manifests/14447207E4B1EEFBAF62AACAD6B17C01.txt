@@ -1,0 +1,2 @@
+serviceClass: hdm.social.media.pinnwand.shared.PinnwandAdministration
+path: 082C95DB508D79FF0FBBB03C08BD2802.gwt.rpc

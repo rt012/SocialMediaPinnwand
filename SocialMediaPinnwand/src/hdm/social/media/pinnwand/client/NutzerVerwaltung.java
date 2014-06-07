@@ -33,6 +33,11 @@ public class NutzerVerwaltung {
 	private Nutzer aktuellerNutzer = null;
 	
 	/**
+	 * Verweis auf EntryPoint
+	 */
+	private SocialMediaPinnwand socialMediaPinnwand = null;
+	
+	/**
 	 * Klassenvariable für das Object LoginInfo welches die LogIn Informationen des Nutzers enthält
 	 *
 	 */
@@ -43,8 +48,9 @@ public class NutzerVerwaltung {
 	 * 
 	 * @param loginInfo
 	 */
-	public NutzerVerwaltung(LoginInfo loginInfo){
+	public NutzerVerwaltung(LoginInfo loginInfo, SocialMediaPinnwand socialMediaPinnwand){
 		this.loginInfo = loginInfo;
+		this.socialMediaPinnwand = socialMediaPinnwand;
 	}
 	
 	/**
@@ -53,27 +59,26 @@ public class NutzerVerwaltung {
 	 * @author Eric Schmidt
 	 */
 	public void nutzerInDatenbank(final LoginInfo googleNutzer){
-		//getNutzerByEmail wäre hier schöner!
-		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-			 public void onFailure
+		PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
+			public void onFailure
 			 (Throwable caught) {
 			 // TODO: Do something with errors.
 			 }
-			 
+
 			@Override
-			public void onSuccess(ArrayList<Nutzer> result) {
-				for (Nutzer n : result){
-					if (n.getEmail() == googleNutzer.getEmailAddress()){
-						aktuellerNutzer = n;
-					}
+			public void onSuccess(Nutzer result) {
+				if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
+						aktuellerNutzer = result;
+						socialMediaPinnwand.loadSocialMediaPinnwand();
 				}
-				if (aktuellerNutzer == null){
+
+				else{
 					createNutzer(googleNutzer);
 				}
+
 			}
 		});
 	}
-	
 	
 	/**
 	 * Legt den Nutzer in der Datenbank an

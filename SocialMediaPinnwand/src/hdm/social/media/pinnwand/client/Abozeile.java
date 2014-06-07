@@ -19,27 +19,27 @@ public class Abozeile extends HorizontalPanel{
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	private Label aboname;
 	private Button buttonAboLoeschen;
-	
+
 	AsyncCallback<Void> callbackVoid = new AsyncCallback<Void>() {
 		public void onFailure (Throwable caught) {
 				// TODO: Do something with errors.
 		}
-	 
-		//@Override
+
+		@Override
 		public void onSuccess(Void result) {
 		}
 	 };
-	
+
 	public Abozeile(final Abo a){
-		
+
 		aboname = new Label(a.getLieferant().getVorname()+" "+a.getLieferant().getName());
 		aboname.setStyleName("aboname");
 		this.add(aboname);
-		
+
 		buttonAboLoeschen = new Button("X");
 		buttonAboLoeschen.setStyleName("buttonAboLoeschen");
 		this.add(buttonAboLoeschen);
-		
+
 		buttonAboLoeschen.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteAbo(a, callbackVoid);

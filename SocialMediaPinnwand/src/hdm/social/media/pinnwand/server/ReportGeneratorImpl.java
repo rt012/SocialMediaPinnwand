@@ -12,6 +12,7 @@ import hdm.social.media.pinnwand.report.NutzerReport;
 import hdm.social.media.pinnwand.report.Report;
 import hdm.social.media.pinnwand.report.Row;
 import hdm.social.media.pinnwand.report.SimpleParagraph;
+import hdm.social.media.pinnwand.server.db.NutzerMapper;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.ReportGenerator;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
@@ -182,7 +183,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 
 	@Override
-	public String CreateNutzerReport(Nutzer n) throws IllegalArgumentException {
+	public String CreateNutzerReport(Nutzer n, Date datumVon, Date datumBis) throws IllegalArgumentException {
 
 		if (this.getPinnwandVerwaltung() == null)
 		      return null;
@@ -275,6 +276,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		     * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
 		     */
 		    return writer.getReportText();
+	}
+
+	@Override
+	public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException {
+		return NutzerMapper.nutzerMapper().getAllNutzer();
 	}
 
 	

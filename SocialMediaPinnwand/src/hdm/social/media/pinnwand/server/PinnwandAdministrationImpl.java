@@ -134,13 +134,6 @@ public void deleteKommentar(Kommentar k) throws IllegalArgumentException {
 }
 
 @Override
-public ArrayList<Kommentar> getAllKommentarJeBeitrag(Beitrag b)
-throws IllegalArgumentException {
-// TODO Auto-generated method stub
-return null;
-}
-
-@Override
 public Like createLike(Like l) throws IllegalArgumentException {
 // TODO Auto-generated method stub
 return null;
@@ -158,18 +151,12 @@ public void deleteLike(Like l) throws IllegalArgumentException {
 
 }
 @Override
-public Boolean checkIfLiked(Nutzer n, Beitrag b)
-		throws IllegalArgumentException {
+public boolean checkIfLiked(Nutzer n, Beitrag b) throws IllegalArgumentException {
 
-	return LikeMapper.likeMapper().checIfLiked(n, b);
+	return LikeMapper.likeMapper().checkIfLiked(n, b);
 }
 
-@Override
-public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b)
-throws IllegalArgumentException {
-// TODO Auto-generated method stub
-return null;
-}
+
 
 @Override
 public Abo createAbo(Nutzer abonnement, Nutzer lieferant) throws IllegalArgumentException {
@@ -220,9 +207,51 @@ public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
 	return AboMapper.aboMapper().getAboByNutzer(id);
 }
 
+
 @Override
-public int getLikeCountByNutzer(Nutzer n) throws IllegalArgumentException {
-	return LikeMapper.likeMapper().getLikeCountByNutzer(n);
+public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag b)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Like> getLikeByBeitrag(Beitrag b)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public int countLikeByBeitrag(int id) throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Pinnwand getPinnwandByNutzer(Nutzer n) throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 

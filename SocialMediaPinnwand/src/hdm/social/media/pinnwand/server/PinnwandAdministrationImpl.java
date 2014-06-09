@@ -3,10 +3,16 @@ package hdm.social.media.pinnwand.server;
 import hdm.social.media.pinnwand.client.LoginInfo;
 import hdm.social.media.pinnwand.server.db.AboMapper;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
+<<<<<<< HEAD
 import hdm.social.media.pinnwand.server.db.KommentarMapper;
+=======
+>>>>>>> refs/remotes/origin/Eric
 import hdm.social.media.pinnwand.server.db.LikeMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
+<<<<<<< HEAD
 import hdm.social.media.pinnwand.server.db.PinnwandMapper;
+=======
+>>>>>>> refs/remotes/origin/Eric
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.bo.Abo;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
@@ -30,6 +36,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 public PinnwandAdministrationImpl() throws IllegalArgumentException {}
 
 public void init() throws IllegalArgumentException {}
+
 @Override
 
 public Nutzer createNutzer(Nutzer n) throws IllegalArgumentException {
@@ -138,12 +145,15 @@ KommentarMapper.kommentarMapper().deleteKommentar(k);
 }
 
 @Override
+<<<<<<< HEAD
 public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag b) throws IllegalArgumentException {
 
 return KommentarMapper.kommentarMapper().getKommentarByBeitrag(b.getId());
 }
 
 @Override
+=======
+>>>>>>> refs/remotes/origin/Eric
 public Like createLike(Like l) throws IllegalArgumentException {
 // TODO Auto-generated method stub
 return LikeMapper.likeMapper().insertLike(l);
@@ -160,12 +170,19 @@ public void deleteLike(Like l) throws IllegalArgumentException {
 LikeMapper.likeMapper().deleteLike(l);
 
 }
-
 @Override
+<<<<<<< HEAD
 public ArrayList<Like> getLikeByBeitrag(Beitrag b)
 throws IllegalArgumentException {
 	return LikeMapper.likeMapper().getLikeByBeitrag(b.getId());
+=======
+public boolean checkIfLiked(Nutzer n, Beitrag b) throws IllegalArgumentException {
+
+	return LikeMapper.likeMapper().checkIfLiked(n, b);
+>>>>>>> refs/remotes/origin/Eric
 }
+
+
 
 @Override
 public Abo createAbo(Nutzer abonnent, Nutzer lieferant) throws IllegalArgumentException {
@@ -243,7 +260,7 @@ public LoginInfo login(String requestUri) {
 	    loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
 	}
 		return loginInfo;
-	}
+}
 
 @Override
 public boolean checkIfliked(Nutzer n, Beitrag b)
@@ -258,10 +275,59 @@ public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
 	return AboMapper.aboMapper().getAboByNutzer(id);
 }
 
+<<<<<<< HEAD
 @Override
 public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException{
 	ArrayList<Beitrag> a = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
 	return a;
+=======
+
+@Override
+public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag b)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Like> getLikeByBeitrag(Beitrag b)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public int countLikeByBeitrag(int id) throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException {
+	return NutzerMapper.nutzerMapper().getNutzerByEmail("'" + email + "'");
+}
+
+@Override
+public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Pinnwand getPinnwandByNutzer(Nutzer n) throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+>>>>>>> refs/remotes/origin/Eric
 }
 
 @Override

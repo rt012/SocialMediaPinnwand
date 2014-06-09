@@ -2,11 +2,16 @@ package hdm.social.media.pinnwand.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+<<<<<<< HEAD
 
 import hdm.social.media.pinnwand.shared.*;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
+=======
+>>>>>>> refs/remotes/origin/Eric
 
-/*
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+
+/**
  * Methoden:
  * getBeitragById(int id)
  * getBeitragByPinnwand(int id)
@@ -63,10 +68,18 @@ public class BeitragMapper {
 		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 		        
 		        //Aufruf des KommentarMappers um alle zum Beitrag gehï¿½rigen Kommentare als ArrayList zuzuweisen
+<<<<<<< HEAD
 		        b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
+=======
+		        b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(b));
+>>>>>>> refs/remotes/origin/Eric
 		        
 		        //Aufruf des LikeMappers um alle zum Beitrag gehï¿½rigen Likes als ArrayList zuzuweisen
+<<<<<<< HEAD
 		        b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(rs.getInt("beitrag_ID")));			       
+=======
+		        b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(b));			       
+>>>>>>> refs/remotes/origin/Eric
 		        
 		        //BeitragObjekt zurï¿½ckgeben
 		        return b;
@@ -80,7 +93,84 @@ public class BeitragMapper {
 	//Falls keines gefunden leere Liste
 	return null;
 	}
-	 
+
+	/**
+	 * getBeiträgeBetweenTwoDates gibt alle Beiträge zwischen einem Zeitraum aus
+	 * 
+	 * @param	datumVon String welches das Anfangsdatum der Suchanfrage bestimmt
+	 * @param	datumVis String welches das Enddatum der Suchanfrage bestimmt
+	 * 
+	 * @return	ArrayList mit allen Beitragobjekten in einem Zeitraum
+	 */
+	public ArrayList<Beitrag> getBeiträgeBetweenTwoDates (String datumVon, String datumBis){
+		//Aufbau der DBVerbindung
+		Connection con = DBConnection.connection();
+		ArrayList <Beitrag> beitragListe= new ArrayList<Beitrag>();
+		//Versuch der Abfrage
+		try{
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * from Beitrag WHERE erstellung between '" + datumVon + "' AND '" + datumBis + "'";
+			ResultSet rs = stmt.executeQuery
+					(sql);
+			
+			while (rs.next()) {
+				// Ergebnis in Beitrag- Objekt umwandeln
+		        Beitrag b = new Beitrag();
+		        b.setId(rs.getInt("beitrag_ID"));
+		        b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        b.setInhalt(rs.getString("inhalt"));
+		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
+				b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(b));
+				b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(b));
+		        beitragListe.add(b);
+			}
+			return beitragListe;		
+		}
+		   catch (SQLException e) {
+	    		e.printStackTrace();
+	    		return null;
+		    }				
+	}
+	
+	/**
+	 * Gibt alle Beiträge zwischen einem Zeitraum aus
+	 * 
+	 * @param	datumVon String welches das Anfangsdatum der Suchanfrage bestimmt
+	 * @param	datumVis String welches das Enddatum der Suchanfrage bestimmt
+	 * @param	pinnwandId int verweißt auf eine spezifische Pinnwand
+	 * 
+	 * @return	ArrayList mit allen Beitragobjekten in einem Zeitraum
+	 */
+	public ArrayList<Beitrag> getBeiträgeBetweenTwoDates (String datumVon, String datumBis, int pinnwandId){
+		//Aufbau der DBVerbindung
+		Connection con = DBConnection.connection();
+		ArrayList <Beitrag> beitragListe= new ArrayList<Beitrag>();
+		//Versuch der Abfrage
+		try{
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * from Beitrag WHERE pinnwand_ID =" + pinnwandId + " AND erstellung between '" + datumVon + "' AND '" + datumBis + "'";
+			ResultSet rs = stmt.executeQuery
+					(sql);
+			
+			while (rs.next()) {
+				// Ergebnis in Beitrag- Objekt umwandeln
+		        Beitrag b = new Beitrag();
+		        b.setId(rs.getInt("beitrag_ID"));
+		        b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        b.setInhalt(rs.getString("inhalt"));
+		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
+				b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(b));
+				b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(b));
+		        beitragListe.add(b);
+			}
+			return beitragListe;		
+		}
+		   catch (SQLException e) {
+	    		e.printStackTrace();
+	    		return null;
+		    }				
+	}
+	
 	 
 	 /*
 	 * @see		getBeittragByPinnwand(int id): Sucht alle Beitrï¿½ge die zu einer Pinnwand gehï¿½ren
@@ -108,10 +198,18 @@ public class BeitragMapper {
 		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 		        
 		        //Aufruf des KommentarMappers um alle zum Beitrag gehï¿½rigen Kommentare als ArrayList zuzuweisen
+<<<<<<< HEAD
 		        b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
+=======
+		        b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(b));
+>>>>>>> refs/remotes/origin/Eric
 		        
 		        //Aufruf des LikeMappers um alle zum Beitrag gehï¿½rigen Likes als ArrayList zuzuweisen
+<<<<<<< HEAD
 		        b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(rs.getInt("beitrag_ID")));			       
+=======
+		        b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(b));			       
+>>>>>>> refs/remotes/origin/Eric
 		        
 		        //BeitragObjekte der ArrayList hinzufï¿½gen
 		        beitragListe.add(b);
@@ -153,11 +251,21 @@ public class BeitragMapper {
 			    b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 			    b.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("pinnwand_ID")));
 			    //Aufruf des KommentarMappers um alle zum Beitrag gehï¿½rigen Kommentare als ArrayList zuzuweisen
+<<<<<<< HEAD
 			    b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(rs.getInt("beitrag_ID")));
+=======
+			    b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(b));
 			        
+			    //Aufruf des LikeMappers um alle zum Beitrag gehï¿½rigen Likes als ArrayList zuzuweisen
+			    b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(b));			       
+>>>>>>> refs/remotes/origin/Eric
+			        
+<<<<<<< HEAD
 			    //Aufruf des LikeMappers um alle zum Beitrag gehï¿½rigen Likes als ArrayList zuzuweisen
 			    b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(rs.getInt("beitrag_ID")));			       
 			        
+=======
+>>>>>>> refs/remotes/origin/Eric
 			    //BeitragObjekte der ArrayList hinzufï¿½gen
 			    beitragListe.add(b);
 			}

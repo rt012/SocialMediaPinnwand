@@ -236,6 +236,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @return true / false 
    * @throws IllegalArgumentException
    */
+<<<<<<< HEAD
   public boolean checkIfliked(Nutzer n, Beitrag b) throws IllegalArgumentException;
   /**
    * Einen Abonnement Beziehung erstellen.
@@ -295,3 +296,62 @@ public interface PinnwandAdministration extends RemoteService{
 
   
 }
+=======
+  public boolean checkIfLiked(Nutzer n, Beitrag b) throws IllegalArgumentException;
+  /**
+   * Einen Abonnement Beziehung erstellen.
+   *
+   * @param abonnement Nutzer
+   * @param lieferant Nutzer
+   * @return Abo
+   * @throws IllegalArgumentException
+   */
+  public Abo createAbo(Nutzer abonnement, Nutzer lieferant) throws IllegalArgumentException;
+ 
+  /**
+   * Einen Abonnement speichern.
+   *
+   * @param a Abo
+   * @throws IllegalArgumentException
+   */
+  public void saveAbo(Abo a) throws IllegalArgumentException;
+ 
+  /**
+   * Einen Abonnement löschen.
+   *
+   * @param a Abo
+   * @throws IllegalArgumentException
+   */
+  public void deleteAbo(Abo a) throws IllegalArgumentException;
+  
+  public Nutzer getNutzerById(int i) throws IllegalArgumentException;
+
+  public int countLikeByBeitrag(int id)throws IllegalArgumentException;
+
+  /**
+   * Gibt s�mtliche Abos eines Nutzers aus
+   * 
+   * @param id der Nutzers
+   * @return ArrayList der Abos des Nutzers
+   * @throws IllegalArgumentException
+   */
+  public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException;
+  
+  /**
+   * Login der Applikation
+   * 
+   * @param requestUri
+   * @return
+   * @author Eric Schmidt
+   */
+  public LoginInfo login(String requestUri) throws IllegalArgumentException;
+  
+  public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException;
+  
+  public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException;
+  
+  public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException;
+
+  public Pinnwand getPinnwandByNutzer(Nutzer n) throws IllegalArgumentException;  
+}
+>>>>>>> refs/remotes/origin/Eric

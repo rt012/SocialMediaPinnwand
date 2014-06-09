@@ -17,10 +17,23 @@
 <servlet-class> hdm.social.media.pinnwand.server.PinnwandAdministrationImpl </servlet-class>
 </servlet>
 
-<servlet-mapping>
+ <servlet-mapping>
 <servlet-name>SocialMediaPinnwandServlet</servlet-name>
 <url-pattern>/socialmediapinnwand/pinnwandadministration</url-pattern>
 </servlet-mapping>
+<<<<<<< HEAD
+=======
+  
+  <servlet>
+<servlet-name>ReportGeneratorServlet</servlet-name>
+<servlet-class> hdm.social.media.pinnwand.server.ReportGeneratorImpl </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>ReportGeneratorServlet</servlet-name>
+<url-pattern>/reportgenerator/reportgenerator</url-pattern>
+</servlet-mapping>
+>>>>>>> refs/remotes/origin/Eric
 <security-constraint>
         <web-resource-collection>
             <web-resource-name>profile</web-resource-name>
@@ -29,5 +42,9 @@
         <auth-constraint>
             <role-name>*</role-name>
         </auth-constraint>
+<<<<<<< HEAD
     </security-constraint>
+=======
+</security-constraint>
+>>>>>>> refs/remotes/origin/Eric
 </web-app>

@@ -6,7 +6,6 @@ import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Kommentar;
 import hdm.social.media.pinnwand.shared.bo.Like;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

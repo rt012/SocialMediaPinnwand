@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.shared.*;
 import hdm.social.media.pinnwand.shared.bo.Abo;
+<<<<<<< HEAD
+=======
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
+>>>>>>> refs/remotes/origin/Eric
 
 /*
  * Methoden:
@@ -178,5 +183,45 @@ public class AboMapper {
 	      e.printStackTrace();
 	    } 
 	}
+	
+	/**
+	 * Gibt alle Abos zwischen einem Zeitraum aus
+	 * 
+	 * @param	datumVon String welches das Anfangsdatum der Suchanfrage bestimmt
+	 * @param	datumVis String welches das Enddatum der Suchanfrage bestimmt
+	 * @param 	n Nutzer dient als Suchparameter 
+	 * 
+	 * @return	ArrayList mit allen Beitragobjekten in einem Zeitraum
+	 */
+	public ArrayList<Abo> getAboBetweenTwoDates (String datumVon, String datumBis, Nutzer n){
+		//Aufbau der DBVerbindung
+		Connection con = DBConnection.connection();
+		ArrayList <Abo> aboListe= new ArrayList<Abo>();
+		//Versuch der Abfrage
+		try{
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * from abonnement WHERE abonnent_ID = " + n.getId() + " AND erstellung between '" 
+					+ datumVon + "' AND '" + datumBis + "'";
+			ResultSet rs = stmt.executeQuery
+					(sql);
+			
+			while (rs.next()) {
+				Abo a = new Abo();
+		        a.setId(rs.getInt("abonnement_ID"));
+		        a.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        a.setAbonnent(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("abonnent_ID")));
+		        a.setLieferant(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("lieferant_ID")));
+		            
+		        //LikeObjekt zu LikeListe hinzuf�gen
+		        aboListe.add(a);
+			}
+			return aboListe;		
+		}
+		   catch (SQLException e) {
+	    		e.printStackTrace();
+	    		return null;
+		    }				
+	}
+	
 	
 }

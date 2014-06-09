@@ -4,6 +4,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.shared.*;
+<<<<<<< HEAD
+=======
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+>>>>>>> refs/remotes/origin/Eric
 import hdm.social.media.pinnwand.shared.bo.Kommentar;
 
 /*
@@ -82,7 +86,7 @@ public class KommentarMapper {
 	 * @param 	Beitrag ID
 	 * @return 	ArrayList mit Kommentar Objekten
 	 */
-	 public ArrayList<Kommentar> getKommentarByBeitrag(int id){
+	 public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag beitrag){
 		//Aufbau der DBVerbindung
 		Connection con = DBConnection.connection();
 		ArrayList <Kommentar> kommentarListe= new ArrayList<Kommentar>();
@@ -91,7 +95,7 @@ public class KommentarMapper {
 		try{
 			Statement stmt = con.createStatement();
 			//Suche alle Kommentar zu einem Beitrag
-			ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE beitrag_ID="+id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE beitrag_ID="+beitrag.getId());
 
 			while (rs.next()) {
 		        // Ergebnis in Kommentar- Objekt umwandeln
@@ -99,7 +103,11 @@ public class KommentarMapper {
 		        k.setId(rs.getInt("kommentar_ID"));
 		        k.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        k.setInhalt(rs.getString("inhalt"));
+<<<<<<< HEAD
 		        //k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
+=======
+		        k.setBeitrag(beitrag);
+>>>>>>> refs/remotes/origin/Eric
 		        k.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
 		        
 		        //Kommentar Objekte der ArrayList hinzuf�gen

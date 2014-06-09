@@ -19,4 +19,6 @@ public interface ReportGeneratorAdministrationAsync {
 
 	void login(String requestUri, AsyncCallback<LoginInfo> callback);
 
+	void getNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
+
 }

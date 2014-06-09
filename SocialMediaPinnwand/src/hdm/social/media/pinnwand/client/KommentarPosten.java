@@ -33,7 +33,7 @@ private Beitrag beitrag;
 private Label LabelInformation;
 private TextArea TextAreaKommentar;
 private Button ButtonSenden;
-	public KommentarPosten(final Nutzer nutzer, final Beitrag beitrag) {
+	public KommentarPosten(final Nutzer nutzer, final Beitrag beitrag, final ShowBeitraege showBeitraege) {
 		this.nutzer = nutzer;
 		this.beitrag = beitrag;
 		
@@ -57,6 +57,7 @@ private Button ButtonSenden;
 				k.setInhalt(TextAreaKommentar.getText());
 				PinnwandAdministration.createKommentar(k, callback);
 				hide();
+				showBeitraege.refresh(nutzer);
 			}
 	});
 	

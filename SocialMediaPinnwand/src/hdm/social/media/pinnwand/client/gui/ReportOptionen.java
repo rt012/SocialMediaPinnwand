@@ -1,6 +1,7 @@
 package hdm.social.media.pinnwand.client.gui;
 
 
+import hdm.social.media.pinnwand.client.NutzerVerwaltung;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
@@ -39,10 +40,11 @@ public class ReportOptionen extends SplitLayoutPanel{
 	private ReportRootPanel reportRootPanel = null;
 	private RadioButton radioButtonBeitrag = new RadioButton("Report Auswahl" , "Beitrag");
 	private RadioButton radioButtonNutzer = new RadioButton("Report Auswahl" , "Nutzer");
+	private Button logout = new Button("LogOut");
 	
 	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
-	public ReportOptionen(final ReportRootPanel reportRootPanel){
+	public ReportOptionen(final ReportRootPanel reportRootPanel,final NutzerVerwaltung nutzerVerwaltung){
 		this.reportRootPanel = reportRootPanel;
 		VerticalPanel verticalPanel = new VerticalPanel();
 		fillSuggestenBox();
@@ -50,6 +52,17 @@ public class ReportOptionen extends SplitLayoutPanel{
 		/**
 		 * Events der Widgets
 		 */
+		
+		//Logout Button
+		
+		logout.setStyleName("buttonLogout");
+		logout.addClickHandler(new ClickHandler(){		
+			@Override
+			public void onClick(ClickEvent event) {
+				nutzerVerwaltung.loadLogout();
+			}
+		});
+		
 		suggestBoxPinnwandSuche.setVisible(false);
 		datePickerVon.setVisible(false);
 		datePickerBis.setVisible(false);
@@ -115,6 +128,7 @@ public class ReportOptionen extends SplitLayoutPanel{
 			
 		});
 		
+		verticalPanel.add(logout);
 		verticalPanel.add(radioButtonBeitrag);
 		verticalPanel.add(radioButtonNutzer);
 		verticalPanel.add(suggestBoxPinnwandSuche);

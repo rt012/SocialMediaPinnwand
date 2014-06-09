@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 public class ReportGenerator implements EntryPoint {
 	private SplitLayoutPanel split = new SplitLayoutPanel();
 	private RootLayoutPanel rp = RootLayoutPanel.get();
-	private ReportRootPanel reportRootPanel = new ReportRootPanel();
+	private ReportRootPanel reportRootPanel = null;
 	private NutzerVerwaltung nutzerVerwaltung = null;
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
@@ -45,7 +45,6 @@ public class ReportGenerator implements EntryPoint {
 			        nutzerVerwaltung = new NutzerVerwaltung(loginInfo, ReportGenerator.this);
 			        if(loginInfo.isLoggedIn()) {
 			        	nutzerVerwaltung.nutzerInDatenbank(loginInfo);
-			        	loadReportGenerator();
 			        } else {
 			        	nutzerVerwaltung.loadLogin();
 			        }
@@ -54,8 +53,10 @@ public class ReportGenerator implements EntryPoint {
 	} 
 	 
 	public void loadReportGenerator(){
-		 split.addWest(new ReportOptionen(reportRootPanel), 1000);
-		   split.addEast(reportRootPanel, 1000);
-		   rp.add(split);
+		reportRootPanel = new ReportRootPanel();
+		
+		split.addWest(new ReportOptionen(reportRootPanel, nutzerVerwaltung), 1000);
+		split.addEast(reportRootPanel, 1000);
+		rp.add(split);
 	}
 }

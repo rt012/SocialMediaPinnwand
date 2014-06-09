@@ -27,4 +27,6 @@ public interface ReportGeneratorAdministration extends RemoteService {
 	
 	
 	public LoginInfo login(String requestUri);
+	
+	public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException;
 }

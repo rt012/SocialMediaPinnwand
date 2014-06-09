@@ -3,6 +3,8 @@ package hdm.social.media.pinnwand.client;
 import hdm.social.media.pinnwand.client.gui.LoginCustomDialog;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import java.util.ArrayList;
@@ -27,7 +29,8 @@ public class NutzerVerwaltung {
 	/**
 	 * Erstellt einen Remote Service Proxy um mit dem Server-Seitigem Service zu kommunizieren.
 	 */
-	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);	
+	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
+	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	/**
 	 * Verweis auf EntryPoint
 	 */
@@ -55,29 +58,55 @@ public class NutzerVerwaltung {
 	 * @author Eric Schmidt
 	 */
 	public void nutzerInDatenbank(final LoginInfo googleNutzer){
-		PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
-			public void onFailure
-			 (Throwable caught) {
-			 // TODO: Do something with errors.
-			 }
-
-			@Override
-			public void onSuccess(Nutzer result) {
-				if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
-					if (entryPointKlasse instanceof SocialMediaPinnwand){
-						((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
-						((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
-					}else{
-						((ReportGenerator) entryPointKlasse).loadReportGenerator();
+		if (entryPointKlasse instanceof SocialMediaPinnwand){
+			PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
+				public void onFailure
+				 (Throwable caught) {
+				 // TODO: Do something with errors.
+				 }
+	
+				@Override
+				public void onSuccess(Nutzer result) {
+					if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
+						if (entryPointKlasse instanceof SocialMediaPinnwand){
+							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
+						}else{
+							((ReportGenerator) entryPointKlasse).loadReportGenerator();
+						}
 					}
+	
+					else{
+						createNutzer(googleNutzer);
+					}
+	
 				}
-
-				else{
-					createNutzer(googleNutzer);
+			});
+		}else{
+			reportGenerator.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
+				public void onFailure
+				 (Throwable caught) {
+				 // TODO: Do something with errors.
+				 }
+	
+				@Override
+				public void onSuccess(Nutzer result) {
+					if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
+						if (entryPointKlasse instanceof SocialMediaPinnwand){
+							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
+						}else{
+							((ReportGenerator) entryPointKlasse).loadReportGenerator();
+						}
+					}
+	
+					else{
+						createNutzer(googleNutzer);
+					}
+	
 				}
-
-			}
-		});
+			});
+		}
 	}
 	
 	/**

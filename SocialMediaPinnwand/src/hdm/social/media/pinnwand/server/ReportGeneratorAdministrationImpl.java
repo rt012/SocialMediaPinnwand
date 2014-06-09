@@ -346,6 +346,12 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 				}
 					return loginInfo;
 			}
+
+			@Override
+			public Nutzer getNutzerByEmail(String email)
+					throws IllegalArgumentException {
+				return NutzerMapper.nutzerMapper().getNutzerByEmail("'"+email+"'");
+			}
 	
 	
 }

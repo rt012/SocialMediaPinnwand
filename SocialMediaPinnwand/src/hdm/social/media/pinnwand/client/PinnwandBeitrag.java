@@ -37,15 +37,18 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	private Button ButtonBeitragLoeschen;
 	private Beitrag beitrag;
 	private Nutzer nutzer;
+	private ShowBeitraege showBeitraege = null;
 	
 	
 	
-	 public PinnwandBeitrag(String Inhalt, String Beitragsautor, String LikeAnzahl, final Beitrag beitrag, final Nutzer nutzer) {   
+	 public PinnwandBeitrag(String Inhalt, String Beitragsautor, String LikeAnzahl, final Beitrag beitrag, final Nutzer nutzer, final ShowBeitraege showBeitraege) {   
 		 /**
 		  * Elemente ( Widgets)  eines Beitrags
 		  */
 		 this.beitrag = beitrag;
 		 this.nutzer = nutzer;
+		 this.showBeitraege = showBeitraege;
+		 
 		 //Anzeige des Inhalts 
 		 LabelBeitragsInhalt = new Label(Inhalt);
 		 LabelBeitragsInhalt.setStyleName("LabelBeitragsInhalt");
@@ -88,9 +91,10 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		  ButtonBeitragKommentieren.addClickHandler(new ClickHandler() {
 				// Öffnet eine Dialog Box mit einer TextArea, um einen Kommentar zu schreiben
 				public void onClick(ClickEvent event) {
-					final KommentarPosten dialog = new KommentarPosten(nutzer, beitrag);
+					final KommentarPosten dialog = new KommentarPosten(nutzer, beitrag, showBeitraege);
 					DialogBox dlb = dialog;
 					dlb.center();
+					
 				}
 		});
 		
@@ -104,7 +108,7 @@ public class PinnwandBeitrag extends HorizontalPanel {
 				public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteBeitrag(beitrag, callbackVoid);	
 				SocialMediaPinnwand sp = new SocialMediaPinnwand();
-			//	sp.refresh();
+				showBeitraege.refresh(nutzer);
 				
 				}
 		});
@@ -204,10 +208,9 @@ public class PinnwandBeitrag extends HorizontalPanel {
 					Like l = new Like();
 					l.setBeitrag(beitrag);
 					l.setNutzer(nutzer);
-					
-					
 					PinnwandAdministration.createLike(l, callback); 
 					setButtonToDislike();	
+					showBeitraege.refresh(nutzer);
 				}
 		});
 		 
@@ -223,10 +226,9 @@ public class PinnwandBeitrag extends HorizontalPanel {
 					Like l = new Like();
 					l.setBeitrag(beitrag);
 					l.setNutzer(nutzer);
-					
-					
 					PinnwandAdministration.deleteLike(l, callbackVoid); 
 					setButtonToLike();
+					showBeitraege.refresh(nutzer);
 				}
 		 });
 		 

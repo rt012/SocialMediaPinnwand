@@ -19,6 +19,8 @@ public class ShowBeitraege extends FlexTable{
 	
 	
 	public ShowBeitraege(Nutzer n, SocialMediaPinnwand s){
+		setStyleName("FlexTableBeitraege");
+		
 		this.aktuellerNutzer = n;
 		this.s=s;
 		printOutBeitragJeNutzer(n);
@@ -43,7 +45,7 @@ public class ShowBeitraege extends FlexTable{
 									new PinnwandBeitrag(result.get(i).getInhalt(),
 														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
 														+ result.get(i).getLikeList().size()+" Personen gefaellt das.",
-														result.get(i),aktuellerNutzer ));
+														result.get(i),aktuellerNutzer, ShowBeitraege.this ));
 							// nachdem ein Beitrag der FlexTable hinzugef�gt wurde wird die aktuelle Zeile um 1 erh�ht.
 							aktuelleRow += 1;
 							// Nun werden alle Kommentare des zuvor hinzugef�gten Beitrages der FlexTable hinzugef�gt
@@ -82,7 +84,7 @@ public class ShowBeitraege extends FlexTable{
 									new PinnwandBeitrag(result.get(i).getInhalt(),
 														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
 														+ likelistsize +" Personen gefaellt das.",
-														result.get(i),aktuellerNutzer ));
+														result.get(i),aktuellerNutzer, ShowBeitraege.this ));
 							// nachdem ein Beitrag der FlexTable hinzugef�gt wurde wird die aktuelle Zeile um 1 erh�ht.
 							aktuelleRow += 1;
 							// Nun werden alle Kommentare des zuvor hinzugef�gten Beitrages der FlexTable hinzugef�gt

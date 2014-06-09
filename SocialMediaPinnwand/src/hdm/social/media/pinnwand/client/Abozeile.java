@@ -28,12 +28,11 @@ public class Abozeile extends HorizontalPanel{
 	 
 		@Override
 		public void onSuccess(Void result) {
-			s.FlexTableAbonniertePinnwaende.clear();
-			s.FlexTableAbonniertePinnwaende.refresh(s.getAktuellerNutzer());
+			s.getPinnwandAllgemeinPanel().refreshFlexTableAbonniertePinnwaende();
 		}
 	 };
 	
-	public Abozeile(final Abo a, final SocialMediaPinnwand s){
+	public Abozeile(final Abo a, final SocialMediaPinnwand s,final ShowBeitraege flexTableBeitraege){
 		
 		this.s=s;
 		
@@ -48,7 +47,7 @@ public class Abozeile extends HorizontalPanel{
 		buttonAboLoeschen.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteAbo(a, callbackVoid);
-				s.FlexTableBeitraege.refresh(s.getAktuellerNutzer());
+				flexTableBeitraege.refresh(s.getAktuellerNutzer());
 			}
 		});		
 	}

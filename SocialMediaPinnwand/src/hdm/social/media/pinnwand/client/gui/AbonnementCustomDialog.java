@@ -1,5 +1,6 @@
 package hdm.social.media.pinnwand.client.gui;
 
+import hdm.social.media.pinnwand.client.Abolist;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Abo;
@@ -19,18 +20,19 @@ import com.google.gwt.user.client.ui.Widget;
 public class AbonnementCustomDialog  extends DialogBox{ 
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	
-	public AbonnementCustomDialog(String content, String title, final Nutzer abonnement, final Nutzer lieferant) {
+	public AbonnementCustomDialog(String content, String title, final Nutzer abonnement, final Nutzer lieferant, final Abolist flexTableAbonniertePinnwaende) {
 		setText(content);
 		Button abonnierenButton = new Button("Abonnieren", new ClickListener(){
 			@Override
 			public void onClick(Widget sender) {
 				PinnwandAdministration.createAbo(abonnement, lieferant, new AsyncCallback<Abo>() {
 					public void onFailure(Throwable error) {
-						Window.alert("Fail");	
+						Window.alert("Abonnement wurde nicht abgeschlossen");	
 					}
 					@Override
 					public void onSuccess(Abo result) {
 						Window.alert("Pinnwand abonniert");	
+						flexTableAbonniertePinnwaende.refresh(abonnement);
 					}
 			    });	
 				hide();

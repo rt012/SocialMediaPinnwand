@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 /*
  * EntryPoint Klasse für den Report Generator 
  * 
- * @author Florian Blessing
+ * @author Blessing
  */
 
 public class ReportGenerator implements EntryPoint {

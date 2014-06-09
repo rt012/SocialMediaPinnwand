@@ -78,11 +78,8 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		 ButtonBeitragGefaelltMir.setStyleName("ButtonBeitragGefälltMir");
 		 this.add(ButtonBeitragGefaelltMir);
 		 // Methode welche überprüft ob der Nutzer den Beitrag schon geliked hat oder nicht
-<<<<<<< HEAD
 		 PinnwandAdministration.checkIfliked(this.nutzer, this.beitrag, callbackBoolean);
-=======
-		 PinnwandAdministration.checkIfLiked(this.nutzer, this.beitrag, callbackBoolean);
->>>>>>> refs/remotes/origin/Eric
+
 		 
 		 //Button für Kommentieren
 		  ButtonBeitragKommentieren = new Button("Kommentieren");

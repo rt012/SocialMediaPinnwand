@@ -5,11 +5,8 @@ import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.shared.*;
 import hdm.social.media.pinnwand.shared.bo.Abo;
-<<<<<<< HEAD
-=======
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
->>>>>>> refs/remotes/origin/Eric
 
 /*
  * Methoden:

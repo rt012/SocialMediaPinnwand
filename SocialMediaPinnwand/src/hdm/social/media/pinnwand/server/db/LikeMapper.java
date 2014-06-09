@@ -77,13 +77,9 @@ public class LikeMapper {
 	}
 	
 	 
-<<<<<<< HEAD
-	 /*
-	 * @see 	getLikeByBeitrag(int id): Sucht alle Likes die zu einem Beitrag gehï¿½ren
-=======
+
 	 /**
 	 * @see 	getLikeByBeitrag(int id): Sucht alle Likes die zu einem Beitrag gehören
->>>>>>> refs/remotes/origin/Eric
 	 * @param	Beitrag ID
 	 * @return 	ArrayList mit Like Objekten
 	 */
@@ -104,16 +100,11 @@ public class LikeMapper {
 		        l.setId(rs.getInt("like_ID"));
 		        l.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        l.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
-<<<<<<< HEAD
-		        //l.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
-		             
-		        
-		        //LikeObjekt zu LikeListe hinzufï¿½gen
-=======
+
 		        l.setBeitrag(beitrag); 
 		 		        
 		        //LikeObjekt zu LikeListe hinzufügen
->>>>>>> refs/remotes/origin/Eric
+
 		        likeListe.add(l);
 		       
 		      }
@@ -217,11 +208,9 @@ public class LikeMapper {
 		//Versuch der Abfrage
 	    try {
 	      Statement stmt = con.createStatement();
-<<<<<<< HEAD
-	      //Lï¿½sche Like mit gleicher ID aus Tabelle
-=======
+
 	      //Lösche Like mit gleicher ID aus Tabelle
->>>>>>> refs/remotes/origin/Eric
+
 	      stmt.executeUpdate("DELETE FROM `like` WHERE `nutzer_ID`=" + l.getNutzer().getId() + " AND `beitrag_ID`=" + l.getBeitrag().getId());
 	    }
 	    catch (SQLException e) {
@@ -229,23 +218,7 @@ public class LikeMapper {
 	    } 
 	}
 	
-<<<<<<< HEAD
-	public boolean checIfLiked(Nutzer n, Beitrag b) {
-		Connection con = DBConnection.connection();
-		try {
-			Statement stmt = con.createStatement();
-			 ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE nutzer_ID="+ n.getId() +" AND beitrag_ID=" + b.getId());
-			 if(rs.next() == true) {
-				 return false;
-				
-			 } else return true;
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-		
-=======
+
 	public boolean checkIfLiked(Nutzer n, Beitrag b) {
 		Connection con = DBConnection.connection();
 		try {
@@ -290,7 +263,6 @@ public class LikeMapper {
 			
 		}
 		return anzahl;
->>>>>>> refs/remotes/origin/Eric
 	}
 
 }

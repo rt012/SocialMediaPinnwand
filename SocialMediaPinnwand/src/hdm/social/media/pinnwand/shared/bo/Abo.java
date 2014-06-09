@@ -1,30 +1,7 @@
 package hdm.social.media.pinnwand.shared.bo;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-<<<<<<< HEAD
 
-public class Abo extends BusinessObject implements IsSerializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private Nutzer abonnent;
-	private Nutzer lieferant;
-	
-	public Nutzer getAbonnent() {
-		return abonnent;
-	}
-	
-	public void setAbonnent(Nutzer abonnent) {
-		this.abonnent = abonnent;
-	}
-	public Nutzer getLieferant() {
-		return lieferant;
-	}
-	public void setLieferant(Nutzer lieferant) {
-		this.lieferant = lieferant;
-	}
-
-=======
 /**
  * Abonnement-Klasse, diese Klasse stellt das Abonnement eines Nutzers von einer Pinnwand dar. 
  * Ein Abonnement entsteht somit wenn ein Nutzer die Pinnwand eines anderen Nutzers abonniert.
@@ -63,10 +40,11 @@ public class Abo extends BusinessObject implements IsSerializable {
 	public void setLieferant(Nutzer lieferant) {
 		this.lieferant = lieferant;
 	}
+	
 	/**
 	 * Wandelt ein Abonnementobjekt in ein Stringobjekt um. 
 	 */
->>>>>>> refs/remotes/origin/Eric
+
 	@Override 
 	public String toString() {
 		return "Abo [abonent=" + abonnent.getName() + ", lieferant=" + lieferant.getName() + "]";

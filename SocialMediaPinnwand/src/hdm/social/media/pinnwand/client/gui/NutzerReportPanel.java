@@ -3,8 +3,8 @@ package hdm.social.media.pinnwand.client.gui;
 import java.text.ParseException;
 import java.util.Date;
 
-import hdm.social.media.pinnwand.shared.ReportGenerator;
-import hdm.social.media.pinnwand.shared.ReportGeneratorAsync;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.core.client.GWT;
@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 public class NutzerReportPanel extends SplitLayoutPanel{
 	
-	private final ReportGeneratorAsync reportGenerator = GWT.create(ReportGenerator.class);
+	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
 	@SuppressWarnings("deprecation")
 	public NutzerReportPanel(Date datumVon, Date datumBis, Nutzer nutzer) throws ParseException{

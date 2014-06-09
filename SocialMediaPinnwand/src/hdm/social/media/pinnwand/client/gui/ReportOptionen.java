@@ -1,8 +1,8 @@
 package hdm.social.media.pinnwand.client.gui;
 
 
-import hdm.social.media.pinnwand.shared.ReportGenerator;
-import hdm.social.media.pinnwand.shared.ReportGeneratorAsync;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class ReportOptionen extends SplitLayoutPanel{
 	private RadioButton radioButtonBeitrag = new RadioButton("Report Auswahl" , "Beitrag");
 	private RadioButton radioButtonNutzer = new RadioButton("Report Auswahl" , "Nutzer");
 	
-	private final ReportGeneratorAsync reportGenerator = GWT.create(ReportGenerator.class);
+	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
 	public ReportOptionen(final ReportRootPanel reportRootPanel){
 		this.reportRootPanel = reportRootPanel;

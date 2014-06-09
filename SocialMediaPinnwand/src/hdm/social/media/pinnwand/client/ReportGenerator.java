@@ -2,9 +2,8 @@ package hdm.social.media.pinnwand.client;
 
 import hdm.social.media.pinnwand.client.gui.ReportOptionen;
 import hdm.social.media.pinnwand.client.gui.ReportRootPanel;
-import hdm.social.media.pinnwand.shared.PinnwandAdministration;
-import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
-import hdm.social.media.pinnwand.shared.ReportGeneratorAsync;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -26,7 +25,7 @@ public class ReportGenerator implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final ReportGeneratorAsync reportGenerator = GWT.create(ReportGenerator.class);
+	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
 	@Override
 	public void onModuleLoad() {

@@ -18,7 +18,7 @@ import hdm.social.media.pinnwand.server.db.LikeMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
 import hdm.social.media.pinnwand.server.db.PinnwandMapper;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
-import hdm.social.media.pinnwand.shared.ReportGenerator;
+import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.bo.Abo;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
@@ -29,7 +29,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator  {
+public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet implements ReportGeneratorAdministration  {
 
 	/**
 	 * 
@@ -59,7 +59,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	   * aufgerufen wird, um eine Initialisierung der Instanz vorzunehmen.
 	   * </p>
 	   */
-	  public ReportGeneratorImpl() throws IllegalArgumentException {
+	  public ReportGeneratorAdministrationImpl() throws IllegalArgumentException {
 	  }
 
 	  /**
@@ -154,7 +154,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	     * Nun werden sämtliche Beiträge innerhalb eines Zeitraumes ausgelesen und Autor, Inhalt, Likes und 
 	     * die Anzahl der Kommentare in die Tabelle eingetragen.
 	     */
-	    ArrayList<Beitrag> beitraege  = BeitragMapper.beitragMapper().getBeiträgeBetweenTwoDates(datumVon, datumBis);
+	    ArrayList<Beitrag> beitraege  = BeitragMapper.beitragMapper().getBeitraegeBetweenTwoDates(datumVon, datumBis);
 	 
 	    beitraege = sort(beitraege);
 	    
@@ -268,7 +268,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		    /**
 		     * Berechne die Beitragsanzahl
 		     */
-		    ArrayList<Beitrag> beitragListe = BeitragMapper.beitragMapper().getBeiträgeBetweenTwoDates(datumVon, datumBis, 
+		    ArrayList<Beitrag> beitragListe = BeitragMapper.beitragMapper().getBeitraegeBetweenTwoDates(datumVon, datumBis, 
 		    		PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
 		    if (beitragListe != null){
 		    	accountRow.addColumn(new Column(String.valueOf(beitragListe.size())));
@@ -308,21 +308,26 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return NutzerMapper.nutzerMapper().getAllNutzer();
 	}
 
-	// Bubblesort method to insure that Listview elements are everytime in the same order 
-			public ArrayList<Beitrag> sort(ArrayList<Beitrag> array) {
-				int n = array.size();
-				for(int i = n-1; i >= 0; i--) {
-					for (int j = 1; j <= i; j++) {
-						if ( array.get(j-1).getLikeList().size() > array.get(j).getLikeList().size()) {
-						Beitrag temp = array.get(j-1);
-			        	array.set(j-1, array.get(j));
-			        	array.set(j, temp);
-							
-						}
-					}
+	/**
+	 * Bubblesort um eine Beitragsliste nach den Likes aufsteigend zu sortieren
+	 * 
+	 * @param array
+	 * @return
+	 */
+	private ArrayList<Beitrag> sort(ArrayList<Beitrag> array) {
+		int n = array.size();
+		for(int i = n-1; i >= 0; i--) {
+			for (int j = 1; j <= i; j++) {
+				if ( array.get(j-1).getLikeList().size() < array.get(j).getLikeList().size()) {
+				Beitrag temp = array.get(j-1);
+	        	array.set(j-1, array.get(j));
+	        	array.set(j, temp);
+					
 				}
-			return array;
+			}
 		}
+		return array;
+	}
 			
 			@Override
 			public LoginInfo login(String requestUri) {

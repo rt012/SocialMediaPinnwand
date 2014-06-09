@@ -7,7 +7,7 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface ReportGeneratorAsync {
+public interface ReportGeneratorAdministrationAsync {
 
 	void CreateNutzerReport(Nutzer n, String datumVon, String datumBis,
 			AsyncCallback<String> callback);

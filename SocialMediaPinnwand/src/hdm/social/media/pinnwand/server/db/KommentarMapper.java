@@ -4,10 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.shared.*;
-<<<<<<< HEAD
-=======
+
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
->>>>>>> refs/remotes/origin/Eric
+
 import hdm.social.media.pinnwand.shared.bo.Kommentar;
 
 /*
@@ -103,11 +102,7 @@ public class KommentarMapper {
 		        k.setId(rs.getInt("kommentar_ID"));
 		        k.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        k.setInhalt(rs.getString("inhalt"));
-<<<<<<< HEAD
-		        //k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
-=======
 		        k.setBeitrag(beitrag);
->>>>>>> refs/remotes/origin/Eric
 		        k.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
 		        
 		        //Kommentar Objekte der ArrayList hinzuf�gen

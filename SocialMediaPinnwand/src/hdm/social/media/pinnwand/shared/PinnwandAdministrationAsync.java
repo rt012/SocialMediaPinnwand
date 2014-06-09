@@ -64,30 +64,8 @@ public interface PinnwandAdministrationAsync {
 	void updateKommentar(Kommentar k, AsyncCallback<Kommentar> callback);
 
 	void updateNutzer(Nutzer n, AsyncCallback<Nutzer> callback);
-<<<<<<< HEAD
-
-	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
-
-	void getNutzerById(int i, AsyncCallback<Nutzer> callback);
-
-	void countLikeByBeitrag(int id, AsyncCallback<Integer> callback);
-
-	void login(String requestUri, AsyncCallback<LoginInfo> callback);
 
 	void checkIfliked(Nutzer n, Beitrag b, AsyncCallback<Boolean> callback);
-	
-	void getNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
-
-	void getAboByNutzer(int id, AsyncCallback<ArrayList<Abo>> callback);
-	
-	void getAllBeitragByNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
-	
-	void getAllBeitragByAktuellerNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
-	
-	void getPinnwandByNutzer(Nutzer n, AsyncCallback<Pinnwand> callback);
-
-}
-=======
 
 	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
 
@@ -110,4 +88,4 @@ public interface PinnwandAdministrationAsync {
 	void getPinnwandByNutzer(Nutzer n, AsyncCallback<Pinnwand> callback);
 
 }
->>>>>>> refs/remotes/origin/Eric
+

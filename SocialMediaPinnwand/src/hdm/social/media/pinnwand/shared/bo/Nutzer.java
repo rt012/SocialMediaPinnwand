@@ -12,20 +12,9 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 
 public class Nutzer extends BusinessObject implements IsSerializable {
-<<<<<<< HEAD
-	
-	
-public Nutzer(String vorname, String name, String email, String nickname) {
-	super();
-	
-	this.vorname = vorname;
-	this.name = name;
-	this.email = email;
-	this.nickname = nickname;
-}
 
-public Nutzer(){};
-//	private static final long serialVersionUID = 1L;
+
+private static final long serialVersionUID = 1L;
 /**
  *  Vorname eines Nutzers 	
  */
@@ -34,19 +23,6 @@ public Nutzer(){};
  * Nachname eines Nutzers
  */
 	private String name;
-
-=======
-
-		private static final long serialVersionUID = 1L;
-/**
- *  Vorname eines Nutzers 	
- */
-	private String vorname;
-/**
- * Nachname eines Nutzers
- */
-	private String name;
->>>>>>> refs/remotes/origin/Eric
 /**
  * Emailadresse eines Nutzers
  */

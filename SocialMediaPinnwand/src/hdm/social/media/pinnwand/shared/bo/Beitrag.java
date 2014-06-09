@@ -1,4 +1,4 @@
-package hdm.social.media.pinnwand.shared;
+package hdm.social.media.pinnwand.shared.bo;
 import java.util.ArrayList;
 import java.util.Collections;
 

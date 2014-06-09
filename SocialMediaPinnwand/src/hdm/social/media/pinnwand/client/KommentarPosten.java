@@ -1,9 +1,11 @@
 package hdm.social.media.pinnwand.client;
 
-import hdm.social.media.pinnwand.shared.Beitrag;
-import hdm.social.media.pinnwand.shared.Kommentar;
-import hdm.social.media.pinnwand.shared.Like;
-import hdm.social.media.pinnwand.shared.Nutzer;
+import hdm.social.media.pinnwand.shared.PinnwandAdministration;
+import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Kommentar;
+import hdm.social.media.pinnwand.shared.bo.Like;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

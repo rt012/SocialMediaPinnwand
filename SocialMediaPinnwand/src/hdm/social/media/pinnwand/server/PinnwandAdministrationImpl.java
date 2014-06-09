@@ -1,19 +1,19 @@
 package hdm.social.media.pinnwand.server;
 
 import hdm.social.media.pinnwand.client.LoginInfo;
-import hdm.social.media.pinnwand.client.PinnwandAdministration;
 import hdm.social.media.pinnwand.server.db.AboMapper;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
 import hdm.social.media.pinnwand.server.db.KommentarMapper;
 import hdm.social.media.pinnwand.server.db.LikeMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
 import hdm.social.media.pinnwand.server.db.PinnwandMapper;
-import hdm.social.media.pinnwand.shared.Abo;
-import hdm.social.media.pinnwand.shared.Beitrag;
-import hdm.social.media.pinnwand.shared.Kommentar;
-import hdm.social.media.pinnwand.shared.Like;
-import hdm.social.media.pinnwand.shared.Nutzer;
-import hdm.social.media.pinnwand.shared.Pinnwand;
+import hdm.social.media.pinnwand.shared.PinnwandAdministration;
+import hdm.social.media.pinnwand.shared.bo.Abo;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Kommentar;
+import hdm.social.media.pinnwand.shared.bo.Like;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
+import hdm.social.media.pinnwand.shared.bo.Pinnwand;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -266,10 +266,6 @@ public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgument
 
 @Override
 public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException{
-	//Aufgabe als erstes result array festlegen
-	//Dann Eigene Beiträge abfragen
-	//Dann Abobeiträge abfragen
-	//Arrayliste sortieren nach Datum TODO
 	
 	ArrayList<Beitrag> result = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
 	ArrayList<Abo> Abonnenten= getAboByNutzer(n.getId());

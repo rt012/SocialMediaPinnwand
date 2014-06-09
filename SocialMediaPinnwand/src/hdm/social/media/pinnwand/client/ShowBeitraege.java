@@ -1,7 +1,9 @@
 package hdm.social.media.pinnwand.client;
 
-import hdm.social.media.pinnwand.shared.Beitrag;
-import hdm.social.media.pinnwand.shared.Nutzer;
+import hdm.social.media.pinnwand.shared.PinnwandAdministration;
+import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import java.util.ArrayList;
 import java.util.Collections;

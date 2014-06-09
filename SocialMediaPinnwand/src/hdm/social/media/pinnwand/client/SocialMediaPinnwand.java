@@ -6,18 +6,18 @@ import java.util.Collection;
 import java.util.Date;
 
 import hdm.social.media.pinnwand.server.PinnwandAdministrationImpl;
-import hdm.social.media.pinnwand.shared.Abo;
-import hdm.social.media.pinnwand.shared.Beitrag;
 import hdm.social.media.pinnwand.shared.FieldVerifier;
-import hdm.social.media.pinnwand.shared.Like;
-import hdm.social.media.pinnwand.shared.Nutzer;
-import hdm.social.media.pinnwand.shared.Pinnwand;
+import hdm.social.media.pinnwand.shared.PinnwandAdministration;
+import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.client.gui.AbonnementCustomDialog;
 import hdm.social.media.pinnwand.client.gui.CustomOracle;
 import hdm.social.media.pinnwand.client.gui.CustomSuggest;
 import hdm.social.media.pinnwand.client.gui.LoginCustomDialog;
-import hdm.social.media.pinnwand.shared.Abo;
-import hdm.social.media.pinnwand.shared.Nutzer;
+import hdm.social.media.pinnwand.shared.bo.Abo;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Like;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
+import hdm.social.media.pinnwand.shared.bo.Pinnwand;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

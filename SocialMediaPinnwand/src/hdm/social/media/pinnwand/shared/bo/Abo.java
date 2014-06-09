@@ -12,9 +12,9 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class Abo extends BusinessObject implements IsSerializable {
 	
 	private static final long serialVersionUID = 1L;
-	//Abonnement Nutzer
+	// Abonnement Nutzer
 	private Nutzer abonnent;
-	//Abonnierter Nutzer 
+	// Abonnierter Nutzer 
 	private Nutzer lieferant;
 	/**
 	 * Methode zum Aulesen eines Abonnements

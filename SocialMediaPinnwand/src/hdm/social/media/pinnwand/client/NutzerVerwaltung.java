@@ -8,6 +8,7 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
@@ -26,11 +27,11 @@ public class NutzerVerwaltung {
 	/**
 	 * Erstellt einen Remote Service Proxy um mit dem Server-Seitigem Service zu kommunizieren.
 	 */
-	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
+	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);	
 	/**
-	 * Klassenvariable für den aktuelle angemeldeten Nutzer
+	 * Verweis auf EntryPoint
 	 */
-	private Nutzer aktuellerNutzer = null;
+	private EntryPoint entryPointKlasse = null;
 	
 	/**
 	 * Klassenvariable für das Object LoginInfo welches die LogIn Informationen des Nutzers enthält
@@ -43,8 +44,9 @@ public class NutzerVerwaltung {
 	 * 
 	 * @param loginInfo
 	 */
-	public NutzerVerwaltung(LoginInfo loginInfo){
+	public NutzerVerwaltung(LoginInfo loginInfo, EntryPoint entryPointKlasse){
 		this.loginInfo = loginInfo;
+		this.entryPointKlasse = entryPointKlasse;
 	}
 	
 	/**
@@ -53,27 +55,30 @@ public class NutzerVerwaltung {
 	 * @author Eric Schmidt
 	 */
 	public void nutzerInDatenbank(final LoginInfo googleNutzer){
-		//getNutzerByEmail wäre hier schöner!
-		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-			 public void onFailure
+		PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
+			public void onFailure
 			 (Throwable caught) {
 			 // TODO: Do something with errors.
 			 }
-			 
+
 			@Override
-			public void onSuccess(ArrayList<Nutzer> result) {
-				for (Nutzer n : result){
-					if (n.getEmail() == googleNutzer.getEmailAddress()){
-						aktuellerNutzer = n;
+			public void onSuccess(Nutzer result) {
+				if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
+					if (entryPointKlasse instanceof SocialMediaPinnwand){
+						((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+						((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
+					}else{
+						((ReportGenerator) entryPointKlasse).loadReportGenerator();
 					}
 				}
-				if (aktuellerNutzer == null){
+
+				else{
 					createNutzer(googleNutzer);
 				}
+
 			}
 		});
 	}
-	
 	
 	/**
 	 * Legt den Nutzer in der Datenbank an
@@ -107,7 +112,9 @@ public class NutzerVerwaltung {
 
 					@Override
 					public void onSuccess(Nutzer result) {
-						aktuellerNutzer = result;	
+						if (entryPointKlasse instanceof SocialMediaPinnwand){
+							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+						}
 					}
 					
 				});

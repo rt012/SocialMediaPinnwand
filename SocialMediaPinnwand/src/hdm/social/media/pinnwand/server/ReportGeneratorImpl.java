@@ -4,19 +4,29 @@ package hdm.social.media.pinnwand.server;
 import java.util.ArrayList;
 import java.util.Date;
 
+import hdm.social.media.pinnwand.client.LoginInfo;
 import hdm.social.media.pinnwand.report.BeitragReport;
 import hdm.social.media.pinnwand.report.Column;
 import hdm.social.media.pinnwand.report.CompositeParagraph;
 import hdm.social.media.pinnwand.report.HTMLReportWriter;
 import hdm.social.media.pinnwand.report.NutzerReport;
-import hdm.social.media.pinnwand.report.Report;
 import hdm.social.media.pinnwand.report.Row;
 import hdm.social.media.pinnwand.report.SimpleParagraph;
+import hdm.social.media.pinnwand.server.db.AboMapper;
+import hdm.social.media.pinnwand.server.db.BeitragMapper;
+import hdm.social.media.pinnwand.server.db.LikeMapper;
+import hdm.social.media.pinnwand.server.db.NutzerMapper;
+import hdm.social.media.pinnwand.server.db.PinnwandMapper;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.ReportGenerator;
+import hdm.social.media.pinnwand.shared.bo.Abo;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator  {
@@ -60,7 +70,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	  public void init() throws IllegalArgumentException {
 	    /*
 	     * Ein ReportGeneratorImpl-Objekt instantiiert für seinen Eigenbedarf eine
-	     * BankVerwaltungImpl-Instanz.
+	     * Pinnwand-Instanz.
 	     */
 	    PinnwandAdministrationImpl a = new PinnwandAdministrationImpl();
 	    a.init();
@@ -77,19 +87,19 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	  }
 
 
-	  /**
-	   * Erstellen von <code>AllAccountsOfCustomerReport</code>-Objekten.
-	   * 
-	   * @param c das Kundenobjekt bzgl. dessen der Report erstellt werden soll.
-	   * @return der fertige Report
-	   */
-	  public String createBeitragReport(
-	      Beitrag b) throws IllegalArgumentException {
+	/**
+	 * Erstelle einen String welches durch den Report als HTML repräsentiert 
+	 * 
+	 * @param datumVon definiert den Anfang der Suchanfrage
+	 * @param datumBis definiert das Ende der Suchanfrage
+	 * @return der fertige HTML-Report
+	 */
+	public String createBeitragReport(String datumVon, String datumBis) throws IllegalArgumentException {
 
 	    if (this.getPinnwandVerwaltung() == null)
 	      return null;
 
-	    /*
+	    /**
 	     * Zunächst legen wir uns einen leeren Report an.
 	     */
 	    BeitragReport result = new BeitragReport();
@@ -98,40 +108,36 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	    result.setTitle("Alle Beiträge");
 
 
-	    /*
+	    /**
 	     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 	     */
 	    result.setCreated(new Date());
 
-	    /*
+	    /**
 	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
 	     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
 	     * die Verwendung von CompositeParagraph.
 	     */
 	    CompositeParagraph header = new CompositeParagraph();
 
-	    // Name und Vorname des Kunden aufnehmen
-	    header.addSubParagraph(new SimpleParagraph(b.getNutzer().getName() + ", "
-	        + b.getNutzer().getVorname()));
+	    /**
+	     * Zeitraum der Report Suchanfrage in die Kopfzeile hinzufügen
+	     */
+	    header.addSubParagraph(new SimpleParagraph("Zeitraum Von: " + datumVon + " Bis: "
+	        + datumBis));
 
-	    // Kundennummer aufnehmen
-	    header.addSubParagraph(new SimpleParagraph("Email:" + b.getNutzer().getEmail()));
 
 	    // Hinzufügen der zusammengestellten Kopfdaten zu dem Report
 	    result.setHeaderData(header);
 
-	    /*
-	     * Ab hier erfolgt ein zeilenweises Hinzufügen von Konto-Informationen.
-	     */
-	    
-	    /*
-	     * Zunächst legen wir eine Kopfzeile für die Konto-Tabelle an.
+	    /**
+	     * Zunächst legen wir eine Kopfzeile für die Nutzer-Tabelle an.
 	     */
 	    Row headline = new Row();
 
-	    /*
-	     * Wir wollen Zeilen mit 2 Spalten in der Tabelle erzeugen. In die erste
+	    /**
+	     * Wir wollen Zeilen mit 4 Spalten in der Tabelle erzeugen. In die erste
 	     * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
 	     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
 	     * Überschriften ab.
@@ -144,92 +150,97 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	    // Hinzufügen der Kopfzeile
 	    result.addRow(headline);
 
-	    /*
-	     * Nun werden sämtliche Konten des Kunden ausgelesen und deren Kto.-Nr. und
-	     * Kontostand sukzessive in die Tabelle eingetragen.
+	    /**
+	     * Nun werden sämtliche Beiträge innerhalb eines Zeitraumes ausgelesen und Autor, Inhalt, Likes und 
+	     * die Anzahl der Kommentare in die Tabelle eingetragen.
 	     */
-	    ArrayList<Beitrag> beitraege  = this.administration.findAllBeitraege();
-
+	    ArrayList<Beitrag> beitraege  = BeitragMapper.beitragMapper().getBeiträgeBetweenTwoDates(datumVon, datumBis);
+	 
+	    beitraege = sort(beitraege);
+	    
 	    for (Beitrag beitrag : beitraege) {
 	      // Eine leere Zeile anlegen.
 	      Row accountRow = new Row();
 
-	      // Erste Spalte: Name hinzufügen
-	      accountRow.addColumn(new Column(beitrag.getNutzer().getName()));
+	      // Erste Spalte: Nachname und Vorname hinzufügen
+	      accountRow.addColumn(new Column(beitrag.getPinnwand().getNutzer().getVorname() + " " 
+	    		  + beitrag.getPinnwand().getNutzer().getName()));
 
 	      // Zweite Spalte: Inhalt hinzufügen
+	      
 	      accountRow.addColumn(new Column(beitrag.getInhalt()));
 	      
 	      // Dritte Spalte: Like-Anzahl hinzufügen
 	      accountRow.addColumn(new Column(String.valueOf(beitrag.getLikeList().size())));
 	      
-	      // Dritte Spalte: Like-Anzahl hinzufügen
+	      // Dritte Spalte: Kommentar-Anzahl hinzufügen
 	      accountRow.addColumn(new Column(String.valueOf(beitrag.getKommentarListe().size())));
 
 	      // und schließlich die Zeile dem Report hinzufügen.
 	      result.addRow(accountRow); 
 	    }
 	    
+	    /**
+	     * Übergebe den erstellten Report dem HTMLReportWriter um HTML zu erzeugen
+	     */
 	    HTMLReportWriter writer = new HTMLReportWriter();
 	    writer.process(result);
-	    /*
-	     * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
+	    
+	    /**
+	     * Zum Schluss müssen wir noch den fertigen HTML-Report zurückgeben.
 	     */
 	    return writer.getReportText();
 	  }
 	  
-	  
-	
-
 	@Override
-	public String CreateNutzerReport(Nutzer n) throws IllegalArgumentException {
+	public String CreateNutzerReport(Nutzer n, String datumVon, String datumBis) throws IllegalArgumentException {
 
 		if (this.getPinnwandVerwaltung() == null)
 		      return null;
 
-		    /*
+		    /**
 		     * Zunächst legen wir uns einen leeren Report an.
 		     */
 		    NutzerReport result = new NutzerReport();
 
 		    // Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-		    result.setTitle("Alle Informationen eines Nutzer");
+		    result.setTitle("Informationen über " + n.getVorname() + " " + n.getName());
 
 
-		    /*
+		    /**
 		     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 		     */
 		    result.setCreated(new Date());
 
-		    /*
+		    /**
 		     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
 		     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
 		     * die Verwendung von CompositeParagraph.
 		     */
 		    CompositeParagraph header = new CompositeParagraph();
 
-		    // Name und Vorname des Kunden aufnehmen
+		    // Name und Vorname des Nutzers aufnehmen
 		    header.addSubParagraph(new SimpleParagraph(n.getName() + ", "
 		        + n.getVorname()));
 
-		    // Kundennummer aufnehmen
+		    // Email-Adresse aufnehmen
 		    header.addSubParagraph(new SimpleParagraph("Email:" + n.getEmail()));
+		    
+		    // Zeitraum aufnehmen
+		    header.addSubParagraph(new SimpleParagraph("Zeitraum Von: " + datumVon + " Bis: "
+			        + datumBis));
 
 		    // Hinzufügen der zusammengestellten Kopfdaten zu dem Report
 		    result.setHeaderData(header);
 
-		    /*
-		     * Ab hier erfolgt ein zeilenweises Hinzufügen von Konto-Informationen.
-		     */
-		    
-		    /*
+		    /**
 		     * Zunächst legen wir eine Kopfzeile für die Konto-Tabelle an.
 		     */
 		    Row headline = new Row();
 
-		    /*
-		     * Wir wollen Zeilen mit 2 Spalten in der Tabelle erzeugen. In die erste
+		    /**
+		     * Wir wollen Zeilen mit 4 Spalten in der Tabelle erzeugen. In die erste
 		     * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
 		     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
 		     * Überschriften ab.
@@ -240,32 +251,47 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		    headline.addColumn(new Column("Likes gegeben"));
 
 		    // Hinzufügen der Kopfzeile
-		    result.addRow(headline);
-		    
-
-		    /*
-		     * Nun werden sämtliche Konten des Kunden ausgelesen und deren Kto.-Nr. und
-		     * Kontostand sukzessive in die Tabelle eingetragen.
-		     */
+		    result.addRow(headline);   
 		    
 		    Row accountRow = new Row();
-		    if(n.getAbonnentenListe() != null)	accountRow.addColumn(new Column(String.valueOf(n.getAbonnentenListe().size())));
-		    else accountRow.addColumn(new Column("0"));
 		    
-		    if (n.getPinnwand() != null) if(n.getPinnwand().getBeitraege() != null) accountRow.addColumn(new Column(String.valueOf(n.getPinnwand().getBeitraege().size())));
-		    else accountRow.addColumn(new Column("0"));
+		    /**
+		     * Berechne die Abonnentenanzahl
+		     */
+		    ArrayList<Abo> aboListe = AboMapper.aboMapper().getAboBetweenTwoDates(datumVon, datumBis, n);  
+		    if (aboListe != null){
+		    	accountRow.addColumn(new Column(String.valueOf(aboListe.size())));
+		    }else{
+		    	accountRow.addColumn(new Column("0"));
+		    }
+		
+		    /**
+		     * Berechne die Beitragsanzahl
+		     */
+		    ArrayList<Beitrag> beitragListe = BeitragMapper.beitragMapper().getBeiträgeBetweenTwoDates(datumVon, datumBis, 
+		    		PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
+		    if (beitragListe != null){
+		    	accountRow.addColumn(new Column(String.valueOf(beitragListe.size())));
+		    }else{
+		    	accountRow.addColumn(new Column("0"));
+		    }
 		    
+		    /**
+		     * Berechne die Like Anzahl
+		     */
 		    int likeAnzahl = 0;
-		    if (n.getPinnwand() != null) if(n.getPinnwand().getBeitraege() != null){
-		    	
-			    for (Beitrag beitrag : n.getPinnwand().getBeitraege()) {
+		    if (beitragListe != null){
+			    for (Beitrag beitrag : beitragListe) {
 				    if(beitrag.getLikeList() != null)
 				    likeAnzahl += beitrag.getLikeList().size();
 			    }
 		    }
-		    
 		    accountRow.addColumn(new Column(String.valueOf(likeAnzahl)));
-		    accountRow.addColumn(new Column(String.valueOf(this.administration.getLikeCountByNutzer(n))));
+		    
+		    /**
+		     * Berechne die gegeben Likes
+		     */
+		    accountRow.addColumn(new Column(String.valueOf(LikeMapper.likeMapper().getLikeCountByNutzer(n, datumVon, datumBis))));
 		
 		    // und schließlich die Zeile dem Report hinzufügen.
 		    result.addRow(accountRow);
@@ -277,6 +303,44 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		    return writer.getReportText();
 	}
 
+	@Override
+	public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException {
+		return NutzerMapper.nutzerMapper().getAllNutzer();
+	}
+
+	// Bubblesort method to insure that Listview elements are everytime in the same order 
+			public ArrayList<Beitrag> sort(ArrayList<Beitrag> array) {
+				int n = array.size();
+				for(int i = n-1; i >= 0; i--) {
+					for (int j = 1; j <= i; j++) {
+						if ( array.get(j-1).getLikeList().size() > array.get(j).getLikeList().size()) {
+						Beitrag temp = array.get(j-1);
+			        	array.set(j-1, array.get(j));
+			        	array.set(j, temp);
+							
+						}
+					}
+				}
+			return array;
+		}
+			
+			@Override
+			public LoginInfo login(String requestUri) {
+				UserService userService = UserServiceFactory.getUserService();
+				User user = userService.getCurrentUser();
+				LoginInfo loginInfo = new LoginInfo();
+
+				if (user != null) {
+					loginInfo.setLoggedIn(true);
+				    loginInfo.setEmailAddress(user.getEmail());
+				    loginInfo.setNickname(user.getNickname());
+				    loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
+				}else {
+				    loginInfo.setLoggedIn(false);
+				    loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
+				}
+					return loginInfo;
+			}
 	
 	
 }

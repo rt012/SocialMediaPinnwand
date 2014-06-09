@@ -39,12 +39,9 @@ public interface PinnwandAdministrationAsync {
 
 	void findAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
 
-	void getAllKommentarJeBeitrag(Beitrag b,
-			AsyncCallback<ArrayList<Kommentar>> callback);
+	void getKommentarByBeitrag(Beitrag b, AsyncCallback<ArrayList<Kommentar>> callback);
 
-	void getAllLikeJeBeitrag(Beitrag b, AsyncCallback<ArrayList<Like>> callback);
-
-	void getNutzerById(int id, AsyncCallback<Nutzer> callback);
+	void getLikeByBeitrag(Beitrag b, AsyncCallback<ArrayList<Like>> callback);
 
 	void getPinnwandById(int id, AsyncCallback<Pinnwand> callback);
 
@@ -70,9 +67,22 @@ public interface PinnwandAdministrationAsync {
 
 	void getAllNutzer(AsyncCallback<ArrayList<Nutzer>> callback);
 
+	void getNutzerById(int i, AsyncCallback<Nutzer> callback);
+
+	void countLikeByBeitrag(int id, AsyncCallback<Integer> callback);
+
 	void login(String requestUri, AsyncCallback<LoginInfo> callback);
 
+	void checkIfLiked(Nutzer n, Beitrag b, AsyncCallback<Boolean> callback);
+
+	void getNutzerByEmail(String email, AsyncCallback<Nutzer> callback);
+
 	void getAboByNutzer(int id, AsyncCallback<ArrayList<Abo>> callback);
-	
-	void getLikeCountByNutzer(Nutzer n, AsyncCallback<Integer> callback);
+
+	void getAllBeitragByNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
+
+	void getAllBeitragByAktuellerNutzer(Nutzer n, AsyncCallback<ArrayList<Beitrag>> callback);
+
+	void getPinnwandByNutzer(Nutzer n, AsyncCallback<Pinnwand> callback);
+
 }

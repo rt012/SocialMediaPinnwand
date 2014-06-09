@@ -28,6 +28,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 public PinnwandAdministrationImpl() throws IllegalArgumentException {}
 
 public void init() throws IllegalArgumentException {}
+
 @Override
 public Nutzer createNutzer(Nutzer n) throws IllegalArgumentException {
 	return NutzerMapper.nutzerMapper().insertNutzer(n);
@@ -133,13 +134,6 @@ public void deleteKommentar(Kommentar k) throws IllegalArgumentException {
 }
 
 @Override
-public ArrayList<Kommentar> getAllKommentarJeBeitrag(Beitrag b)
-throws IllegalArgumentException {
-// TODO Auto-generated method stub
-return null;
-}
-
-@Override
 public Like createLike(Like l) throws IllegalArgumentException {
 // TODO Auto-generated method stub
 return null;
@@ -156,13 +150,13 @@ public void deleteLike(Like l) throws IllegalArgumentException {
 // TODO Auto-generated method stub
 
 }
-
 @Override
-public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b)
-throws IllegalArgumentException {
-// TODO Auto-generated method stub
-return null;
+public boolean checkIfLiked(Nutzer n, Beitrag b) throws IllegalArgumentException {
+
+	return LikeMapper.likeMapper().checkIfLiked(n, b);
 }
+
+
 
 @Override
 public Abo createAbo(Nutzer abonnement, Nutzer lieferant) throws IllegalArgumentException {
@@ -206,16 +200,58 @@ public LoginInfo login(String requestUri) {
 	    loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
 	}
 		return loginInfo;
-	}
+}
 
 @Override
 public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
 	return AboMapper.aboMapper().getAboByNutzer(id);
 }
 
+
 @Override
-public int getLikeCountByNutzer(Nutzer n) throws IllegalArgumentException {
-	return LikeMapper.likeMapper().getLikeCountByNutzer(n);
+public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag b)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
 }
+
+@Override
+public ArrayList<Like> getLikeByBeitrag(Beitrag b)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public int countLikeByBeitrag(int id) throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException {
+	return NutzerMapper.nutzerMapper().getNutzerByEmail("'" + email + "'");
+}
+
+@Override
+public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n)
+		throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Pinnwand getPinnwandByNutzer(Nutzer n) throws IllegalArgumentException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }
 

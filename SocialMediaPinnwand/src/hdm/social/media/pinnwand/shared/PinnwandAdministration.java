@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 
 
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -61,16 +60,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @throws IllegalArgumentException
    */
   public Nutzer updateNutzer(Nutzer n) throws IllegalArgumentException;
- 
-  /**
-   * Einen Nutzer durch dessen ID finden.
-   *
-   * @param id int
-   * @return Ein Nutzer-Objekt.
-   * @throws IllegalArgumentException
-   */
-  public Nutzer getNutzerById(int id) throws IllegalArgumentException;
- 
+  
   /**
    * Einen Nutzer lÃ¶schen.
    *
@@ -203,7 +193,7 @@ public interface PinnwandAdministration extends RemoteService{
    * @return ArrayList<Kommentar>
    * @throws IllegalArgumentException
    */
-  public ArrayList<Kommentar> getAllKommentarJeBeitrag(Beitrag b) throws IllegalArgumentException;
+  public ArrayList<Kommentar> getKommentarByBeitrag(Beitrag b) throws IllegalArgumentException;
  
   /**
    * Einen Like erstellen.
@@ -237,8 +227,16 @@ public interface PinnwandAdministration extends RemoteService{
    * @return ArrayList<Like>
    * @throws IllegalArgumentException
    */
-  public ArrayList<Like> getAllLikeJeBeitrag(Beitrag b) throws IllegalArgumentException;
+  public ArrayList<Like> getLikeByBeitrag(Beitrag b) throws IllegalArgumentException;
  
+  /**
+   * Prï¿½fen ob Nutzer einen Beitrag geliked hat
+   * @param n Nutzer
+   * @param b Beitrag 
+   * @return true / false 
+   * @throws IllegalArgumentException
+   */
+  public boolean checkIfLiked(Nutzer n, Beitrag b) throws IllegalArgumentException;
   /**
    * Einen Abonnement Beziehung erstellen.
    *
@@ -264,9 +262,13 @@ public interface PinnwandAdministration extends RemoteService{
    * @throws IllegalArgumentException
    */
   public void deleteAbo(Abo a) throws IllegalArgumentException;
+  
+  public Nutzer getNutzerById(int i) throws IllegalArgumentException;
+
+  public int countLikeByBeitrag(int id)throws IllegalArgumentException;
 
   /**
-   * Gibt sämtliche Abos eines Nutzers aus
+   * Gibt sï¿½mtliche Abos eines Nutzers aus
    * 
    * @param id der Nutzers
    * @return ArrayList der Abos des Nutzers
@@ -281,8 +283,13 @@ public interface PinnwandAdministration extends RemoteService{
    * @return
    * @author Eric Schmidt
    */
-  public LoginInfo login(String requestUri)throws IllegalArgumentException;
+  public LoginInfo login(String requestUri) throws IllegalArgumentException;
   
-  public int getLikeCountByNutzer(Nutzer n) throws IllegalArgumentException;
+  public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException;
   
+  public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException;
+  
+  public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException;
+
+  public Pinnwand getPinnwandByNutzer(Nutzer n) throws IllegalArgumentException;  
 }

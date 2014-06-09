@@ -31,6 +31,7 @@ public class Row implements Serializable {
   public void addColumn(Column c) {
     this.columns.addElement(c);
   }
+ 
 
   /**
    * Entfernen einer benannten Spalte

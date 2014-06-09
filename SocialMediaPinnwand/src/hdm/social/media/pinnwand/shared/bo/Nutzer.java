@@ -13,7 +13,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class Nutzer extends BusinessObject implements IsSerializable {
 
-//	private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 /**
  *  Vorname eines Nutzers 	
  */

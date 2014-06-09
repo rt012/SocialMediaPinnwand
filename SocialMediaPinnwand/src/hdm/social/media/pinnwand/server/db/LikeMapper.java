@@ -77,12 +77,12 @@ public class LikeMapper {
 	}
 	
 	 
-	 /*
+	 /**
 	 * @see 	getLikeByBeitrag(int id): Sucht alle Likes die zu einem Beitrag gehören
 	 * @param	Beitrag ID
 	 * @return 	ArrayList mit Like Objekten
 	 */
-	 public ArrayList<Like> getLikeByBeitrag(int id){
+	 public ArrayList<Like> getLikeByBeitrag(Beitrag beitrag){
 		//Aufbau der DBVerbindung
 		Connection con = DBConnection.connection();
 		ArrayList <Like> likeListe= new ArrayList<Like>();
@@ -91,7 +91,7 @@ public class LikeMapper {
 		try{
 			Statement stmt = con.createStatement();
 			//Suche alle Likes zu einem Beitrag
-			ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE beitrag_ID="+id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE beitrag_ID="+ beitrag.getId());
 
 			while (rs.next()) {
 		        // Ergebnis in Like- Objekt umwandeln
@@ -99,9 +99,8 @@ public class LikeMapper {
 		        l.setId(rs.getInt("like_ID"));
 		        l.setErstellungsZeitpunkt(rs.getDate("erstellung"));
 		        l.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
-		        l.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
-		             
-		        
+		        l.setBeitrag(beitrag); 
+		 		        
 		        //LikeObjekt zu LikeListe hinzufügen
 		        likeListe.add(l);
 		       
@@ -214,7 +213,7 @@ public class LikeMapper {
 	    } 
 	}
 	
-	public boolean checIfLiked(Nutzer n, Beitrag b) {
+	public boolean checkIfLiked(Nutzer n, Beitrag b) {
 		Connection con = DBConnection.connection();
 		try {
 			Statement stmt = con.createStatement();
@@ -231,16 +230,27 @@ public class LikeMapper {
 		
 	}
 	
-	public int getLikeCountByNutzer(Nutzer n) {
+	/**
+	 * Gibt alle Likes eines Nutzeres innerhalb eines Zeitraums aus
+	 * 
+	 * @param	Nutzer n 
+	 * @param	datumVon String welches das Anfangsdatum der Suchanfrage bestimmt
+	 * @param	datumVis String welches das Enddatum der Suchanfrage bestimmt
+	 * 
+	 * @return Anzahl der Likes des Nutzers
+	 */
+	
+	public int getLikeCountByNutzer(Nutzer n, String datumVon, String datumBis) {
 		Connection con = DBConnection.connection();
 		int anzahl = 0;
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(`like_ID`) FROM `like` WHERE `nutzer_ID` = " + n.getId());
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(`like_ID`) FROM `like` WHERE `nutzer_ID` = " + n.getId()
+					+ " AND erstellung between '" + datumVon + "' AND '" + datumBis + "'");
 			if(rs.next()) {
 				anzahl = rs.getInt(1);
 			}
-			return anzahl;
+ 			return anzahl;
 		}
 		catch  (SQLException e) {
 			e.printStackTrace();

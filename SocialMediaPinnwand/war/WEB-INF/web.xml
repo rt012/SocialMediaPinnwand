@@ -29,15 +29,15 @@
 
 <servlet-mapping>
 <servlet-name>ReportGeneratorServlet</servlet-name>
-<url-pattern>/socialmediapinnwand/reportgenerator</url-pattern>
+<url-pattern>/reportgenerator/reportgenerator</url-pattern>
 </servlet-mapping>
- <!-- <security-constraint>
+<security-constraint>
         <web-resource-collection>
-            <web-resource-name>socialmediapinnwand</web-resource-name>
-            <url-pattern>/socialmediapinnwand/*</url-pattern>
+            <web-resource-name>profile</web-resource-name>
+            <url-pattern>/profile/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>*</role-name>
         </auth-constraint>
-    </security-constraint> -->
+</security-constraint>
 </web-app>

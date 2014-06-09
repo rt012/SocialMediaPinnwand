@@ -2,6 +2,8 @@ package hdm.social.media.pinnwand.report;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.ui.Button;
+
 /**
  * Spalte eines <code>Row</code>-Objekts. <code>Column</code>-Objekte
  * implementieren das <code>Serializable</code>-Interface und können daher als
@@ -22,6 +24,8 @@ public class Column implements Serializable {
    * In dieser Realisierung handelt es sich um einen einfachen textuellen Wert.
    */
   private String value = "";
+  private Button button;
+  
 
   /**
    * <p>
@@ -53,6 +57,7 @@ public class Column implements Serializable {
   public Column(String s) {
     this.value = s;
   }
+  
 
   /**
    * Auslesen des Spaltenwerts.

@@ -1,41 +1,30 @@
 package hdm.social.media.pinnwand.client.gui;
 
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.TabBar;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
+import java.text.ParseException;
+import java.util.Date;
+
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 public class ReportRootPanel extends SplitLayoutPanel{
 	
-	private TabBar tabBar = new TabBar();
-	
 	public ReportRootPanel(){
-		tabBar.addTab("Nutzer-Report");
-		tabBar.addTab("Beitrag-Report");
-
-	    // Hook up a tab listener to do something when the user selects a tab.
-		tabBar.addSelectionHandler(new SelectionHandler<Integer>() {
-	      public void onSelection(SelectionEvent<Integer> event) {
-	        // Let the user know what they just did.
-	        switch(event.getSelectedItem().intValue()){
-	        case 0:
-	        	clear();
-	        	addNorth(tabBar, 32);
-	        	add(new NutzerReportPanel());
-	        	
-	        	break;
-	        case 1:
-	        	clear();
-	        	addNorth(tabBar, 32);
-	        	add (new BeitragReportPanel());
-	        	break;
-	        }
-	      }
-	    });
-	    
-		tabBar.selectTab(0); //Starte mit Social Media Pinnwand
-		
+	}
+	
+	public void loadNutzerReport(Date datumVon, Date datumBis, Nutzer nutzer){
+		clear();
+		try {
+			add(new NutzerReportPanel(datumVon, datumBis, nutzer));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadBeitragReport(Date datumVon, Date datumBis){
+		clear();
+		add (new BeitragReportPanel(datumVon, datumBis));
 	}
 	
 	

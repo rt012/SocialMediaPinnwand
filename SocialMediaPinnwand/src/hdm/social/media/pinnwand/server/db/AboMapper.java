@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.shared.*;
 import hdm.social.media.pinnwand.shared.bo.Abo;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 /*
  * Methoden:
@@ -47,7 +49,7 @@ public class AboMapper {
 			//Suche alle Felder der Abotabelle anhand von ID
 			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE abonnement_ID=" + id );
 			
-			//Maximal ein Rückgabewert da Id Primärschlüssel
+			//Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			if (rs.next()) {
 		        // Ergebnis in Abo- Objekt umwandeln
 		        Abo a = new Abo();
@@ -56,7 +58,7 @@ public class AboMapper {
 		        a.setAbonnent(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("abonnent_ID")));
 		        a.setLieferant(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("lieferant_ID")));
 		        
-		        //Abo Objekt zurückgeben
+		        //Abo Objekt zurï¿½ckgeben
 		        return a;
 			}
 		}
@@ -72,7 +74,7 @@ public class AboMapper {
 	
 	
 	/*
-	* @see 		getAboBNutzer(int id): gibt komplette Liste an Abonnements zurück die ein Nutzer besitzt
+	* @see 		getAboBNutzer(int id): gibt komplette Liste an Abonnements zurï¿½ck die ein Nutzer besitzt
 	* @param 	Nutzer Id
 	* @return 	ArrayList mit Abo objekten
 	*/ 
@@ -85,7 +87,7 @@ public class AboMapper {
 		try{
 			Statement stmt = con.createStatement();
 			//Suche alle Abonnements von einem Nutzer
-			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE lieferant_ID="+id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE abonnent_ID="+id);
 
 			while (rs.next()) {
 		        // Ergebnis in Abo- Objekt umwandeln
@@ -96,7 +98,7 @@ public class AboMapper {
 		        a.setLieferant(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("lieferant_ID")));
 		             
 		        
-		        //LikeObjekt zu LikeListe hinzufügen
+		        //LikeObjekt zu LikeListe hinzufï¿½gen
 		        aboListe.add(a);
 		       
 		      }
@@ -127,24 +129,24 @@ public class AboMapper {
 			Statement stmt = con.createStatement();
 
 	      /*
-	       * Zunächst schauen wir nach, welches der momentan höchste
-	       * Primärschlüsselwert ist.
+	       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+	       * Primï¿½rschlï¿½sselwert ist.
 	       */
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(abonnement_ID) AS maxid "
 	          + "FROM abonnement ");
 
-	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
 		        /*
-		         * c erhält den bisher maximalen, nun um 1 inkrementierten
-		         * Primärschlüssel.
+		         * c erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+		         * Primï¿½rschlï¿½ssel.
 		         */
 	    	  	maxid=rs.getInt("maxid");
 		        a.setId(rs.getInt("maxid") + 1);
 	
 		        stmt = con.createStatement();
 	
-		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 		        stmt.executeUpdate("INSERT INTO abonnement (abonnement_ID, abonnent_ID, lieferant_ID) "
 		            + "VALUES (" + a.getId() + ",'" + a.getAbonnent().getId() + "','"
 		            + a.getLieferant().getId() +"')");
@@ -160,7 +162,7 @@ public class AboMapper {
 	
 	
 	/*
-	* @see 		deleteAbo(Abo a): Löscht Abonnement aus der Datenbank
+	* @see 		deleteAbo(Abo a): Lï¿½scht Abonnement aus der Datenbank
 	* @param 	Abonnementobjekt
 	* @return 		-
 	*/ 
@@ -171,12 +173,52 @@ public class AboMapper {
 		//Versuch der Abfrage
 	    try {
 	      Statement stmt = con.createStatement();
-	      //Lösche Abonnement aus Tabelle mit gleicher ID
+	      //Lï¿½sche Abonnement aus Tabelle mit gleicher ID
 	      stmt.executeUpdate("DELETE FROM abonnement WHERE abonnement_ID=" + a.getId());
 	    }
 	    catch (SQLException e) {
 	      e.printStackTrace();
 	    } 
 	}
+	
+	/**
+	 * Gibt alle Abos zwischen einem Zeitraum aus
+	 * 
+	 * @param	datumVon String welches das Anfangsdatum der Suchanfrage bestimmt
+	 * @param	datumVis String welches das Enddatum der Suchanfrage bestimmt
+	 * @param 	n Nutzer dient als Suchparameter 
+	 * 
+	 * @return	ArrayList mit allen Beitragobjekten in einem Zeitraum
+	 */
+	public ArrayList<Abo> getAboBetweenTwoDates (String datumVon, String datumBis, Nutzer n){
+		//Aufbau der DBVerbindung
+		Connection con = DBConnection.connection();
+		ArrayList <Abo> aboListe= new ArrayList<Abo>();
+		//Versuch der Abfrage
+		try{
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * from abonnement WHERE abonnent_ID = " + n.getId() + " AND erstellung between '" 
+					+ datumVon + "' AND '" + datumBis + "'";
+			ResultSet rs = stmt.executeQuery
+					(sql);
+			
+			while (rs.next()) {
+				Abo a = new Abo();
+		        a.setId(rs.getInt("abonnement_ID"));
+		        a.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        a.setAbonnent(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("abonnent_ID")));
+		        a.setLieferant(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("lieferant_ID")));
+		            
+		        //LikeObjekt zu LikeListe hinzufï¿½gen
+		        aboListe.add(a);
+			}
+			return aboListe;		
+		}
+		   catch (SQLException e) {
+	    		e.printStackTrace();
+	    		return null;
+		    }				
+	}
+	
 	
 }

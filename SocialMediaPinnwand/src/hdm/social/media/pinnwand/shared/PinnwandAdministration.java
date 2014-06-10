@@ -9,12 +9,6 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
 import hdm.social.media.pinnwand.shared.bo.Pinnwand;
 
 import java.util.ArrayList;
-
-
-
-
-
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 

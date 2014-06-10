@@ -122,6 +122,8 @@ public class Beitrag extends Document implements IsSerializable, Comparable<Beit
 	public String toString() {
 		return "Erstellungszeitpunnkt" + getErstellungsZeitpunkt() + "Beitrag:" + getInhalt() + "\n Autor:" + pinnwand.getNutzer() + "\n Benutzer die diesen Beitrag geliked haben:"+ getAllLikeNutzer();
 	}
+
+	
 	
 	/**
 	 * Notwendig um Arraylisten ordnen zu können

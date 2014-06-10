@@ -186,7 +186,8 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 					}
 					if (!existiert){
 						DialogBox dlg = new AbonnementCustomDialog("Abonnieren", "Pinnwand von"
-					    		+ n.getVorname() + " wirklich abonnieren?", aktuellerNutzer, n, flexTableAbonniertePinnwaende);
+					    		+ n.getVorname() + " wirklich abonnieren?", aktuellerNutzer, n,
+					    		flexTableAbonniertePinnwaende, flexTableBeitraege);
 				        dlg.center();
 					}else{
 						Window.alert("Sie sind bereits eine Abonnementbeziehung mit diesem Nutzer eingegangen");

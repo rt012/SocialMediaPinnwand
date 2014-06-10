@@ -19,7 +19,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class AbonnementCustomDialog  extends DialogBox{ 
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	
-	public AbonnementCustomDialog(String content, String title, final Nutzer abonnement, final Nutzer lieferant, final Abolist flexTableAbonniertePinnwaende) {
+	public AbonnementCustomDialog(String content, String title, final Nutzer abonnement, final Nutzer lieferant, 
+			final Abolist flexTableAbonniertePinnwaende, final ShowBeitraege showbeitraege) {
 		setText(content);
 		Button abonnierenButton = new Button("Abonnieren", new ClickListener(){
 			@Override
@@ -32,6 +33,7 @@ public class AbonnementCustomDialog  extends DialogBox{
 					public void onSuccess(Abo result) {
 						Window.alert("Pinnwand abonniert");	
 						flexTableAbonniertePinnwaende.refresh(abonnement);
+						showbeitraege.refresh(abonnement);
 					}
 			    });	
 				hide();

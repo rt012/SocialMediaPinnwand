@@ -1,6 +1,6 @@
 package hdm.social.media.pinnwand.shared;
 
-import hdm.social.media.pinnwand.client.LoginInfo;
+import hdm.social.media.pinnwand.client.gui.LoginInfo;
 import hdm.social.media.pinnwand.shared.bo.Abo;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Kommentar;

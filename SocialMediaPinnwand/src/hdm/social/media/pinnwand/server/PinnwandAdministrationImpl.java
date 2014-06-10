@@ -1,16 +1,12 @@
 package hdm.social.media.pinnwand.server;
 
-import hdm.social.media.pinnwand.client.LoginInfo;
+import hdm.social.media.pinnwand.client.gui.LoginInfo;
 import hdm.social.media.pinnwand.server.db.AboMapper;
 import hdm.social.media.pinnwand.server.db.BeitragMapper;
-
 import hdm.social.media.pinnwand.server.db.KommentarMapper;
-
 import hdm.social.media.pinnwand.server.db.LikeMapper;
 import hdm.social.media.pinnwand.server.db.NutzerMapper;
-
 import hdm.social.media.pinnwand.server.db.PinnwandMapper;
-
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.bo.Abo;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;

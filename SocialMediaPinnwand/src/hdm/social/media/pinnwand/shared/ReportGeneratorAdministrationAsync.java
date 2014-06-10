@@ -2,7 +2,7 @@ package hdm.social.media.pinnwand.shared;
 
 import java.util.ArrayList;
 
-import hdm.social.media.pinnwand.client.LoginInfo;
+import hdm.social.media.pinnwand.client.gui.LoginInfo;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;

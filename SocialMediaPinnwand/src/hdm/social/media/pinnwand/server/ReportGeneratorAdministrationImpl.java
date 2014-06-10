@@ -4,7 +4,7 @@ package hdm.social.media.pinnwand.server;
 import java.util.ArrayList;
 import java.util.Date;
 
-import hdm.social.media.pinnwand.client.LoginInfo;
+import hdm.social.media.pinnwand.client.gui.LoginInfo;
 import hdm.social.media.pinnwand.report.BeitragReport;
 import hdm.social.media.pinnwand.report.Column;
 import hdm.social.media.pinnwand.report.CompositeParagraph;

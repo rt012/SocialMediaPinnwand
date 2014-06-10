@@ -1,4 +1,4 @@
-package hdm.social.media.pinnwand.client;
+package hdm.social.media.pinnwand.client.gui;
 
 import java.io.Serializable;
 

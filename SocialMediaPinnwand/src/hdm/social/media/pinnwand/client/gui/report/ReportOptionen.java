@@ -1,7 +1,9 @@
-package hdm.social.media.pinnwand.client.gui;
+package hdm.social.media.pinnwand.client.gui.report;
 
 
-import hdm.social.media.pinnwand.client.NutzerVerwaltung;
+import hdm.social.media.pinnwand.client.gui.CustomOracle;
+import hdm.social.media.pinnwand.client.gui.CustomSuggest;
+import hdm.social.media.pinnwand.client.gui.NutzerVerwaltung;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;

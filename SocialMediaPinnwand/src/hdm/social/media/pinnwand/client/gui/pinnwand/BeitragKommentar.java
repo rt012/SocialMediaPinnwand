@@ -1,4 +1,4 @@
-package hdm.social.media.pinnwand.client;
+package hdm.social.media.pinnwand.client.gui.pinnwand;
 
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;

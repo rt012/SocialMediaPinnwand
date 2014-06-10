@@ -1,6 +1,7 @@
-package hdm.social.media.pinnwand.client;
+package hdm.social.media.pinnwand.client.gui;
 
-import hdm.social.media.pinnwand.client.gui.LoginCustomDialog;
+import hdm.social.media.pinnwand.client.ReportGenerator;
+import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;

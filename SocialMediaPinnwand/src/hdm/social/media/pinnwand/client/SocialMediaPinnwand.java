@@ -3,13 +3,17 @@ package hdm.social.media.pinnwand.client;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
-import hdm.social.media.pinnwand.client.gui.PinnwandAllgemeinPanel;
-import hdm.social.media.pinnwand.client.gui.PinnwandBeitragPanel;
+import hdm.social.media.pinnwand.client.gui.LoginInfo;
+import hdm.social.media.pinnwand.client.gui.NutzerVerwaltung;
+import hdm.social.media.pinnwand.client.gui.pinnwand.PinnwandAllgemeinPanel;
+import hdm.social.media.pinnwand.client.gui.pinnwand.PinnwandBeitragPanel;
+import hdm.social.media.pinnwand.client.gui.pinnwand.ShowBeitraege;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 /**
@@ -78,7 +82,13 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandBeitragPanel = new PinnwandBeitragPanel(SocialMediaPinnwand.this);
 		pinnwandAllgemeinPanel= new PinnwandAllgemeinPanel(SocialMediaPinnwand.this, nutzerVerwaltung, showBeitraege);
 		
-
+		//ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		ScrollPanel scrollPanel = new ScrollPanel();
+		showBeitraege.setWidth("100%");
+		scrollPanel.setSize("300", "200");    
+		scrollPanel.add(showBeitraege);
+		
+		
 		SplitLayoutPanel split = new SplitLayoutPanel();
 		split.setStyleName("rootSplitPanel");
 
@@ -89,7 +99,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		split.addWest(pinnwandAllgemeinPanel, 300);
 		split.addEast(vsplit, 700);
 		vsplit.addNorth(pinnwandBeitragPanel, rootHeightSize*3/10);
-		vsplit.addSouth(showBeitraege, rootHeightSize*7/10);
+		vsplit.addSouth(scrollPanel, rootHeightSize*7/10);
 		rp.add(split);
 	}
 	

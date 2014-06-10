@@ -1,5 +1,6 @@
-package hdm.social.media.pinnwand.client;
+package hdm.social.media.pinnwand.client.gui.pinnwand;
 
+import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Abo;
@@ -13,13 +14,14 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 public class Abolist extends FlexTable{
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	private final SocialMediaPinnwand s;
 	private ShowBeitraege flexTableBeitraege;
 	
-	public Abolist(Nutzer n, SocialMediaPinnwand s, final ShowBeitraege flexTableBeitraege){
+	public Abolist(Nutzer n, SocialMediaPinnwand s, final ShowBeitraege flexTableBeitraege){		
 		this.s=s;
 		this.flexTableBeitraege = flexTableBeitraege;
 		fillAboList(n);

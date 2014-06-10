@@ -1,11 +1,14 @@
-package hdm.social.media.pinnwand.client;
+package hdm.social.media.pinnwand.client.gui.pinnwand;
 
+import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Like;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
+
 import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

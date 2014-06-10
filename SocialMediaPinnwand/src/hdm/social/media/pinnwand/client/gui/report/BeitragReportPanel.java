@@ -1,24 +1,24 @@
-package hdm.social.media.pinnwand.client.gui;
+package hdm.social.media.pinnwand.client.gui.report;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
-import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
-public class NutzerReportPanel extends SplitLayoutPanel{
+public class BeitragReportPanel extends SplitLayoutPanel {
 	
-	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
+	
+private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
 	@SuppressWarnings("deprecation")
-	public NutzerReportPanel(Date datumVon, Date datumBis, Nutzer nutzer) throws ParseException{
+	public BeitragReportPanel(Date datumVon, Date datumBis){
 		/**
 		 * Setze Stunden, Minuten und Sekunden der übergebenen Daten, um das selbe
 		 * Format wie in der Datenbank zu erhalten. Anschließend wird über das 
@@ -38,14 +38,21 @@ public class NutzerReportPanel extends SplitLayoutPanel{
 		String datumBisString = simpleDateFormat.format(datumBis);
 		String datumVonString = simpleDateFormat.format(datumVon);
 		
-		reportGenerator.CreateNutzerReport(nutzer, datumVonString, datumBisString, new AsyncCallback<String>(){
+		reportGenerator.createBeitragReport(datumVonString, datumBisString, new AsyncCallback<String>(){
 			@Override
 			public void onFailure(Throwable caught) {}
 
 			@Override
 			public void onSuccess(String result) {
+				//ScrollPanel sorgt dafür, dass das HTML scrollbar wird.
+				ScrollPanel scrollPanel = new ScrollPanel();
 				HTML html = new HTML(result);
-				add(html);	
+				
+				html.setWidth("100%");
+				scrollPanel.setSize("300", "200");    
+				scrollPanel.add(html);
+				
+				add(scrollPanel);	
 			}	
 		});
 	}

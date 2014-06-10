@@ -1,7 +1,9 @@
 package hdm.social.media.pinnwand.client;
 
-import hdm.social.media.pinnwand.client.gui.ReportOptionen;
-import hdm.social.media.pinnwand.client.gui.ReportRootPanel;
+import hdm.social.media.pinnwand.client.gui.LoginInfo;
+import hdm.social.media.pinnwand.client.gui.NutzerVerwaltung;
+import hdm.social.media.pinnwand.client.gui.report.ReportOptionen;
+import hdm.social.media.pinnwand.client.gui.report.ReportRootPanel;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 

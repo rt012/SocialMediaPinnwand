@@ -1,6 +1,5 @@
-package hdm.social.media.pinnwand.client.gui;
+package hdm.social.media.pinnwand.client.gui.pinnwand;
 
-import hdm.social.media.pinnwand.client.Abolist;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Abo;

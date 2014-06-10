@@ -1,12 +1,12 @@
-package hdm.social.media.pinnwand.client.gui;
+package hdm.social.media.pinnwand.client.gui.pinnwand;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import hdm.social.media.pinnwand.client.Abolist;
-import hdm.social.media.pinnwand.client.NutzerVerwaltung;
-import hdm.social.media.pinnwand.client.ShowBeitraege;
 import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
+import hdm.social.media.pinnwand.client.gui.CustomOracle;
+import hdm.social.media.pinnwand.client.gui.CustomSuggest;
+import hdm.social.media.pinnwand.client.gui.NutzerVerwaltung;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Abo;
@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -98,7 +99,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		
 
 		/**
-		 * Block fï¿½r SuggestBox
+		 * Block fuer SuggestBox
 		 * 
 		 * @author Eric Schmidt
 		 */
@@ -116,13 +117,19 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 
 
 		/**
-		 * Anzeigen einer Liste mit den bereits abonnierten PinnwÃ¤nden
+		 * Anzeigen einer Liste (FlexTable) mit den bereits abonnierten Pinnwaenden
 		 */
 		
-		flexTableAbonniertePinnwaende=new Abolist(aktuellerNutzer, socialMediaPinnwand,flexTableBeitraege);
-		flexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");	
+		//ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		ScrollPanel scrollPanel = new ScrollPanel();
 
-		add(flexTableAbonniertePinnwaende);
+		flexTableAbonniertePinnwaende=new Abolist(aktuellerNutzer, socialMediaPinnwand,flexTableBeitraege);
+		flexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
+		flexTableAbonniertePinnwaende.setWidth("100%");
+		
+		scrollPanel.setSize("300", "200");    
+		scrollPanel.add(flexTableAbonniertePinnwaende);
+		add(scrollPanel);
 
 	}
 	/**

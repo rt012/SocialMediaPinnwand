@@ -1,9 +1,11 @@
-package hdm.social.media.pinnwand.client.gui;
+package hdm.social.media.pinnwand.client.gui.report;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.shared.DateTimeFormat;
@@ -11,13 +13,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
-public class BeitragReportPanel extends SplitLayoutPanel {
+public class NutzerReportPanel extends SplitLayoutPanel{
 	
-	
-private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
+	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
 	@SuppressWarnings("deprecation")
-	public BeitragReportPanel(Date datumVon, Date datumBis){
+	public NutzerReportPanel(Date datumVon, Date datumBis, Nutzer nutzer) throws ParseException{
 		/**
 		 * Setze Stunden, Minuten und Sekunden der übergebenen Daten, um das selbe
 		 * Format wie in der Datenbank zu erhalten. Anschließend wird über das 
@@ -37,7 +38,7 @@ private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(Re
 		String datumBisString = simpleDateFormat.format(datumBis);
 		String datumVonString = simpleDateFormat.format(datumVon);
 		
-		reportGenerator.createBeitragReport(datumVonString, datumBisString, new AsyncCallback<String>(){
+		reportGenerator.CreateNutzerReport(nutzer, datumVonString, datumBisString, new AsyncCallback<String>(){
 			@Override
 			public void onFailure(Throwable caught) {}
 

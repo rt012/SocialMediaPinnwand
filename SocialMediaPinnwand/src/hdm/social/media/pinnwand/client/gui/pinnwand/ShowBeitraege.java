@@ -1,5 +1,6 @@
-package hdm.social.media.pinnwand.client;
+package hdm.social.media.pinnwand.client.gui.pinnwand;
 
+import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
@@ -11,6 +12,7 @@ import java.util.Collections;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 public class ShowBeitraege extends FlexTable{
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
@@ -19,6 +21,8 @@ public class ShowBeitraege extends FlexTable{
 	
 	
 	public ShowBeitraege(Nutzer n, SocialMediaPinnwand s){
+	
+		
 		setStyleName("FlexTableBeitraege");
 		
 		this.aktuellerNutzer = n;

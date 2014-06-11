@@ -76,8 +76,6 @@ public class BeitragKommentar extends HorizontalPanel {
 		
 	
 	
-	
-	
 	public Label getLabelKommentarInhalt() {
 		return LabelKommentarInhalt;
 	}

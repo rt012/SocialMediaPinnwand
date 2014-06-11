@@ -387,6 +387,7 @@ public class BeitragMapper {
 	   * @param nutzer Nutzer der momentan eingeloggt ist
 	   * @param beitrag Beitrag der angezeigt werden soll
 	   * @return true/false, je nach dem ob eingeloggter Nutzer Autor ist oder nicht.
+	   * 
 	   */
 	public boolean checkAuthor(Nutzer nutzer, Beitrag beitrag) {
 		Connection con = DBConnection.connection();

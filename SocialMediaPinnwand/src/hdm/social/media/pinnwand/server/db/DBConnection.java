@@ -14,12 +14,12 @@ public class DBConnection {
 	
 	//Datenbank URL
 	//CloudSQL
-	private static String url = "jdbc:mysql://173.194.248.243/it_projekt";
+	private static String url = "jdbc:mysql://localhost/it-projekt";
 
 	
 	//Nutzerdaten f�r DB-login
 	private static String name="root";
-	private static String password="root";
+	private static String password="";
 	
 	//Ersatz f�r Konstruktor zum erstellen einer Verbindung
 	public static Connection connection()  {

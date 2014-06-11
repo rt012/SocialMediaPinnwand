@@ -45,6 +45,8 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	
 	
 	 public PinnwandBeitrag(String Inhalt, String Beitragsautor, String LikeAnzahl, final Beitrag beitrag, final Nutzer nutzer, final ShowBeitraege showBeitraege) {   
+		
+		 
 		 /**
 		  * Elemente ( Widgets)  eines Beitrags
 		  */

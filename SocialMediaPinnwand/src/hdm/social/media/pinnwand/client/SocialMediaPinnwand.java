@@ -2,7 +2,9 @@ package hdm.social.media.pinnwand.client;
 
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
+import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
+import hdm.social.media.pinnwand.shared.bo.Pinnwand;
 import hdm.social.media.pinnwand.client.gui.LoginInfo;
 import hdm.social.media.pinnwand.client.gui.NutzerVerwaltung;
 import hdm.social.media.pinnwand.client.gui.pinnwand.PinnwandAllgemeinPanel;
@@ -78,6 +80,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 	 * @author Eric Schmidt
 	 */
 	public void loadSocialMediaPinnwand(){
+		
 		showBeitraege = new ShowBeitraege(aktuellerNutzer, SocialMediaPinnwand.this);
 		pinnwandBeitragPanel = new PinnwandBeitragPanel(SocialMediaPinnwand.this);
 		pinnwandAllgemeinPanel= new PinnwandAllgemeinPanel(SocialMediaPinnwand.this, nutzerVerwaltung, showBeitraege);

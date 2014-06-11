@@ -25,20 +25,23 @@ public class ReportGenerator implements EntryPoint {
 	private ReportRootPanel reportRootPanel = null;
 	private NutzerVerwaltung nutzerVerwaltung = null;
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 * Stellt eine Verbindung über einen Proxy her, um mit der Serverseite zu kommunizeren
+	 * 
 	 */
 	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
 	@Override
 	public void onModuleLoad() {
 		 /**
-		  * <code>UserLogin</code> gibt den aktuell eingeloggten Nutzer zurÃ¼ck
+		  * <code>UserLogin</code> gibt den aktuell eingeloggten Nutzer zurück
 		  * Wenn der Nutzer nicht bei Google angemeldet ist, gibt die Methode
-		  * <code> UserLogin().getUser() null zurÃ¼ck
+		  * <code> UserLogin().getUser() null zurück
 		  * 
 		  * @author Eric Schmidt 
 		 */
-		// Check login status using login service. --> Nach Deploy: GWT.getHostPageBaseURL() 
+		/**
+		 * Überprüft den Login Status --> Nach Deploy: GWT.getHostPageBaseURL() 
+		 */
 		reportGenerator.login("http://127.0.0.1:8888/ReportGenerator.html?gwt.codesvr=127.0.0.1:9997", new AsyncCallback<LoginInfo>() {
 				public void onFailure(Throwable error) {}
 
@@ -53,6 +56,12 @@ public class ReportGenerator implements EntryPoint {
 				}
 		    });	
 	} 
+	
+	/**
+	 * Die Methode loadReportGenerator(), erstellt ein Rootpanel und
+	 * fügt dem Splitpanel einmal das Rootpanel zur rechten Seite hinzu.
+	 * Zweites fügt er auf der linken Seite die ReportOptionen hinzu.
+	 */
 	 
 	public void loadReportGenerator(){
 		reportRootPanel = new ReportRootPanel();

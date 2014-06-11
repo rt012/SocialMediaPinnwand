@@ -1,24 +1,29 @@
 package hdm.social.media.pinnwand.client.gui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
    
 /**
  * Custom DialogBox um die Login Informationen des Google UserService
- * zu erweitern
+ * zu erweitern. Erweitert die Klasse DialogBox
  * 
  * @author Eric Schmidt
  */
-@SuppressWarnings("deprecation")
-public class LoginCustomDialog  extends DialogBox implements ClickListener { 
+public class LoginCustomDialog  extends DialogBox implements ClickHandler { 
 	private String vorname, nachname, nickname;
 	private TextBox nachnameTextBox, vornameTextBox, nicknameTextBox;
 	
+	/**
+	 * Erzeugt sämtliche Widgets innerhalb der DialogBox und schreibt den Nickname,
+	 * welche aus dem Google Nutzer gelesen wird, in eine TextBox.
+	 * 
+	 * @param nickname Der Nickname aus dem Google Nutzer
+	 */
 	public LoginCustomDialog(String nickname) {
 		setText("Sie starten die Applikation zum ersten Mal");
 		Button abonnierenButton = new Button("Erstelle einen Account", this);
@@ -51,13 +56,6 @@ public class LoginCustomDialog  extends DialogBox implements ClickListener {
 		dock.setWidth("100%");
 		setWidget(dock);
 	}
-	
-	public void onClick(Widget sender) {
-		nachname = nachnameTextBox.getText();
-		vorname = vornameTextBox.getText();
-		nickname = nicknameTextBox.getText();
-		hide();
-	}
 
 	public String getVorname() {
 		return vorname;
@@ -69,6 +67,20 @@ public class LoginCustomDialog  extends DialogBox implements ClickListener {
 
 	public String getNickname() {
 		return nickname;
+	}
+
+	
+	/**
+	 * Erstellt ein onClick Event, welches die eingebenen Werte auf die Klassen Variablen 
+	 * schreibt. Diese werden spaeter durch die getter ausgelesen.
+	 * 
+	 */
+	@Override
+	public void onClick(ClickEvent event) {
+		nachname = nachnameTextBox.getText();
+		vorname = vornameTextBox.getText();
+		nickname = nicknameTextBox.getText();
+		hide();
 	}
 }
 

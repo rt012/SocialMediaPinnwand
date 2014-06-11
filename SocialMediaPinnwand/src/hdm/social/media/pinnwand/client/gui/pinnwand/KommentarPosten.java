@@ -37,19 +37,27 @@ private Button ButtonSenden;
 		this.nutzer = nutzer;
 		this.beitrag = beitrag;
 		
-	// Label welches einen kleinen Information-Text darstellen soll	
+	/**
+	 *  Label welches einen kleinen Information-Text darstellen soll	
+	 */
 	LabelInformation = new Label("Bitte geben Sie hier ihr Kommentar ein:");
 	LabelInformation.setStyleName("LabelInformation");
 	
-	// TextArea für den Inhalt des Kommentars 
+	/**
+	 *  TextArea für den Inhalt des Kommentars 
+	 */
 	TextAreaKommentar = new TextArea();
 	TextAreaKommentar.setStyleName("TextAreaKommentar");
 	
-	// Button um den Kommentar abzusenden 
+	/**
+	 *  Button um den Kommentar abzusenden 
+	 */
 	ButtonSenden = new Button("Senden");
 	ButtonSenden.setStyleName("ButtonSenden");
 	ButtonSenden.addClickHandler(new ClickHandler() {
-		 // Beim click auf den Button wird der Kommentar dem Beitrag hinzugefügt und das Dialog Fenster geschlossen
+		 /**
+		  *  Beim click auf den Button wird der Kommentar dem Beitrag hinzugefügt und das Dialog Fenster geschlossen
+		  */
 			public void onClick(ClickEvent event) {
 				Kommentar k = new Kommentar();
 				k.setNutzer(nutzer);
@@ -61,8 +69,11 @@ private Button ButtonSenden;
 			}
 	});
 	
-	// Es wird ein DogPanel initialisiert welches alle oben initialisierten Elemente bündelt. 
-	// Dem Dock Panel werden die zuvor initialisierten Elemente hinzugefügt 
+	/**
+	 *  Es wird ein DogPanel initialisiert welches alle oben initialisierten Elemente bündelt. 
+	 *  Dem Dock Panel werden die zuvor initialisierten Elemente hinzugefügt 
+	 */
+	
 	DockPanel dock = new DockPanel();
 	dock.setSpacing(4);
 	dock.add(LabelInformation, DockPanel.NORTH);
@@ -72,7 +83,9 @@ private Button ButtonSenden;
 	setWidget(dock);
 	}
 	
-	// 	Callback für die Methode CreateKommentar
+	/**
+	 *  	Callback für die Methode CreateKommentar
+	 */
 	AsyncCallback<Kommentar> callback
 	 = new AsyncCallback<Kommentar>() {
 	 public void onFailure

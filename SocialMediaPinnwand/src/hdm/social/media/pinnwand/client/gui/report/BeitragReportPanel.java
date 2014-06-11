@@ -14,6 +14,9 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 public class BeitragReportPanel extends SplitLayoutPanel {
 	
+	/**
+	 * Klasse für die Darstellung eines Beitragsreport.
+	 */
 	
 private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	

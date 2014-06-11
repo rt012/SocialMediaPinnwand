@@ -2,18 +2,21 @@ package hdm.social.media.pinnwand.client.gui.report;
 
 import java.text.ParseException;
 import java.util.Date;
-
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
+/**
+ * 
+ * Klasse zur Darstellung von Nutzerreports.
+ */
 public class NutzerReportPanel extends SplitLayoutPanel{
+	
 	
 	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
@@ -37,11 +40,16 @@ public class NutzerReportPanel extends SplitLayoutPanel{
 		
 		String datumBisString = simpleDateFormat.format(datumBis);
 		String datumVonString = simpleDateFormat.format(datumVon);
-		
+		/**
+		 * Erstellung des Nutzerreports
+		 */
 		reportGenerator.CreateNutzerReport(nutzer, datumVonString, datumBisString, new AsyncCallback<String>(){
 			@Override
 			public void onFailure(Throwable caught) {}
-
+			/**
+			 * Das Ergebnis wird dem Layout hinzugefügt. 
+			 * @param result
+			 */
 			@Override
 			public void onSuccess(String result) {
 				HTML html = new HTML(result);

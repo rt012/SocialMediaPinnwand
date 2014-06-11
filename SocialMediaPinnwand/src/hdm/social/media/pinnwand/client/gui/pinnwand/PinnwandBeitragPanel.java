@@ -15,6 +15,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 
+/**
+ * Diese Klasse ermöglicht es Beiträge zu schreiben und zu senden.
+ * Sie stellt ein Label, eine TextArea und einen Button dar.
+ * @author remi
+ *
+ */
 public class PinnwandBeitragPanel extends HorizontalPanel{
 	/**
 	 * Widgets

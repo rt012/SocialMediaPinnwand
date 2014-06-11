@@ -26,17 +26,23 @@ private FlexTable FlexTableLikeListe;
 private Button ButtonSchliessen;
 
 public LikeListe(ArrayList<Like> likeListe){
-	// Label für eine kurze Information über das DialogFenster
+	/**
+	 *  Label für eine kurze Information über das DialogFenster
+	 */
 	LabelInformation = new Label("Nutzer, denen das gefällt:");
 	LabelInformation.setStyleName("LabelInformation");
-	// FlexTable für darstellung der Nutzer 
+	/**
+	 *  FlexTable für darstellung der Nutzer 
+	 */
 	FlexTableLikeListe = new FlexTable();
 	FlexTableLikeListe.setStyleName("FlexTableLikeListe");
 	// Durchlauf durch die LikeListe welche als Paramenter im Konstruktor übergeben wurde. Jeder Nutzer wird in einer row hinzugefügt. 
 	for(int i = 0; i < likeListe.size(); i++) {
 		FlexTableLikeListe.setHTML(i, 0, likeListe.get(i).getNutzer().getName());
 	}
-	// Button mit Hilfe man die DialogBox wieder schließen kann 
+	/**
+	 *  Button mit Hilfe man die DialogBox wieder schließen kann 
+	 */
 	ButtonSchliessen = new Button("Schließen");
 	ButtonSchliessen.setStyleName("ButtonSchließen");
 	ButtonSchliessen.addClickHandler(new ClickHandler() {
@@ -46,7 +52,10 @@ public LikeListe(ArrayList<Like> likeListe){
 		}
 });
 	
-	// DockPanel welches die zuvor initialisierten Elemente Bündelt 
+	/**
+	 *  DockPanel welches die zuvor initialisierten Elemente Bündelt 
+	 */
+	
 	DockPanel dock = new DockPanel();
 	dock.setSpacing(4);
 	dock.add(LabelInformation, DockPanel.NORTH);

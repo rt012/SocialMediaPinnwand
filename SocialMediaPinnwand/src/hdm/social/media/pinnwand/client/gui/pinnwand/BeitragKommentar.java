@@ -10,8 +10,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-
+/**
+ * Diese Klasse ist für die Darstellung eines Kommentars zuständig.
+ * Jeder Kommentar besteht aus einem Inhalt, einem Autor, einem Erstellungszeitpunkt und einem Button, welcher die Möglichkeit verschafft den Kommentar wieder zu löschen.
+ * @author remi
+ *
+ */
 public class BeitragKommentar extends HorizontalPanel {
+	
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	private Label LabelKommentarInhalt;
 	private Label LabelKommentarAutor;
@@ -36,7 +42,9 @@ public class BeitragKommentar extends HorizontalPanel {
 		ButtonKommentarLoeschen.setStyleName("ButtonKommentarLoeschen");
 		this.add(ButtonKommentarLoeschen);
 		ButtonKommentarLoeschen.addClickHandler(new ClickHandler() {
-			 
+		/**
+		 * Beim Klick auf den "Löschen"-Button wird der Kommentar aus der Datenbank gelöscht.	 
+		 */
 				public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteKommentar(kommentar, callbackVoid);	
 			//	SocialMediaPinnwand sp = new SocialMediaPinnwand();

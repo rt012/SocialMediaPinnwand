@@ -52,24 +52,32 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		 this.nutzer = nutzer;
 		 this.showBeitraege = showBeitraege;
 		 
-		 //Anzeige des Inhalts 
+		/**
+		 * Anzeige des Inhalts 
+		 */
 		 LabelBeitragsInhalt = new Label(Inhalt);
 		 LabelBeitragsInhalt.setStyleName("LabelBeitragsInhalt");
 		 this.add(LabelBeitragsInhalt);
 		 
-		 // Autor + Erstellungszeitpunkt
+		 /**
+		  *  Autor + Erstellungszeitpunkt
+		  */
 		 
 		 LabelBeitragsAutor = new Label(Beitragsautor);
 		 this.add(LabelBeitragsAutor);
 		 LabelBeitragsAutor.setStyleName("LabelBeitragsAutor");
 		 
 		 
-		 // Like Anzahl
+		 /**
+		  *  Like Anzahl
+		  */
 		 LabelBeitragLikeAnzahl = new Label(LikeAnzahl);
 		 LabelBeitragLikeAnzahl.setStyleName("LabelBeitragLikeAnzahl");
 		 this.add(LabelBeitragLikeAnzahl);
 		 LabelBeitragLikeAnzahl.addClickHandler(new ClickHandler() {
-		 // Bei Klick auf die Likeanzahl, öffnet sich eine Dialogbox, welche die likenden Nutzer anzeigt
+		 /**
+		  *  Bei Klick auf die Likeanzahl, öffnet sich eine Dialogbox, welche die likenden Nutzer anzeigt
+		  */
 				public void onClick(ClickEvent event) {
 					final LikeListe dialog = new LikeListe(beitrag.getLikeList());
 					DialogBox dlb = dialog;
@@ -79,15 +87,21 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		
 		 
 	
-		 //Button für "Gefällt mir
+		/**
+		 * Button für "Gefällt mir
+		 */
 		 ButtonBeitragGefaelltMir = new Button("");
 		 ButtonBeitragGefaelltMir.setStyleName("ButtonBeitragGefälltMir");
 		 this.add(ButtonBeitragGefaelltMir);
-		 // Methode welche überprüft ob der Nutzer den Beitrag schon geliked hat oder nicht
+		 /**
+		  *  Methode welche überprüft ob der Nutzer den Beitrag schon geliked hat oder nicht
+		  */
 		 PinnwandAdministration.checkIfliked(this.nutzer, this.beitrag, callbackBoolean);
 
 		 
-		 //Button für Kommentieren
+		 /**
+		  * Button für Kommentieren
+		  */
 		  ButtonBeitragKommentieren = new Button("Kommentieren");
 		  ButtonBeitragKommentieren.setStyleName("ButtonBeitragKommentieren");
 		  this.add(ButtonBeitragKommentieren);
@@ -101,7 +115,9 @@ public class PinnwandBeitrag extends HorizontalPanel {
 				}
 		});
 		
-	  //Button um Beitrag zu löschen
+	  /**
+	   * Button um Beitrag zu löschen
+	   */
 		  
 		  ButtonBeitragLoeschen = new Button("Beitrag löschen");
 		  ButtonBeitragLoeschen.setStyleName("ButtonBeitragLöschen");
@@ -202,7 +218,9 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	}
 	 };
 	 
-	 // Methode welche den Button zu einem "Gefällt mir" - Button macht
+	/**
+	 *  Methode welche den Button zu einem "Gefällt mir" - Button macht
+	 */
 	 public void setButtonToLike() {
 		 ButtonBeitragGefaelltMir.setText("Gefällt mir"); 
 		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
@@ -219,7 +237,9 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		 
 	 }
 	 
-	 // Methode welche aus dem Button ein "Gefällt mir nicht mehr" - Button macht
+	 /**
+	  *  Methode welche aus dem Button ein "Gefällt mir nicht mehr" - Button macht
+	  */
 	public void setButtonToDislike() {
 		 
 		 ButtonBeitragGefaelltMir.setText("Gefällt mir nicht mehr");

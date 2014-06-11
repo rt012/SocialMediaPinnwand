@@ -64,12 +64,16 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		
 		setStyleName("layout_west");
 		
-		//Ueberschrift etwa: "Ferdis SocialMediaPinnwand"
+		/**
+		 * Ueberschrift etwa: "Ferdis SocialMediaPinnwand"
+		 */
 		pinnwandName.setStyleName("pinnwandName");
 		pinnwandName.setText("Social MediaPinnwand von "+ aktuellerNutzer.getVorname()+' '+ aktuellerNutzer.getName());
 		add(pinnwandName);
 		
-		//Eigener Pinnwand Button
+		/**
+		 * Eigener Pinnwand Button
+		 */
 		Button eigenePinnwand = new Button("Eigene Pinnwand");
 		eigenePinnwand.addStyleName("buttonEigenePinnwand");
 		add(eigenePinnwand);
@@ -80,7 +84,9 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		});
 		
 		
-		//Logout Button
+		/**
+		 * Logout Button
+		 */
 		Button b = new Button("LogOut Temp");
 		b.setStyleName("buttonLogout");
 		b.addClickHandler(new ClickHandler(){
@@ -120,7 +126,9 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		 * Anzeigen einer Liste (FlexTable) mit den bereits abonnierten Pinnwaenden
 		 */
 		
-		//ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		/**
+		 * ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		 */
 		ScrollPanel scrollPanel = new ScrollPanel();
 
 		flexTableAbonniertePinnwaende=new Abolist(aktuellerNutzer, socialMediaPinnwand,flexTableBeitraege);

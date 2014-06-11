@@ -5,14 +5,17 @@ import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
-
 import java.util.ArrayList;
 import java.util.Collections;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.ScrollPanel;
+
+/**
+ * Diese Klasse ist für die Anordnung der einzelnen Beiträge zuständig.
+ * Es werden die jeweiligen Beiträge ausgelesen und in einer FlexTable angeordnet. 
+ *
+ */
 
 public class ShowBeitraege extends FlexTable{
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
@@ -29,7 +32,10 @@ public class ShowBeitraege extends FlexTable{
 		this.s=s;
 		printOutBeitragJeNutzer(n);
 	}
-	
+	/**
+	 * Methode welche alle Beiträge eines bestimmten Nutzers in der FlexTable anordnet.
+	 * @param n Nutzer
+	 */
 	public void printOutBeitragJeNutzer(Nutzer n) {
 		
 		if(n!=s.getAktuellerNutzer()){
@@ -38,11 +44,15 @@ public class ShowBeitraege extends FlexTable{
 				
 				public void onSuccess(ArrayList<Beitrag> result){
 					Collections.sort(result); 
-					// Hilfvariable um festzuhalten in welcher Row man sich befindet
+					/**
+					 *  Hilfvariable um festzuhalten in welcher Row man sich befindet
+					 */
 					int aktuelleRow = 0;
 					if(result!= null){
 						for(int i= 0; i < result.size(); i++){
-							// Hinzufï¿½gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefï¿½gt
+							/**
+							 *  Hinzufï¿½gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefï¿½gt
+							 */
 							ShowBeitraege.this.setWidget(
 									aktuelleRow,
 									0,
@@ -50,9 +60,13 @@ public class ShowBeitraege extends FlexTable{
 														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
 														+ result.get(i).getLikeList().size()+" Personen gefaellt das.",
 														result.get(i),aktuellerNutzer, ShowBeitraege.this ));
-							// nachdem ein Beitrag der FlexTable hinzugefï¿½gt wurde wird die aktuelle Zeile um 1 erhï¿½ht.
+							/**
+							 *  nachdem ein Beitrag der FlexTable hinzugefï¿½gt wurde wird die aktuelle Zeile um 1 erhï¿½ht.
+							 */
 							aktuelleRow += 1;
-							// Nun werden alle Kommentare des zuvor hinzugefï¿½gten Beitrages der FlexTable hinzugefï¿½gt
+							/**
+							 *  Nun werden alle Kommentare des zuvor hinzugefï¿½gten Beitrages der FlexTable hinzugefï¿½gt
+							 */
 							
 							for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
 								ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
@@ -69,14 +83,20 @@ public class ShowBeitraege extends FlexTable{
 				public void onFailure(Throwable caught) {}
 				
 				public void onSuccess(ArrayList<Beitrag> result){
-					// Hilfvariable um festzuhalten in welcher Row man sich befindet
+					/**
+					 *  Hilfvariable um festzuhalten in welcher Row man sich befindet
+					 */
 					int aktuelleRow = 0;
 					Collections.sort(result); 
 					if(result != null){
 						for(int i= 0; i < result.size(); i++){
-							// Hinzufï¿½gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefï¿½gt
+							/**
+							 *  Hinzufï¿½gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefï¿½gt
+							 */
 							
-							//Da Likelist evtl null ist muss hier die Abfrage ausgelagert werden
+							/**
+							 * Da Likelist evtl null ist muss hier die Abfrage ausgelagert werden
+							 */
 							int likelistsize=0;
 							if (result.get(i).getLikeList() != null){
 								likelistsize = result.get(i).getLikeList().size();
@@ -89,9 +109,13 @@ public class ShowBeitraege extends FlexTable{
 														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
 														+ likelistsize +" Personen gefaellt das.",
 														result.get(i),aktuellerNutzer, ShowBeitraege.this ));
-							// nachdem ein Beitrag der FlexTable hinzugefï¿½gt wurde wird die aktuelle Zeile um 1 erhï¿½ht.
+							/**
+							 *  nachdem ein Beitrag der FlexTable hinzugefï¿½gt wurde wird die aktuelle Zeile um 1 erhï¿½ht.
+							 */
 							aktuelleRow += 1;
-							// Nun werden alle Kommentare des zuvor hinzugefï¿½gten Beitrages der FlexTable hinzugefï¿½gt
+							/**
+							 *  Nun werden alle Kommentare des zuvor hinzugefï¿½gten Beitrages der FlexTable hinzugefï¿½gt
+							 */
 							if(result.get(i).getKommentarListe() != null){
 								for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
 									ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));

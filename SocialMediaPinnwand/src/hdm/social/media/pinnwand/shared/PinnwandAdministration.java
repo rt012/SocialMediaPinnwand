@@ -291,5 +291,13 @@ public interface PinnwandAdministration extends RemoteService{
 
   public boolean checkIfLiked(Nutzer n, Beitrag b) throws IllegalArgumentException;
 
+  /**
+   *  Methode welche überprüft ob ein bestimmter Beitrag vom eingeloggten Nutzer stammt.
+   * @param nutzer Nutzer der momentan eingeloggt ist
+   * @param beitrag Beitrag der angezeigt werden soll
+   * @return true/false, je nach dem ob eingeloggter Nutzer Autor ist oder nicht.
+   */
+  boolean checkAuthor(Nutzer nutzer, Beitrag beitrag) throws IllegalArgumentException;
+
 }
 

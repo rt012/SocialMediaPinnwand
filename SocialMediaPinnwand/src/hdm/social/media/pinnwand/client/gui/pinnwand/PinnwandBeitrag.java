@@ -132,7 +132,23 @@ public class PinnwandBeitrag extends HorizontalPanel {
 				}
 		});
 		 
-	    
+		  PinnwandAdministration.checkAuthor(this.nutzer, this.beitrag, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if(result == true) {
+					ButtonBeitragLoeschen.setVisible(true);
+				} else ButtonBeitragLoeschen.setVisible(false);
+				
+			}
+			  
+		  });
 	 }
 	public Label getLabelBeitragsInhalt() {
 		return LabelBeitragsInhalt;

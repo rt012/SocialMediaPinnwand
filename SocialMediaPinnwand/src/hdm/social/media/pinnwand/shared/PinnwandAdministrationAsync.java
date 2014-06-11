@@ -87,5 +87,7 @@ public interface PinnwandAdministrationAsync {
 
 	void getPinnwandByNutzer(Nutzer n, AsyncCallback<Pinnwand> callback);
 
+	void checkAuthor(Nutzer nutzer, Beitrag beitrag, AsyncCallback<Boolean> callback);
+
 }
 

@@ -2,11 +2,13 @@ package hdm.social.media.pinnwand.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import hdm.social.media.pinnwand.shared.*;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 
 
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 /**
  * Methoden:
@@ -379,5 +381,27 @@ public class BeitragMapper {
 		    // Zurï¿½ckgeben des aktuellen Beitragobjektes
 		    return getBeitragById(b.getId());
 		 }
+
+	 /**
+	   *  Methode welche überprüft ob ein bestimmter Beitrag vom eingeloggten Nutzer stammt.
+	   * @param nutzer Nutzer der momentan eingeloggt ist
+	   * @param beitrag Beitrag der angezeigt werden soll
+	   * @return true/false, je nach dem ob eingeloggter Nutzer Autor ist oder nicht.
+	   */
+	public boolean checkAuthor(Nutzer nutzer, Beitrag beitrag) {
+		Connection con = DBConnection.connection();
+		try {
+			Statement stmt = con.createStatement();
+			 ResultSet rs = stmt.executeQuery("SELECT * FROM `beitrag` WHERE pinnwand_ID="+ nutzer.getPinnwand().getId() +" AND beitrag_ID=" + beitrag.getId());
+			 if(rs.next() == true) {
+				 return true;
+				
+			 } else return false;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }

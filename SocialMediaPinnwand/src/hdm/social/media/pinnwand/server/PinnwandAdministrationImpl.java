@@ -293,6 +293,13 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 		return PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId());
 	}
 
+	@Override
+	public boolean checkAuthor(Nutzer nutzer, Beitrag beitrag)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return BeitragMapper.beitragMapper().checkAuthor(nutzer, beitrag);
+	}
+
 }
 
 

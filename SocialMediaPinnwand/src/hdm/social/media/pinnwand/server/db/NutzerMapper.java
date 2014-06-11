@@ -110,12 +110,8 @@ public class NutzerMapper{
 			        n.setName(rs.getString("name"));
 			        n.setEmail(rs.getString("email"));
 			        n.setNickname(rs.getString("nickname"));
-			        /*
-			        //Verweis auf PinnwandMapper um zugehörige Pinnwand herauszufinden
-			        n.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(rs.getInt("nutzer_ID")));
-			        //Verweis auf AbonnementMapper um zugehörige Abos herauszufinden
-			        n.setAbonnementListe(AboMapper.aboMapper().getAboByNutzer(rs.getInt("nutzer_ID")));
-			        */	
+			       // n.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n));
+			       // n.setAbonnentenListe(AboMapper.aboMapper().getAboByNutzer(n.getId()));	
 			        return n;
 			      }
 			}

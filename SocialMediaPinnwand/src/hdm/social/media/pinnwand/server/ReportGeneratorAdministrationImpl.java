@@ -269,7 +269,7 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 		     * Berechne die Beitragsanzahl
 		     */
 		    ArrayList<Beitrag> beitragListe = BeitragMapper.beitragMapper().getBeitraegeBetweenTwoDates(datumVon, datumBis, 
-		    		PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
+		    		PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n).getId());
 		    if (beitragListe != null){
 		    	accountRow.addColumn(new Column(String.valueOf(beitragListe.size())));
 		    }else{

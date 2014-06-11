@@ -19,12 +19,15 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * Diese Klasse stellt den Entry point für die SocialMediaPinnwand dar. 
+ * 
  */
 public class SocialMediaPinnwand implements EntryPoint {
 	private NutzerVerwaltung nutzerVerwaltung = null;
 
-	//Aktiver/Aktueller Nutzer
+	/** 
+	 * Aktiver/Aktueller Nutzer
+	 */
 	private Nutzer aktuellerNutzer = null;
 	
 	/**
@@ -34,21 +37,29 @@ public class SocialMediaPinnwand implements EntryPoint {
 	private PinnwandAllgemeinPanel pinnwandAllgemeinPanel;
 	private PinnwandBeitragPanel pinnwandBeitragPanel;
 	
+	/**
+	 * Methode zum Auslesen des aktuellen Nutzers
+	 * @return
+	 */
 	public Nutzer getAktuellerNutzer(){
 		return aktuellerNutzer;
 	}
+	/**
+	 * Methode zum Setzen des aktuellen Nutzers
+	 * @param aktuellerNutzer
+	 */
 	
 	public void setAktuellerNutzer(Nutzer aktuellerNutzer){
 		this.aktuellerNutzer=aktuellerNutzer;
 	}
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 *  Stellt eine Verbindung über einen Proxy her
 	 */
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 
 	/**
-	 * This is the entry point method.
+	 * Methode um den Entry Point zu laden
 	 */
 	public void onModuleLoad() {		
 		/**
@@ -58,10 +69,18 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 * 
 		 * @author Eric Schmidt 
 		 */
-		 // Check login status using login service. --> Nach Deploy: GWT.getHostPageBaseURL() 
+		/**
+		 * Überprüft den Login Status --> Nach Deploy: GWT.getHostPageBaseURL() 
+		 */
 		PinnwandAdministration.login("http://127.0.0.1:8888/SocialMediaPinnwand.html?gwt.codesvr=127.0.0.1:9997", new AsyncCallback<LoginInfo>() {
+			/**
+			 * Bei einer fehlgeschlagenen Verbindung wird ein Fehler ausgegeben
+			 */
 			public void onFailure(Throwable error) {}
-
+		/**
+		 * Bei einer erfolgreichen Verbindung kann der Nutzer eingeloggt werden. 
+		 * 
+		 */
 			public void onSuccess(LoginInfo result) {
 		        LoginInfo loginInfo = result;
 		        nutzerVerwaltung = new NutzerVerwaltung(loginInfo, SocialMediaPinnwand.this);
@@ -85,7 +104,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandBeitragPanel = new PinnwandBeitragPanel(SocialMediaPinnwand.this);
 		pinnwandAllgemeinPanel= new PinnwandAllgemeinPanel(SocialMediaPinnwand.this, nutzerVerwaltung, showBeitraege);
 		
-		//ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		/**
+		 * ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		 */
 		ScrollPanel scrollPanel = new ScrollPanel();
 		showBeitraege.setWidth("100%");
 		scrollPanel.setSize("300", "200");    
@@ -105,10 +126,15 @@ public class SocialMediaPinnwand implements EntryPoint {
 		vsplit.addSouth(scrollPanel, rootHeightSize*7/10);
 		rp.add(split);
 	}
-	
+	/**
+	 * Methode zum Auslesen von PinnwandAllgemeinPanel-Objekten
+	 */
 	public PinnwandAllgemeinPanel getPinnwandAllgemeinPanel(){
 		return this.pinnwandAllgemeinPanel;
 	}
+	/**
+	 * Methode zum Auslesen von ShowBeitraege-Objekten
+	 */
 	
 	public ShowBeitraege getShowBeitraege(){
 		return this.showBeitraege;

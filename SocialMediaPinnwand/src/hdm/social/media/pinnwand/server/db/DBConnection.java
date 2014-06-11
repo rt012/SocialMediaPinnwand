@@ -4,26 +4,39 @@ import java.sql.*;
 
 public class DBConnection {
 	
-	//Singleton Variable damit es nur eine DB Verbindung gibt
+	/**
+	 * Singleton Variable damit es nur eine DB Verbindung gibt
+	 */
 	private static Connection con = null;
 	
-	//Geschï¿½tzter Konstruktor zum verhindern einer Instanziierung via new
+	/**
+	 * Geschuetzter Konstruktor zum verhindern einer Instanziierung via new
+	 */
 	protected DBConnection(){
 	}
 	
 	
+
 	//Datenbank URL
 	//CloudSQL
 	private static String url = "jdbc:mysql://localhost/it-projekt";
 
+
 	
-	//Nutzerdaten fï¿½r DB-login
+	/**
+	 * Nutzerdaten für DB-login
+	 */
 	private static String name="root";
 	private static String password="";
 	
-	//Ersatz fï¿½r Konstruktor zum erstellen einer Verbindung
+	/**
+	 * Ersatz für Konstruktor zum erstellen einer Verbindung
+	 * @return
+	 */
 	public static Connection connection()  {
-		// Wenn es bisher keine Conncetion zur DB gab, ... 
+		/** 
+		 * Wenn es bisher keine Conncetion zur DB gab, ... 
+		 */
 		if ( con == null ) {
 			try {
 				//Installieren des geeigneten DB-Treibers

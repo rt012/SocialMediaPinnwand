@@ -267,7 +267,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	
 	@Override
 	public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException{
-		ArrayList<Beitrag> a = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
+		ArrayList<Beitrag> a = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n).getId());
 		return a;
 	}
 	
@@ -275,12 +275,12 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	@Override
 	public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException{
 		
-		ArrayList<Beitrag> result = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId()).getId());
+		ArrayList<Beitrag> result = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n).getId());
 		ArrayList<Abo> Abonnenten= getAboByNutzer(n.getId());
 		if(Abonnenten!=null){
 			for(Abo a: Abonnenten){
-				if(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant().getId()).getId())!=null){
-					result.addAll(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant().getId()).getId()));
+				if(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant()).getId())!=null){
+					result.addAll(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant()).getId()));
 				}
 			}
 		}
@@ -290,7 +290,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	
 	@Override
 	public Pinnwand getPinnwandByNutzer(Nutzer n){
-		return PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n.getId());
+		return PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n);
 	}
 
 	@Override

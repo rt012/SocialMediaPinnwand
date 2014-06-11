@@ -1,7 +1,10 @@
 package hdm.social.media.pinnwand.client.gui;
 
 import java.io.Serializable;
-
+/**
+ * Diese 
+ *
+ */
 public class LoginInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -10,11 +13,15 @@ public class LoginInfo implements Serializable {
 	  private String logoutUrl;
 	  private String emailAddress;
 	  private String nickname;
-	
+	/**
+	 * Methode zum Auslesen des Attributes ob ein Nutzer eingeloggt
+	 */
 	  public boolean isLoggedIn() {
 	    return loggedIn;
 	  }
-	
+	/**
+	 * Methode 
+	 */
 	  public void setLoggedIn(boolean loggedIn) {
 	    this.loggedIn = loggedIn;
 	  }

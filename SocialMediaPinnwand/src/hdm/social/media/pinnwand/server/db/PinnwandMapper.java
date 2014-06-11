@@ -3,6 +3,7 @@ package hdm.social.media.pinnwand.server.db;
 import java.sql.*;
 
 import hdm.social.media.pinnwand.shared.*;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 import hdm.social.media.pinnwand.shared.bo.Pinnwand;
 
 /*
@@ -73,7 +74,7 @@ public class PinnwandMapper {
 	* @param	Nutzer id
 	* @return 	Pinnwandobjekt welches zum Nutzer gehört
 	*/
-	public Pinnwand getPinnwandByNutzer(int id){
+	public Pinnwand getPinnwandByNutzer(Nutzer nutzer){
 			
 	//Aufbau der DBVerbindung
 	Connection con = DBConnection.connection();
@@ -82,7 +83,7 @@ public class PinnwandMapper {
 	try{
 		Statement stmt = con.createStatement();
 		//Suche alle Felder der Pinnwandtabelle anhand von ID
-		ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand " + "WHERE nutzer_ID=" + id );
+		ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand " + "WHERE nutzer_ID=" + nutzer.getId());
 
 		 //Maximal ein Rückgabewert da Id Primärschlüssel
 		if (rs.next()) {
@@ -90,7 +91,7 @@ public class PinnwandMapper {
 			Pinnwand p = new Pinnwand();
 			p.setId(rs.getInt("pinnwand_ID"));
 			p.setErstellungsZeitpunkt(rs.getDate("erstellung"));
-			p.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));   	
+			p.setNutzer(nutzer);   	
 			return p;
 			}
 		}

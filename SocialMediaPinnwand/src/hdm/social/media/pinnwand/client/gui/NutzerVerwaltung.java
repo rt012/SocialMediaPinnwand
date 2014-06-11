@@ -7,10 +7,7 @@ import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
-
-import java.util.ArrayList;
 import java.util.Date;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -21,7 +18,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 
 /**
- * Diese Klasse Verwaltet den Eingeloggten Nutzer
+ * Diese Klasse Verwaltet den eingeloggten Nutzer
  * 
  * @author Eric Schmidt
  *

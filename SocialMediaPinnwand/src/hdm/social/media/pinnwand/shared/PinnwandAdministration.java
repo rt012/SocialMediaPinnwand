@@ -299,5 +299,13 @@ public interface PinnwandAdministration extends RemoteService{
    */
   boolean checkAuthor(Nutzer nutzer, Beitrag beitrag) throws IllegalArgumentException;
 
+  /**
+   *  Methode welche überprüft ob ein bestimmter Kommentar vom eingeloggten Nutzer stammt.
+   * @param nutzer Nutzer der momentan eingeloggt ist
+   * @param kommentar Kommentar der angezeigt werden soll
+   * @return true/false, je nach dem ob eingeloggter Nutzer Autor ist oder nicht.
+   */
+  boolean checkAuthorKommentar(Nutzer nutzer, Kommentar kommentar);
+
 }
 

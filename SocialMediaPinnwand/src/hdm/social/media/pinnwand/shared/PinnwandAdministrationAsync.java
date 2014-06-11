@@ -89,5 +89,7 @@ public interface PinnwandAdministrationAsync {
 
 	void checkAuthor(Nutzer nutzer, Beitrag beitrag, AsyncCallback<Boolean> callback);
 
+	void checkAuthorKommentar(Nutzer nutzer, Kommentar kommentar, AsyncCallback<Boolean> asyncCallback);
+
 }
 

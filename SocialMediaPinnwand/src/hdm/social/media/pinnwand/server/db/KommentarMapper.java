@@ -4,10 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import hdm.social.media.pinnwand.shared.*;
-
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
-
 import hdm.social.media.pinnwand.shared.bo.Kommentar;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 /*
  * Methoden:
@@ -241,5 +240,27 @@ public class KommentarMapper {
 	    return getKommentarById(k.getId());
 		 
 	 }
+	 
+	 /**
+	   *  Methode welche überprüft ob ein bestimmter Kommentar vom eingeloggten Nutzer stammt.
+	   * @param nutzer Nutzer der momentan eingeloggt ist
+	   * @param kommentar Kommentar der angezeigt werden soll
+	   * @return true/false, je nach dem ob eingeloggter Nutzer Autor ist oder nicht.
+	   */
+	public boolean checkAuthor(Nutzer nutzer, Kommentar kommentar) {
+		Connection con = DBConnection.connection();
+		try {
+			Statement stmt = con.createStatement();
+			 ResultSet rs = stmt.executeQuery("SELECT * FROM `kommentar` WHERE nutzer_ID="+ nutzer.getId() +" AND kommentar_ID=" + kommentar.getId());
+			 if(rs.next() == true) {
+				 return true;
+				
+			 } else return false;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 }

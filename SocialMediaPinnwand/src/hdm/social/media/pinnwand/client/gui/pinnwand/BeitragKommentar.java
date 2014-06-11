@@ -3,6 +3,8 @@ package hdm.social.media.pinnwand.client.gui.pinnwand;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Kommentar;
+import hdm.social.media.pinnwand.shared.bo.Nutzer;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -24,7 +26,7 @@ public class BeitragKommentar extends HorizontalPanel {
 	private Label LabelErstellungszeitpunkt;
 	private Button ButtonKommentarLoeschen;
 	
-	public BeitragKommentar(final Kommentar kommentar, String inhalt, String autor, String erstellungszeitpunkt){
+	public BeitragKommentar(Nutzer nutzer, final Kommentar kommentar, String inhalt, String autor, String erstellungszeitpunkt){
 		
 		LabelKommentarInhalt = new Label(inhalt);
 		LabelKommentarInhalt.setStyleName("LabelKommentarInhalt");
@@ -52,8 +54,30 @@ public class BeitragKommentar extends HorizontalPanel {
 				
 				}
 		});
-	}
+		
+		PinnwandAdministration.checkAuthorKommentar(nutzer, kommentar, new AsyncCallback<Boolean>() {
 
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if(result == true) {
+					ButtonKommentarLoeschen.setVisible(true);
+				} else ButtonKommentarLoeschen.setVisible(false);
+				
+			}
+			  
+		  });
+	 }
+		
+	
+	
+	
+	
 	public Label getLabelKommentarInhalt() {
 		return LabelKommentarInhalt;
 	}

@@ -69,7 +69,7 @@ public class ShowBeitraege extends FlexTable{
 							 */
 							
 							for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-								ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
+								ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
 								aktuelleRow += 1;
 							}
 						}
@@ -118,7 +118,7 @@ public class ShowBeitraege extends FlexTable{
 							 */
 							if(result.get(i).getKommentarListe() != null){
 								for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-									ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
+									ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
 									aktuelleRow += 1;
 								}
 							}

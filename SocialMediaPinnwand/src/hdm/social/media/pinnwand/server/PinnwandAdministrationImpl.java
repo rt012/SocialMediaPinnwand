@@ -300,6 +300,12 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 		return BeitragMapper.beitragMapper().checkAuthor(nutzer, beitrag);
 	}
 
+	@Override
+	public boolean checkAuthorKommentar(Nutzer nutzer, Kommentar kommentar) {
+		// TODO Auto-generated method stub
+		return KommentarMapper.kommentarMapper().checkAuthor(nutzer, kommentar);
+	}
+
 }
 
 

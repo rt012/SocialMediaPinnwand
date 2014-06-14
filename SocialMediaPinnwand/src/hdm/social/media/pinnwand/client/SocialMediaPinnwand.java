@@ -13,6 +13,7 @@ import hdm.social.media.pinnwand.client.gui.pinnwand.ShowBeitraege;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -72,6 +73,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		/**
 		 * Überprüft den Login Status --> Nach Deploy: GWT.getHostPageBaseURL() 
 		 */
+
 		PinnwandAdministration.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			/**
 			 * Bei einer fehlgeschlagenen Verbindung wird ein Fehler ausgegeben

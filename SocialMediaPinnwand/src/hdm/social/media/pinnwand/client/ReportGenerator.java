@@ -44,7 +44,7 @@ public class ReportGenerator implements EntryPoint {
 		/**
 		 * Überprüft den Login Status --> Nach Deploy: GWT.getHostPageBaseURL() 
 		 */
-		reportGenerator.login("http://127.0.0.1:8888/ReportGenerator.html?gwt.codesvr=127.0.0.1:9997", new AsyncCallback<LoginInfo>() {
+		reportGenerator.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 				public void onFailure(Throwable error) {}
 
 				public void onSuccess(LoginInfo result) {

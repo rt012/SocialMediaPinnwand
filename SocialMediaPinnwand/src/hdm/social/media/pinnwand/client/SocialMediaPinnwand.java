@@ -72,7 +72,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		/**
 		 * Überprüft den Login Status --> Nach Deploy: GWT.getHostPageBaseURL() 
 		 */
-		PinnwandAdministration.login("http://127.0.0.1:8888/SocialMediaPinnwand.html?gwt.codesvr=127.0.0.1:9997", new AsyncCallback<LoginInfo>() {
+		PinnwandAdministration.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			/**
 			 * Bei einer fehlgeschlagenen Verbindung wird ein Fehler ausgegeben
 			 */

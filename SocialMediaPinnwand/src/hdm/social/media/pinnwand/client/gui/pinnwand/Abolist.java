@@ -61,7 +61,7 @@ public class Abolist extends FlexTable{
 	} 
 	
 	public void refresh(Nutzer n){
-		this.clear();
+		this.removeAllRows();
 		fillAboList(n);
 	}
 	

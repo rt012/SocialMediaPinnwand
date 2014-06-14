@@ -1,13 +1,45 @@
-/** Add css rules here for your application. */
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/**
+ * Author: Ferdinand Grüner
+ *
+ * CONTENTS.....................You’re reading it
+ * General......................Styles that apply for the whole document
+ * Linke Seite .................Elemente der Linken Seite (Auswahl und Datepicker)
+ * Rechte Seite ................Elemente der Rechten Seite (report)
+ * Hover Effekte................Mouseover Effekte
+ */
 
 
-/** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+/*------------------------------------*\
+    General
+\*------------------------------------*/
+
+@font-face {
+  font-family: Geometria;
+  src:url('fonts/Geometria-Light.otf');
+}
+
+@font-face {
+  font-family: exo;
+  src:url('fonts/Exo-Medium.otf');
+}
+
+body{
+  background: linear-gradient(#fff, #ECECEC) !important;
+  background-attachment: fixed !important;
+}
+
+h1, h2, h3, body, a, ul, li, form, input, p, div, button, button.gwt-Button{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-weight: normal;
+  border: none;
+  font-family: Geometria;
+  font-size: 14px;  
 }
 
 .gwt-SplitLayoutPanel-HDragger,
@@ -15,25 +47,137 @@ h1 {
 	display: none !important;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+/*------------------------------------*\
+    Layout
+\*------------------------------------*/
+
+.gwt-SplitLayoutPanel{
+  width:1000px;
+  position: absolute;
+  left:0px;
+  right:0px;
+  margin: 20px auto;
+  border: 1px solid #c4c4c4;
+  background: #fff;
+  -webkit-box-shadow: 0px 0px 10px 3px #cacaca;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+.ReportOptionen{
+  width: 300px !important;
+  position: absolute;
+  left: 0px;  
+  border-right: 1px solid #c4c4c4;
+  z-index: 1;
+
 }
 
-.dialogVPanel {
-  margin: 5px;
+.ReportRoot{  
+  width:700px !important;
+  position: absolute;
+  right: 0px;
+  left: auto !important;
 }
 
-.serverResponseLabelError {
-  color: red;
+/*------------------------------------*\
+    Linke Seite
+\*------------------------------------*/
+
+.verticalPanel{
+  padding: 20px;
+  width: 260px;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+.buttonLogout{
+  position: absolute;
+  right: 0px;
+  top: 45px;
+  margin-top: 15px;
+  background: url(img/logout.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:36px;
+  width:36px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.verticalPanel td{
+  margin-top: 10px;
+  font-size: 16px;
+  font-family: Geometria;
+}
+
+.verticalPanel label{
+  margin-left: 5px;
+}
+
+.reportName{
+  font-size: 20px;
+  font-family: exo;
+}
+
+.verticalPanel > tbody > tr:nth-child(3)> td{
+  padding-top: 10px;
+}
+
+.gwt-DatePicker,
+.gwt-SuggestBox{
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.gwt-SuggestBoxPopup{
+  z-index:2;
+}
+
+.gwt-SuggestBox{
+  width: 216px;
+}
+
+.createReportButton{
+  position: absolute;
+  right: 0px;
+  margin-top: 15px;
+  background: url(img/pfeil.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:36px;
+  width:36px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/*------------------------------------*\
+    Rechte Seite
+\*------------------------------------*/
+
+.ReportRoot > div > .gwt-SplitLayoutPanel{
+  margin: 0px;
+}
+
+.ScrollPanel,
+.nutzerReport{
+  padding: 20px;
+}
+
+.gwt-HTML h1,
+.nutzerReport h1{
+  font-size: 20px;  
+  font-family: exo;
+}
+
+.gwt-HTML table,
+.nutzerReport table{
+  margin-top: 10px;
+}
+
+/*------------------------------------*\
+    Hover Effekte
+\*------------------------------------*/
+
+.buttonLogout:hover,
+.createReportButton:hover{
+  -webkit-box-shadow: 0px 0px 3px 1px #c4c4c4;
 }

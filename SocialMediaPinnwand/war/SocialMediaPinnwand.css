@@ -6,7 +6,6 @@
  *
  * CONTENTS.....................You’re reading it
  * General......................Styles that apply for the whole document
- * GWT..........................GWT Einstellungen
  * Layout.......................Aufbau der Seite
  * Linke Seite..................Elemente der Linken Seite (Aboliste, Suggestbox, Pinnwandname)
  * Rechte Seite oben............Elemente der Rechten Seite Oben (Beitrag Senden)
@@ -46,43 +45,9 @@ h1, h2, h3, body, a, ul, li, form, input, p, div, button, button.gwt-Button{
   font-size: 14px;  
 }
 
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
-}
-
 .gwt-SplitLayoutPanel-HDragger,
 .gwt-SplitLayoutPanel-VDragger{
   display: none !important;
-}
-
-/*------------------------------------*\
-    GWT
-\*------------------------------------*/
-
-
-.gwt-DialogBox {
-  width: 400px;
-}
-
-.dialogVPanel {
-  margin: 5px;
-}
-
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
-
-.serverResponseLabelError {
-  color: red;
-}
-
-#closeButton {
-  margin: 15px 6px 6px;
 }
 
 /*------------------------------------*\
@@ -286,7 +251,8 @@ h1 {
   padding: 2px 30px 2px 5px;
   margin: 0px;
   resize: none;
-
+  font-family: Geometria;
+  font-size: 14px;
 }
 
 .beitragSenden{
@@ -315,6 +281,7 @@ h1 {
   position: absolute;
   top: 220px !important;
   padding: 20px;
+  margin-bottom: 40px;
 }
 
 .pinnwandBeitrag > tbody tr td{

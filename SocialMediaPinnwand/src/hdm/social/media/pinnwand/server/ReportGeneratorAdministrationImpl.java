@@ -203,9 +203,8 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 		     */
 		    NutzerReport result = new NutzerReport();
 
-		    // Jeder Report hat einen Titel (Bezeichnung / Überschrift).
+		    // Jeder Report hat einen Titel (Bezeichnung / Überschrift)
 		    result.setTitle("Informationen über " + n.getVorname() + " " + n.getName());
-
 
 		    /**
 		     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen

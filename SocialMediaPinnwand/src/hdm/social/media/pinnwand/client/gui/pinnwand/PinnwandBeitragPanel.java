@@ -59,6 +59,7 @@ public class PinnwandBeitragPanel extends HorizontalPanel{
 			 *  Anschlie�end wird die Beitragsliste aktualisiert. 
 			 */
 			public void onClick(ClickEvent event) {
+				if(TextAreaBeitragVerfassen.getValue()!=""){
 
 				PinnwandAdministration.getPinnwandByNutzer(socialMediaPinnwand.getAktuellerNutzer(), new AsyncCallback<Pinnwand>(){
 					public void onFailure(Throwable caught){}
@@ -79,6 +80,7 @@ public class PinnwandBeitragPanel extends HorizontalPanel{
 						});
 					}
 				});				
+				}
 			}
 		});
 		

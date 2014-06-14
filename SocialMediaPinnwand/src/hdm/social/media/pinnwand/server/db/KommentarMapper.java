@@ -16,6 +16,7 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
  * insertKommentar(Kommentar k)
  * deleteKommentar(Kommentar k)
  * updateKommentar(Kommentar k)
+ * checkAutor(Nutzer nutzer, Kommentar kommentar)
  */
 
 
@@ -38,7 +39,7 @@ public class KommentarMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see 	getKommentarById(int id): Sucht Kommentar anhand von ID
 	 * @param 	Kommentar ID
 	 * @return 	Kommentar Objekt
@@ -79,7 +80,7 @@ public class KommentarMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see		getKommentarByBeitrag(int id): Sucht alle Kommentare zu einem Beitrag
 	 * @param 	Beitrag ID
 	 * @return 	ArrayList mit Kommentar Objekten
@@ -118,7 +119,7 @@ public class KommentarMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see 	countKommentarByBeitrag(int id): Z�hlt alle Kommentare zu einem Beitrag
 	 * @pram 	Beitrag ID
 	 * @return 	int mit Anzahl
@@ -150,7 +151,7 @@ public class KommentarMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see 	insertKommentar(Kommentar k): Speichert Kommentar Objekt in der Datenbank
 	 * @param 	Kommentar Objekt
 	 * @return 	Gespeichertes Kommentar Objekt
@@ -164,7 +165,7 @@ public class KommentarMapper {
 		try{
 			Statement stmt = con.createStatement();
 
-	      /*
+	      /**
 	       * Zun�chst schauen wir nach, welches der momentan h�chste
 	       * Prim�rschl�sselwert ist.
 	       */
@@ -195,7 +196,7 @@ public class KommentarMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see 	deleteKommentar(Kommentar k): L�scht Kommentar Objekt aus Datenbank
 	 * @param	Kommentar Objekt
 	 * @return 		-
@@ -216,7 +217,7 @@ public class KommentarMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see 	updateKommentar(Kommentar k): Updated den Inhalt eines Kommentarobjektes
 	 * @param 	Kommentar Objekt
 	 * @return	Geupdateder Kommentar
@@ -247,7 +248,7 @@ public class KommentarMapper {
 	   * @param kommentar Kommentar der angezeigt werden soll
 	   * @return true/false, je nach dem ob eingeloggter Nutzer Autor ist oder nicht.
 	   */
-	public boolean checkAuthor(Nutzer nutzer, Kommentar kommentar) {
+	public boolean checkAutor(Nutzer nutzer, Kommentar kommentar) {
 		Connection con = DBConnection.connection();
 		try {
 			Statement stmt = con.createStatement();

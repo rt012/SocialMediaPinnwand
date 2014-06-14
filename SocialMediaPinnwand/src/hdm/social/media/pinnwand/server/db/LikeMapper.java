@@ -15,6 +15,8 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
  * countLikeByBeitrag(int id)
  * insertLike(Like l)
  * deleteLike(Like l)
+ * checkIfLiked(Nutzer n, Beitrag b)
+ * getLikeCountByNutzer(Nutzer n, String datumVon, String datumBis)
  */
 
 public class LikeMapper {
@@ -37,7 +39,7 @@ public class LikeMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see 	getLikeById(int id): Sucht Like anhand von ID
 	 * @param 	Like ID
 	 * @return 	Like Objekt
@@ -119,7 +121,7 @@ public class LikeMapper {
 	 }
 	 
 	 
-	 /*
+	 /**
 	 * @see 	countLikeByBeitrag(int id): Z�hlt alle Likes zu einem Beitrag
 	 * @param 	Beitrag ID
 	 * @return 	int mit Anzahl
@@ -152,7 +154,7 @@ public class LikeMapper {
 	}
 	 
 	 
-	 /*
+	 /**
 	 * @see 	insertLike(Like l):	Speichert einen Like in der Datenbank
 	 * @param	Objekt von Typ Like
 	 * @return 	Gespeichertes Objekt vom Typ Like
@@ -167,7 +169,7 @@ public class LikeMapper {
 		try{
 			Statement stmt = con.createStatement();
 
-	      /*
+	      /**
 	       * Zun�chst schauen wir nach, welches der momentan h�chste
 	       * Prim�rschl�sselwert ist.
 	       */
@@ -196,7 +198,7 @@ public class LikeMapper {
 	}
 	
 	
-	 /*
+	 /**
 	 * @see 	deleteLike(Like l): L�scht einen Like aus der Datenbank
 	 * @param 	Objekt von Typ Like
 	 * @return 		-

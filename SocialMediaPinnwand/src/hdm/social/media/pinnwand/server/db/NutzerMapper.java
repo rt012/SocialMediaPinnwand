@@ -39,7 +39,7 @@ public class NutzerMapper{
 	 }
 	 
 	 
-	/*
+	/**
 	 * @see 	getNutzrById(int id): Sucht Nutzer anhand der email 
 	 * @param 	String email
 	 * @return 	1 Nutzerobjekt entweder mit Ergebnis oder leer 
@@ -65,12 +65,6 @@ public class NutzerMapper{
 		        n.setName(rs.getString("name"));
 		        n.setEmail(rs.getString("email"));
 		        n.setNickname(rs.getString("nickname"));
-		        /*
-		        //Verweis auf PinnwandMapper um zugehörige Pinnwand herauszufinden
-		        n.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(rs.getInt("nutzer_ID")));
-		        //Verweis auf AbonnementMapper um zugehörige Abos herauszufinden
-		        n.setAbonnementListe(AboMapper.aboMapper().getAboByNutzer(rs.getInt("nutzer_ID")));
-		        */	
 		        return n;
 		      }
 		}
@@ -110,8 +104,6 @@ public class NutzerMapper{
 			        n.setName(rs.getString("name"));
 			        n.setEmail(rs.getString("email"));
 			        n.setNickname(rs.getString("nickname"));
-			       // n.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n));
-			       // n.setAbonnentenListe(AboMapper.aboMapper().getAboByNutzer(n.getId()));	
 			        return n;
 			      }
 			}
@@ -124,7 +116,7 @@ public class NutzerMapper{
 		return null;
 		}
 	 
-	 /*
+	 /**
 	 * @see 	getAllNutzer(): Sucht alle Nutzer
 	 * @param 	-
 	 * @return 	ArrayList mit Nutzerobjekten
@@ -150,13 +142,7 @@ public class NutzerMapper{
 		        n.setName(rs.getString("name"));
 		        n.setEmail(rs.getString("email"));
 		        n.setNickname(rs.getString("nickname"));
-		        /*
-		        //Verweis auf PinnwandMapper um zugehörige Pinnwand herauszufinden
-		        n.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(rs.getInt("nutzer_ID")));
-		        //Verweis auf AbonnementMapper um zugehörige Abos herauszufinden
-		        n.setAbonnementListe(AboMapper.aboMapper().getAboByNutzer(rs.getInt("nutzer_ID")));	
-		        */
-		        
+		        		        
 		        //NutzerObjekte der ArrayList hinzufügen
 		        nutzerListe.add(n);
 		      }
@@ -171,7 +157,7 @@ public class NutzerMapper{
 	}
 	
 	
-	 /*
+	 /**
 	 * @see		countNutzer(): Zählt alle angemeldeten Nutzer
 	 * @param 	-
 	 * @return 	int mit Anzahl
@@ -205,7 +191,7 @@ public class NutzerMapper{
 	
 	 
 	 
-	/*
+	/**
 	* @see		insertNutzer(Nutzer n): Speichert Nutzerobjekt in DB
 	* @param 	Nutzerobjekt
 	* @return 	Das gespeicherte Nutzerobjekt
@@ -219,7 +205,7 @@ public class NutzerMapper{
 		try{
 			Statement stmt = con.createStatement();
 
-	      /*
+	      /**
 	       * ZunÃ¤chst schauen wir nach, welches der momentan höchste
 	       * Primärschlüsselwert ist.
 	       */
@@ -252,7 +238,7 @@ public class NutzerMapper{
 	}
 	
 	
-	/*
+	/**
 	* @see 		deleteNutzer(Nutzer n): Löscht Nutzer aus der Datenbank
 	* @param 	Nutzerobjekt
 	* @return 	-
@@ -273,7 +259,7 @@ public class NutzerMapper{
 	}
 	
 	
-	/*
+	/**
 	* @see		updateNutzer(Nutzwr n): Aktualisiert Nutzerinformationen in der Datenbank
 	* @param	zu aktualisierendes Nutzerobjekt
 	* @return 	aktualisiertes Nutzerobjekt

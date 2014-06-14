@@ -10,7 +10,7 @@ import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
-/**
+/*
  * Methoden:
  * getBeitragById(int id)
  * getBeitragByPinnwand(int id)
@@ -41,7 +41,7 @@ public class BeitragMapper {
 	 }
 	 
 	
-	 /*
+	 /**
 	 * @see 	getBeitragById (int id): Sucht Beitrag anhand von ID
 	 * @param 	Beitrag ID
 	 * @return 	Beitrag Objekt
@@ -62,7 +62,7 @@ public class BeitragMapper {
 		        // Ergebnis in Beitrag- Objekt umwandeln
 		        Beitrag b = new Beitrag();
 		        b.setId(rs.getInt("beitrag_ID"));
-		        b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        b.setErstellungsZeitpunkt(rs.getTimestamp("erstellung"));
 		        b.setInhalt(rs.getString("inhalt"));
 		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 		        
@@ -86,45 +86,45 @@ public class BeitragMapper {
 	//Falls keines gefunden leere Liste
 	return null;
 	}
-
+	 
 	/**
 	 * getBeiträgeBetweenTwoDates gibt alle Beiträge zwischen einem Zeitraum aus
-	 * 
-	 * @param	datumVon String welches das Anfangsdatum der Suchanfrage bestimmt
-	 * @param	datumVis String welches das Enddatum der Suchanfrage bestimmt
-	 * 
-	 * @return	ArrayList mit allen Beitragobjekten in einem Zeitraum
+	 *
+	 * @param datumVon String welches das Anfangsdatum der Suchanfrage bestimmt
+	 * @param datumVis String welches das Enddatum der Suchanfrage bestimmt
+	 *
+	 * @return ArrayList mit allen Beitragobjekten in einem Zeitraum
 	 */
-	public ArrayList<Beitrag> getBeitraegeBetweenTwoDates (String datumVon, String datumBis){
-		//Aufbau der DBVerbindung
+	public ArrayList<Beitrag> getBeitraegeBetweenTwoDates(String datumVon,String datumBis) {
+		// Aufbau der DBVerbindung
 		Connection con = DBConnection.connection();
-		ArrayList <Beitrag> beitragListe= new ArrayList<Beitrag>();
-		//Versuch der Abfrage
-		try{
+		ArrayList<Beitrag> beitragListe = new ArrayList<Beitrag>();
+		// Versuch der Abfrage
+		try {
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * from beitrag WHERE erstellung between '" + datumVon + "' AND '" + datumBis + "'";
-			ResultSet rs = stmt.executeQuery
-					(sql);
-			
+			String sql = "SELECT * from beitrag WHERE erstellung between '"+ datumVon + "' AND '" + datumBis + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
 			while (rs.next()) {
 				// Ergebnis in Beitrag- Objekt umwandeln
-		        Beitrag b = new Beitrag();
-		        b.setId(rs.getInt("beitrag_ID"));
-		        b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
-		        b.setInhalt(rs.getString("inhalt"));
-		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
+				Beitrag b = new Beitrag();
+				b.setId(rs.getInt("beitrag_ID"));
+				b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+				b.setInhalt(rs.getString("inhalt"));
+				b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(
+						rs.getInt("pinnwand_ID")));
 				b.setLikeList(LikeMapper.likeMapper().getLikeByBeitrag(b));
-				b.setKommentarListe(KommentarMapper.kommentarMapper().getKommentarByBeitrag(b));
-		        beitragListe.add(b);
+				b.setKommentarListe(KommentarMapper.kommentarMapper()
+						.getKommentarByBeitrag(b));
+				beitragListe.add(b);
 			}
-			return beitragListe;		
+			return beitragListe;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
-		   catch (SQLException e) {
-	    		e.printStackTrace();
-	    		return null;
-		    }				
 	}
-	
+		
 	/**
 	 * Gibt alle Beiträge zwischen einem Zeitraum aus
 	 * 
@@ -165,7 +165,7 @@ public class BeitragMapper {
 	}
 	
 	 
-	 /*
+	 /**
 	 * @see		getBeittragByPinnwand(int id): Sucht alle Beitrï¿½ge die zu einer Pinnwand gehï¿½ren
 	 * @param 	Pinnwand Id
 	 * @return	ArrayList mit Beitragobjekten
@@ -186,7 +186,7 @@ public class BeitragMapper {
 		        // Ergebnis in Beitrag- Objekt umwandeln
 		        Beitrag b = new Beitrag();
 		        b.setId(rs.getInt("beitrag_ID"));
-		        b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        b.setErstellungsZeitpunkt(rs.getTimestamp("erstellung"));
 		        b.setInhalt((rs.getString("inhalt")));
 		        b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 		        
@@ -214,7 +214,7 @@ public class BeitragMapper {
 	}
 	 
 	 
-	/*
+	/**
 	* @see		getAllBeitrag: Sucht alle Beitrï¿½ge die zu einer Pinnwand gehï¿½ren
 	* @param 	Pinnwand Id
 	* @return 	ArrayList mit Beitragobjekten
@@ -235,7 +235,7 @@ public class BeitragMapper {
 				// Ergebnis in Beitrag- Objekt umwandeln
 			    Beitrag b = new Beitrag();
 			    b.setId(rs.getInt("beitrag_ID"));
-			    b.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        b.setErstellungsZeitpunkt(rs.getTimestamp("erstellung"));
 			    b.setInhalt((rs.getString("inhalt")));
 			    b.setPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandById(rs.getInt("pinnwand_ID")));
 			    b.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("pinnwand_ID")));
@@ -260,7 +260,7 @@ public class BeitragMapper {
 	}
 	 
 	 
-	 /*
+	 /**
 	 * @see		countBeitraege(): Zï¿½hlt alle Beitrï¿½ge
 	 * @param 	-
 	 * @return 	Anzahl der Beitrï¿½ge als int
@@ -293,7 +293,7 @@ public class BeitragMapper {
 	} 
 	
 	 
-	 /*
+	 /**
 	  * @see 	insertBeitrag(Beitrag b): Speichert Beitragobjekt in DB
 	  * @param 	Beitragobjekt
 	  * @return Das gespeicherte Beitragobjekt
@@ -308,7 +308,7 @@ public class BeitragMapper {
 		try{
 			Statement stmt = con.createStatement();
 
-	      /*
+	      /**
 	       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
 	       * Primï¿½rschlï¿½sselwert ist.
 	       */
@@ -337,7 +337,7 @@ public class BeitragMapper {
 	}
 
 	
-	/*
+	/**
 	* @see 		deleteBeitrag(Beitrag b): Lï¿½scht Beitrag aus der Datenbank
 	* @param 	Beitragobjekt
 	* @return 		-
@@ -358,7 +358,7 @@ public class BeitragMapper {
 	 }
 	
 	 
-	 /*
+	 /**
 	  * @see	updateBeitrag(Beitrag b): Aktualisiert Beitraginformationen in der Datenbank
 	  * @param	zu aktualisierendes Beitragobjekt
 	  * @return	aktualisiertes Beitragobjekt

@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -31,6 +32,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class ReportOptionen extends SplitLayoutPanel{
 	
+	private Label reportName = new Label();
 	private Date datumVon = new Date();
 	private Date datumBis= new Date();
 	private DatePicker datePickerVon = new DatePicker();
@@ -38,22 +40,29 @@ public class ReportOptionen extends SplitLayoutPanel{
 	private Nutzer nutzer = null;
 	private CustomOracle oracle = new CustomOracle();
 	private final SuggestBox suggestBoxPinnwandSuche = new SuggestBox(oracle);
-	private Button createReportButton = new Button("Report Erstellen");
+	private Button createReportButton = new Button("");
 	private ReportRootPanel reportRootPanel = null;
 	private RadioButton radioButtonBeitrag = new RadioButton("Report Auswahl" , "Beitrag");
 	private RadioButton radioButtonNutzer = new RadioButton("Report Auswahl" , "Nutzer");
-	private Button logout = new Button("LogOut");
+	private Button logout = new Button("");
 	
 	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
 	public ReportOptionen(final ReportRootPanel reportRootPanel,final NutzerVerwaltung nutzerVerwaltung){
 		this.reportRootPanel = reportRootPanel;
 		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setStyleName("verticalPanel");
 		fillSuggestenBox();
+		
+		
 		
 		/**
 		 * Events der Widgets
 		 */
+		
+		reportName.setText("ReportGenerator");
+		reportName.setStyleName("reportName");
+		
 		
 		//Logout Button
 		
@@ -69,6 +78,7 @@ public class ReportOptionen extends SplitLayoutPanel{
 		datePickerVon.setVisible(false);
 		datePickerBis.setVisible(false);
 		createReportButton.setVisible(false);
+		createReportButton.setStyleName("createReportButton");
 		
 		radioButtonBeitrag.addClickHandler(new ClickHandler(){
 
@@ -130,6 +140,7 @@ public class ReportOptionen extends SplitLayoutPanel{
 			
 		});
 		
+		verticalPanel.add(reportName);
 		verticalPanel.add(logout);
 		verticalPanel.add(radioButtonBeitrag);
 		verticalPanel.add(radioButtonNutzer);

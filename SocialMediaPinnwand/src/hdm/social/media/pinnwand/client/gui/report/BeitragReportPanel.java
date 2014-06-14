@@ -49,6 +49,7 @@ private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(Re
 			public void onSuccess(String result) {
 				//ScrollPanel sorgt dafür, dass das HTML scrollbar wird.
 				ScrollPanel scrollPanel = new ScrollPanel();
+				scrollPanel.setStyleName("ScrollPanel");
 				HTML html = new HTML(result);
 				
 				html.setWidth("100%");

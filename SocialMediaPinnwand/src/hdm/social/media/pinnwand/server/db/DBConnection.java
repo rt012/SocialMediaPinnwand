@@ -19,18 +19,18 @@ public class DBConnection {
 
 	//Datenbank URL
 	//CloudSQL
-	private static String url = "jdbc:mysql://localhost/it-projekt";
+	private static String url = "jdbc:mysql://localhost/it_projekt";
 
 
 	
 	/**
-	 * Nutzerdaten f�r DB-login
+	 * Nutzerdaten für DB-login
 	 */
 	private static String name="root";
 	private static String password="";
 	
 	/**
-	 * Ersatz f�r Konstruktor zum erstellen einer Verbindung
+	 * Ersatz für Konstruktor zum erstellen einer Verbindung
 	 * @return
 	 */
 	public static Connection connection()  {
@@ -40,7 +40,7 @@ public class DBConnection {
 		if ( con == null ) {
 			try {
 				//Installieren des geeigneten DB-Treibers
-				//im Moment noch standard sql-Treiber, sp�ter AppEngine Treiber
+				//im Moment noch standard sql-Treiber, spï¿½ter AppEngine Treiber
 				DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
 				
 				con = DriverManager.getConnection(url, name, password);
@@ -55,7 +55,7 @@ public class DBConnection {
 			}
 		}
 		
-		// Zur�ckgegeben der Verbindung
+		// Zurï¿½ckgegeben der Verbindung
 		return con;
 	}
 }

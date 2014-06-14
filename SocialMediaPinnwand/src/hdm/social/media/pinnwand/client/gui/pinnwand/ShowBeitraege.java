@@ -30,7 +30,6 @@ public class ShowBeitraege extends FlexTable{
 	
 		
 		setStyleName("FlexTableBeitraege");
-		
 		this.aktuellerNutzer = n;
 		this.s=s;
 		printOutBeitragJeNutzer(n);

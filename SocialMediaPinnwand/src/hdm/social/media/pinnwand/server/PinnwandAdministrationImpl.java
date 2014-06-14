@@ -303,7 +303,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	@Override
 	public boolean checkAuthorKommentar(Nutzer nutzer, Kommentar kommentar) {
 		// TODO Auto-generated method stub
-		return KommentarMapper.kommentarMapper().checkAuthor(nutzer, kommentar);
+		return KommentarMapper.kommentarMapper().checkAutor(nutzer, kommentar);
 	}
 
 }

@@ -59,13 +59,18 @@ private Button ButtonSenden;
 		  *  Beim click auf den Button wird der Kommentar dem Beitrag hinzugefügt und das Dialog Fenster geschlossen
 		  */
 			public void onClick(ClickEvent event) {
-				Kommentar k = new Kommentar();
-				k.setNutzer(nutzer);
-				k.setBeitrag(beitrag);
-				k.setInhalt(TextAreaKommentar.getText());
-				PinnwandAdministration.createKommentar(k, callback);
-				hide();
-				showBeitraege.refresh(nutzer);
+				if(TextAreaKommentar.getValue() != ""){
+					Kommentar k = new Kommentar();
+					k.setNutzer(nutzer);
+					k.setBeitrag(beitrag);
+					k.setInhalt(TextAreaKommentar.getText());
+					PinnwandAdministration.createKommentar(k, callback);
+					hide();
+					showBeitraege.refresh(nutzer);
+				}
+				else{
+					hide();
+				}
 			}
 	});
 	

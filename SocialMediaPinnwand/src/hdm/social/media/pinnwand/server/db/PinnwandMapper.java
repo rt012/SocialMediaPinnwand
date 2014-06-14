@@ -33,7 +33,7 @@ public class PinnwandMapper {
 		}
 	
 	 
-	/*
+	/**
 	* @see 		getPinnwandById(int id): Sucht Pinnwand anhand der id 
 	* @param 	int id
 	* @return 	1 Pinnwandobjekt entweder mit Ergebnis oder leer 
@@ -69,7 +69,7 @@ public class PinnwandMapper {
 	}
 	
 	
-	/*
+	/**
 	* @see 		getPinnwandByNutzer(int id): Sucht zugehörige Pinnwand zu einem Nutzer
 	* @param	Nutzer id
 	* @return 	Pinnwandobjekt welches zum Nutzer gehört
@@ -105,7 +105,7 @@ public class PinnwandMapper {
 	}
 	
 	
-	/*
+	/**
 	* @see 		insertPinnwand(Pinnwand p): Speichert Pinnwandobjekt in DB
 	* @param 	Pinnwandobjekt
 	* @return 	Das gespeicherte Pinnwandobjekt
@@ -118,7 +118,7 @@ public class PinnwandMapper {
 		try{
 			Statement stmt = con.createStatement();
 			
-	      /*
+	      /**
 	       * Zunächst schauen wir nach, welches der momentan höchste
 	       * Primärschlüsselwert ist.
 	       */
@@ -127,7 +127,7 @@ public class PinnwandMapper {
 
 	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
-		        /*
+		        /**
 		         * p erhält den bisher maximalen, nun um 1 inkrementierten
 		         * Primärschlüssel.
 		         */

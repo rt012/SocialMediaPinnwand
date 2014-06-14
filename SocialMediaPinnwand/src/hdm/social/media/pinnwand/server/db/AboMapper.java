@@ -14,6 +14,7 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
  * getAboByNutzer(int id)
  * insertAbo(Abo a)
  * deleteAbo(Abo a)
+ * getAboBetweenTwoDates(String s, String s2)
  */
 
 public class AboMapper {
@@ -34,7 +35,7 @@ public class AboMapper {
 	}
 	
 	
-	/*
+	/**
 	* @see		getAboById(int id): Gibt Abo Objekt anhand von Id aus
 	* @param 	Abonemment ID
 	* @return	Abo objekt
@@ -73,7 +74,7 @@ public class AboMapper {
 	}
 	
 	
-	/*
+	/**
 	* @see 		getAboBNutzer(int id): gibt komplette Liste an Abonnements zur�ck die ein Nutzer besitzt
 	* @param 	Nutzer Id
 	* @return 	ArrayList mit Abo objekten
@@ -114,7 +115,7 @@ public class AboMapper {
 	}
 	
 		
-	/*
+	/**
 	* @see		insertAbo(Abo a): Speichert Abonnementobjekt in DB
 	* @param	Abonnementrobjekt
 	* @return 	Das gespeicherte Abonnementobjekt
@@ -128,7 +129,7 @@ public class AboMapper {
 		try{
 			Statement stmt = con.createStatement();
 
-	      /*
+	      /**
 	       * Zun�chst schauen wir nach, welches der momentan h�chste
 	       * Prim�rschl�sselwert ist.
 	       */
@@ -137,7 +138,7 @@ public class AboMapper {
 
 	      // Wenn wir etwas zur�ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
-		        /*
+		        /**
 		         * c erh�lt den bisher maximalen, nun um 1 inkrementierten
 		         * Prim�rschl�ssel.
 		         */
@@ -161,7 +162,7 @@ public class AboMapper {
 	}
 	
 	
-	/*
+	/**
 	* @see 		deleteAbo(Abo a): L�scht Abonnement aus der Datenbank
 	* @param 	Abonnementobjekt
 	* @return 		-

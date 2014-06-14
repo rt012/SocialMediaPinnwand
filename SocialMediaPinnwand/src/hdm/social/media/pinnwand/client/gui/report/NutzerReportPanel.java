@@ -53,6 +53,7 @@ public class NutzerReportPanel extends SplitLayoutPanel{
 			@Override
 			public void onSuccess(String result) {
 				HTML html = new HTML(result);
+				html.setStyleName("nutzerReport");
 				add(html);	
 			}	
 		});

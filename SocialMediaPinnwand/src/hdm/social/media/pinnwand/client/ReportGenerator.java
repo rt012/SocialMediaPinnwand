@@ -30,6 +30,8 @@ public class ReportGenerator implements EntryPoint {
 	 */
 	private final ReportGeneratorAdministrationAsync reportGenerator = GWT.create(ReportGeneratorAdministration.class);
 	
+	
+	
 	@Override
 	public void onModuleLoad() {
 		 /**
@@ -65,8 +67,10 @@ public class ReportGenerator implements EntryPoint {
 	 
 	public void loadReportGenerator(){
 		reportRootPanel = new ReportRootPanel();
-		
-		split.addWest(new ReportOptionen(reportRootPanel, nutzerVerwaltung), 1000);
+		reportRootPanel.setStyleName("ReportRoot");
+		ReportOptionen reportOptionen = new ReportOptionen(reportRootPanel, nutzerVerwaltung);
+		reportOptionen.setStyleName("ReportOptionen");
+		split.addWest(reportOptionen, 1000);
 		split.addEast(reportRootPanel, 1000);
 		rp.add(split);
 	}

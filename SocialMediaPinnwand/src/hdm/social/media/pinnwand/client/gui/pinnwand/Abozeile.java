@@ -41,7 +41,7 @@ public class Abozeile extends HorizontalPanel{
 		aboname.setStyleName("aboname");
 		this.add(aboname);
 		
-		buttonAboLoeschen = new Button("X");
+		buttonAboLoeschen = new Button("");
 		buttonAboLoeschen.setStyleName("buttonAboLoeschen");
 		this.add(buttonAboLoeschen);
 		

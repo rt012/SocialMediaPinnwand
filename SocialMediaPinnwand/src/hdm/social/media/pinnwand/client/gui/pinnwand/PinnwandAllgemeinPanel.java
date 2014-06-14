@@ -22,6 +22,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -37,7 +38,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 	//private PinnwandBeitrag panel_PinnwandBeitrag;
 	private ShowBeitraege flexTableBeitraege = null;
 	//Label zum anzeigen des Pinnwand Namen
-	private final Label pinnwandName = new Label("");
+	private final HTML pinnwandName = new HTML("");
 	//Verweis auf CustomOracle -> Verwaltung der SuggestBox um Nutzerobjekte zu speichern
 	private CustomOracle oracle = new CustomOracle();
 	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
@@ -65,16 +66,16 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		setStyleName("layout_west");
 		
 		/**
-		 * Ueberschrift etwa: "Ferdis SocialMediaPinnwand"
+		 * Ueberschrift etwa: "SocialMediaPinnwand Ferdinand Grüner"
 		 */
 		pinnwandName.setStyleName("pinnwandName");
-		pinnwandName.setText("Social MediaPinnwand von "+ aktuellerNutzer.getVorname()+' '+ aktuellerNutzer.getName());
+		pinnwandName.setHTML("SocialMediaPinnwand von </br>"+ aktuellerNutzer.getVorname()+' '+ aktuellerNutzer.getName());
 		add(pinnwandName);
 		
 		/**
 		 * Eigener Pinnwand Button
 		 */
-		Button eigenePinnwand = new Button("Eigene Pinnwand");
+		Button eigenePinnwand = new Button("");
 		eigenePinnwand.addStyleName("buttonEigenePinnwand");
 		add(eigenePinnwand);
 		eigenePinnwand.addClickHandler(new ClickHandler(){
@@ -87,7 +88,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		/**
 		 * Logout Button
 		 */
-		Button b = new Button("LogOut Temp");
+		Button b = new Button("");
 		b.setStyleName("buttonLogout");
 		b.addClickHandler(new ClickHandler(){
 			
@@ -208,7 +209,6 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 	}
 
 	public void refreshFlexTableAbonniertePinnwaende(){
-		flexTableAbonniertePinnwaende.clear();
 		flexTableAbonniertePinnwaende.refresh(aktuellerNutzer);
 	}
 	

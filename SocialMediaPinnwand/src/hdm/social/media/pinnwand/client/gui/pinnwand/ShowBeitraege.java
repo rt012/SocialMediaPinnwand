@@ -4,9 +4,12 @@ import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Beitrag;
+import hdm.social.media.pinnwand.shared.bo.Kommentar;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
+
 import java.util.ArrayList;
 import java.util.Collections;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -50,16 +53,19 @@ public class ShowBeitraege extends FlexTable{
 					int aktuelleRow = 0;
 					if(result!= null){
 						for(int i= 0; i < result.size(); i++){
+							
+							
 							/**
 							 *  Hinzuf�gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugef�gt
 							 */
-							ShowBeitraege.this.setWidget(
-									aktuelleRow,
-									0,
-									new PinnwandBeitrag(result.get(i).getInhalt(),
-														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
-														+ result.get(i).getLikeList().size()+" Personen gefaellt das.",
-														result.get(i),aktuellerNutzer, ShowBeitraege.this ));
+							
+							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(result.get(i).getInhalt(),
+									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),result.get(i).getErstellungsZeitpunkt().toString(),
+									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
+									result.get(i),aktuellerNutzer, ShowBeitraege.this);
+							
+							pinnwandBeitrag.setStyleName("pinnwandBeitrag");
+							ShowBeitraege.this.setWidget(aktuelleRow,0,pinnwandBeitrag);
 							/**
 							 *  nachdem ein Beitrag der FlexTable hinzugef�gt wurde wird die aktuelle Zeile um 1 erh�ht.
 							 */
@@ -69,7 +75,10 @@ public class ShowBeitraege extends FlexTable{
 							 */
 							
 							for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-								ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
+								
+								BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(),result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+ " "  + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
+								kommentar.setStyleName("kommentar");
+								ShowBeitraege.this.setWidget(aktuelleRow, 0, kommentar);
 								aktuelleRow += 1;
 							}
 						}
@@ -93,22 +102,16 @@ public class ShowBeitraege extends FlexTable{
 							/**
 							 *  Hinzuf�gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugef�gt
 							 */
-							
-							/**
-							 * Da Likelist evtl null ist muss hier die Abfrage ausgelagert werden
-							 */
-							int likelistsize=0;
-							if (result.get(i).getLikeList() != null){
-								likelistsize = result.get(i).getLikeList().size();
-							}
 														
-							ShowBeitraege.this.setWidget(
-									aktuelleRow,
-									0,
-									new PinnwandBeitrag(result.get(i).getInhalt(),
-														"von "+ result.get(i).getPinnwand().getNutzer().getName() +","+result.get(i).getErstellungsZeitpunkt(),
-														+ likelistsize +" Personen gefaellt das.",
-														result.get(i),aktuellerNutzer, ShowBeitraege.this ));
+							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(result.get(i).getInhalt(),
+									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),result.get(i).getErstellungsZeitpunkt().toString(),
+									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
+									result.get(i),aktuellerNutzer, ShowBeitraege.this);
+							
+							pinnwandBeitrag.setStyleName("pinnwandBeitrag");
+							
+							ShowBeitraege.this.setWidget(aktuelleRow,0,pinnwandBeitrag);
+							
 							/**
 							 *  nachdem ein Beitrag der FlexTable hinzugef�gt wurde wird die aktuelle Zeile um 1 erh�ht.
 							 */
@@ -118,7 +121,9 @@ public class ShowBeitraege extends FlexTable{
 							 */
 							if(result.get(i).getKommentarListe() != null){
 								for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-									ShowBeitraege.this.setWidget(aktuelleRow, 0, new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), " ,von " + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt())));
+									BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+" "+result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
+									kommentar.setStyleName("kommentar");
+									ShowBeitraege.this.setWidget(aktuelleRow, 0, kommentar);
 									aktuelleRow += 1;
 								}
 							}

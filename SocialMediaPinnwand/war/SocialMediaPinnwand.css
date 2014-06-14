@@ -1,7 +1,51 @@
-/** Add css rules here for your application. */
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/**
+ * Author: Ferdinand Grüner
+ *
+ * CONTENTS.....................You’re reading it
+ * General......................Styles that apply for the whole document
+ * GWT..........................GWT Einstellungen
+ * Layout.......................Aufbau der Seite
+ * Linke Seite..................Elemente der Linken Seite (Aboliste, Suggestbox, Pinnwandname)
+ * Rechte Seite oben............Elemente der Rechten Seite Oben (Beitrag Senden)
+ * Rechte Seite unten(Beit).....Elemente der Rechten Seite Unten (Beitragsliste)
+ * Rechte Seite unten(Komm).....Elemente der Rechten Seite Unten (Kommentare)
+ * Hover Effekte................Mouseover Effekte
+ */
 
 
-/** Example rules used by the template application (remove for your app) */
+/*------------------------------------*\
+    General
+\*------------------------------------*/
+
+@font-face {
+  font-family: Geometria;
+  src:url('fonts/Geometria-Light.otf');
+}
+
+@font-face {
+  font-family: exo;
+  src:url('fonts/Exo-Medium.otf');
+}
+
+body{
+  background: linear-gradient(#fff, #ECECEC) !important;
+  background-attachment: fixed !important;
+}
+
+h1, h2, h3, body, a, ul, li, form, input, p, div, button, button.gwt-Button{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-weight: normal;
+  border: none;
+  font-family: Geometria;
+  font-size: 14px;  
+}
+
 h1 {
   font-size: 2em;
   font-weight: bold;
@@ -12,15 +56,14 @@ h1 {
 
 .gwt-SplitLayoutPanel-HDragger,
 .gwt-SplitLayoutPanel-VDragger{
-	display: none !important;
+  display: none !important;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
+/*------------------------------------*\
+    GWT
+\*------------------------------------*/
 
-/** Most GWT widgets already have a style name defined */
+
 .gwt-DialogBox {
   width: 400px;
 }
@@ -29,11 +72,424 @@ h1 {
   margin: 5px;
 }
 
+.sendButton {
+  display: block;
+  font-size: 16pt;
+}
+
 .serverResponseLabelError {
   color: red;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
+}
+
+/*------------------------------------*\
+    Layout
+\*------------------------------------*/
+
+.rootSplitPanel{
+  width:1000px;
+  position: absolute;
+  left:0px;
+  right:0px;
+  margin: 20px auto;
+  border: 1px solid #c4c4c4;
+  background: #fff;
+  -webkit-box-shadow: 0px 0px 10px 3px #cacaca;
+}
+
+
+/*------------------------------------*\
+    Linke Seite
+\*------------------------------------*/
+
+.pinnwandAllgemein{
+  padding:20px;
+  border-right: 1px solid #c4c4c4;
+}
+
+.pinnwandAllgemein > tbody tr:nth-child(2),
+.pinnwandAllgemein > tbody tr:nth-child(3){
+  display: inline-block;
+}
+
+.pinnwandAllgemein > tbody tr:nth-child(3){
+  float: right;
+}
+
+.pinnwandName{
+  font-family: exo;
+  font-size: 20px;
+}
+
+.buttonEigenePinnwand{
+  margin-top: 15px !important;
+  background: url(img/home.png) !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  height:36px;
+  width:36px;
+  border: 1px solid #c4c4c4 !important;
+  border-radius: 3px !important;
+  display: inline-block;
+  margin-right: 5px !important;
+}
+
+.buttonLogout{
+  margin-top: 15px;
+  background: url(img/logout.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:36px;
+  width:36px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.pinnwandSuche{
+  display: inline-block;
+  width:120px;
+  padding: 2px 5px; 
+  margin-top: 20px;
+  background-color: #ECECEC;
+  border-radius: 3px 3px 0px 0px ;
+  border-right: 1px solid #c4c4c4;
+  border-top: 1px solid #c4c4c4;
+  border-left: 1px solid #c4c4c4;
+}
+
+.SuggestBoxPinnwandSuche{
+  border: 1px solid #c4c4c4;
+  border-radius: 0px 3px 3px 3px;
+  width: 250px;
+  padding: 2px 5px;
+}
+
+.buttonAboLoeschen{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: url(img/loeschen.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:22px;
+  width:22px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+}
+
+.buttonZeigePinnwand{
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: url(img/auge.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:22px;
+  width:22px;
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+}
+
+.Abozeile{
+  position: relative;
+  display: inline-block;
+  width:218px;
+  vertical-align: middle;
+}
+
+.aboname{
+  width: 180px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.FlexTableAbonniertePinnwaende{
+  margin-top: 20px;
+  overflow: auto;
+}
+
+.FlexTableAbonniertePinnwaende > tbody > tr{
+  position: relative;
+  background-color: #ECECEC;
+}
+
+.FlexTableAbonniertePinnwaende tr{
+  display: inline-block;
+  width: 100%;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-radius: 3px;
+  padding-left:2px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.rootSplitPanel > div:nth-child(2){
+  border-right: 1px solid #c4c4c4;
+}
+
+
+/*------------------------------------*\
+    Rechte Seite oben
+\*------------------------------------*/
+
+.gwt-SplitLayoutPanel{
+  position: relative !important;
+}
+
+.gwt-SplitLayoutPanel > div:nth-child(2){
+  
+  border-bottom: 1px solid #c4c4c4 !important;
+  height: 205px !important;
+  z-index: 1;
+}
+
+.beitragPanel{
+  padding:20px;  
+  overflow: hidden;
+}
+
+.beitragPanel> tbody tr td
+{
+  display: inline-block;
+}
+
+.beitragSchreiben{
+  width:130px;
+  padding: 2px 5px; 
+  margin-top: 20px;
+  background-color: #ECECEC;
+  border-radius: 3px 3px 0px 0px ;
+  border-right: 1px solid #c4c4c4;
+  border-top: 1px solid #c4c4c4;
+  border-left: 1px solid #c4c4c4;
+}
+
+
+.TextAreaBeitragVerfassen{
+  width: 625px;
+  max-width: 625px;
+  height: 100px;
+  max-height: 100px;
+  border: 1px solid #c4c4c4;
+  padding: 2px 30px 2px 5px;
+  margin: 0px;
+  resize: none;
+
+}
+
+.beitragSenden{
+  background: url(img/umschlag.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:35px;
+  width:35px;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 28px;
+  right: 24px;
+  border: 1px solid #c4c4c4;
+}
+
+/*------------------------------------*\
+    Rechte Seite unten -> Beitraege
+\*------------------------------------*/
+
+
+.gwt-SplitLayoutPanel > div:nth-child(4){
+  top: 0px;
+}
+
+.scrollPanel{
+  position: absolute;
+  top: 220px !important;
+  padding: 20px;
+}
+
+.pinnwandBeitrag > tbody tr td{
+  display: inline-block !important;
+}
+
+.pinnwandBeitrag{
+  width:650px;
+  position: relative;
+  height: 125px;
+  border-radius: 5px;
+  background-color: #ECECEC;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.LabelBeitragsAutor{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+
+.LabelErstellung{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.LabelBeitragLikeAnzahl{
+  position: absolute;
+  bottom: 5px;
+  left: 40px;
+}
+
+.LabelBeitragsInhalt{
+  position: absolute;
+  padding: 2px 8px;
+  top: 25px;
+  height: 60px;
+  width: 630px;
+  overflow: auto;
+  background-color: white;
+  border: 2px solid #ECECEC;
+}
+
+.like{
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  background: url(img/like.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:22px;
+  width:22px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+}
+
+.dislike{
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  background: url(img/dislike.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:22px;
+  width:22px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+}
+
+.ButtonBeitragKommentieren{
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  background: url(img/kommentar.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:22px;
+  width:22px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+}
+
+.ButtonBeitragLoeschen{
+  position: absolute;
+  bottom: 5px;
+  right: 40px;
+  background: url(img/loeschen.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:22px;
+  width:22px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+}
+
+/*------------------------------------*\
+    Rechte Seite unten -> Kommentare
+\*------------------------------------*/
+
+.kommentar{
+  width:400px;
+  position: relative;
+  height: 125px;
+  border-radius: 5px;
+  float: right;
+  background-color: #ECECEC;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.LabelKommentarAutor{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+
+.LabelErstellungszeitpunkt{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.LabelKommentarInhalt{
+  position: absolute;
+  right:0px;
+  padding: 2px 8px;
+  top: 25px;
+  height: 60px;
+  width: 380px;
+  overflow: auto;
+  background-color: white;
+  border: 2px solid #ECECEC;
+}
+
+.ButtonKommentarLoeschen{
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  background: url(img/loeschen.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:22px;
+  width:22px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+}
+
+
+/*------------------------------------*\
+    Hover-Effekte
+\*------------------------------------*/
+
+
+.beitragSenden:hover{
+  -webkit-box-shadow: 0px 0px 3px 1px #c4c4c4;
+}
+
+.buttonAboLoeschen:hover,
+.ButtonKommentarLoeschen:hover,
+.ButtonBeitragLoeschen:hover,
+.dislike:hover,
+.buttonLogout:hover{
+  -webkit-box-shadow: 0px 0px 3px 1px #A13034;
+}
+
+
+.buttonEigenePinnwand:hover,
+.buttonZeigePinnwand:hover{
+  -webkit-box-shadow: 0px 0px 3px 1px #FFD700
+}
+
+.like:hover,
+.beitragSenden:hover,
+.ButtonBeitragKommentieren:hover{
+  -webkit-box-shadow: 0px 0px 3px 1px #66CD00;
 }

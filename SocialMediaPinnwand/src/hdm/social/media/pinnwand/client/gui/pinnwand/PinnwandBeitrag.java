@@ -7,6 +7,7 @@ import hdm.social.media.pinnwand.shared.bo.Like;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -35,6 +36,7 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	private Label LabelBeitragsInhalt;
 	private Label LabelBeitragsAutor;
 	private Label LabelBeitragLikeAnzahl;
+	private Label LabelErstellung;
 	private Button ButtonBeitragGefaelltMir;
 	private Button ButtonBeitragKommentieren;
 	private Button ButtonBeitragLoeschen;
@@ -44,7 +46,7 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	
 	
 	
-	 public PinnwandBeitrag(String Inhalt, String Beitragsautor, String LikeAnzahl, final Beitrag beitrag, final Nutzer nutzer, final ShowBeitraege showBeitraege) {   
+	 public PinnwandBeitrag(String Inhalt, String Beitragsautor, String Erstellung, String LikeAnzahl, final Beitrag beitrag, final Nutzer nutzer, final ShowBeitraege showBeitraege) {   
 		
 		 
 		 /**
@@ -54,20 +56,21 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		 this.nutzer = nutzer;
 		 this.showBeitraege = showBeitraege;
 		 
-		/**
-		 * Anzeige des Inhalts 
-		 */
-		 LabelBeitragsInhalt = new Label(Inhalt);
-		 LabelBeitragsInhalt.setStyleName("LabelBeitragsInhalt");
-		 this.add(LabelBeitragsInhalt);
-		 
+				 
 		 /**
-		  *  Autor + Erstellungszeitpunkt
+		  *  Autor 
 		  */
 		 
 		 LabelBeitragsAutor = new Label(Beitragsautor);
 		 this.add(LabelBeitragsAutor);
 		 LabelBeitragsAutor.setStyleName("LabelBeitragsAutor");
+		 
+		 /**
+		  * Erstellungszeitpunkt
+		  */
+		 LabelErstellung = new Label(Erstellung);
+		 this.add(LabelErstellung);
+		 LabelErstellung.setStyleName("LabelErstellung");
 		 
 		 
 		 /**
@@ -87,14 +90,20 @@ public class PinnwandBeitrag extends HorizontalPanel {
 				}
 		});
 		
-		 
+		 /**
+		 * Anzeige des Inhalts 
+		 */
+		 LabelBeitragsInhalt = new Label(Inhalt);
+		 LabelBeitragsInhalt.setStyleName("LabelBeitragsInhalt");
+		 this.add(LabelBeitragsInhalt);
 	
 		/**
 		 * Button für "Gefällt mir
 		 */
 		 ButtonBeitragGefaelltMir = new Button("");
-		 ButtonBeitragGefaelltMir.setStyleName("ButtonBeitragGefälltMir");
+		 ButtonBeitragGefaelltMir.setStyleName("ButtonBeitragGefaelltMir");
 		 this.add(ButtonBeitragGefaelltMir);
+		 
 		 /**
 		  *  Methode welche überprüft ob der Nutzer den Beitrag schon geliked hat oder nicht
 		  */
@@ -104,7 +113,7 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		 /**
 		  * Button für Kommentieren
 		  */
-		  ButtonBeitragKommentieren = new Button("Kommentieren");
+		  ButtonBeitragKommentieren = new Button("");
 		  ButtonBeitragKommentieren.setStyleName("ButtonBeitragKommentieren");
 		  this.add(ButtonBeitragKommentieren);
 		  ButtonBeitragKommentieren.addClickHandler(new ClickHandler() {
@@ -121,14 +130,13 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	   * Button um Beitrag zu löschen
 	   */
 		  
-		  ButtonBeitragLoeschen = new Button("Beitrag löschen");
-		  ButtonBeitragLoeschen.setStyleName("ButtonBeitragLöschen");
+		  ButtonBeitragLoeschen = new Button("");
+		  ButtonBeitragLoeschen.setStyleName("ButtonBeitragLoeschen");
 		  this.add(ButtonBeitragLoeschen);
 		  ButtonBeitragLoeschen.addClickHandler(new ClickHandler() {
 				 // Nach click auf den "Beitrag Löschen"-Button wird der ausgewählte Beitrag gelöscht
 				public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteBeitrag(beitrag, callbackVoid);	
-				SocialMediaPinnwand sp = new SocialMediaPinnwand();
 				showBeitraege.refresh(nutzer);
 				
 				}
@@ -240,7 +248,7 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	 *  Methode welche den Button zu einem "Gefällt mir" - Button macht
 	 */
 	 public void setButtonToLike() {
-		 ButtonBeitragGefaelltMir.setText("Gefällt mir"); 
+		 ButtonBeitragGefaelltMir.setStyleName("like"); 
 		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
 			 // Beim Click auf den Button wird der Like hinzugefügt und die Methode setButtonToDislike aufgerufen 
 				public void onClick(ClickEvent event) {
@@ -260,7 +268,7 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	  */
 	public void setButtonToDislike() {
 		 
-		 ButtonBeitragGefaelltMir.setText("Gefällt mir nicht mehr");
+		 ButtonBeitragGefaelltMir.setStyleName("dislike");
 		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
 			 // Löscht den Like und setzt den Button wieder auf "Gefällt mir"
 				public void onClick(ClickEvent event) {

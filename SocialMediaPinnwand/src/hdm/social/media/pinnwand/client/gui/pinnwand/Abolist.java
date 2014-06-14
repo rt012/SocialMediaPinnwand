@@ -40,7 +40,7 @@ public class Abolist extends FlexTable{
 				for (int i=0; i<result.size(); i++){
 					
 					final int x=i;
-					Button buttonZeigePinnwand = new Button("Zur Pinnwand");
+					Button buttonZeigePinnwand = new Button("");
 					buttonZeigePinnwand.setStyleName("buttonZeigePinnwand");
 					buttonZeigePinnwand.addClickHandler(new ClickHandler(){
 						public void onClick(ClickEvent event) {
@@ -61,6 +61,7 @@ public class Abolist extends FlexTable{
 	} 
 	
 	public void refresh(Nutzer n){
+		this.clear();
 		fillAboList(n);
 	}
 	

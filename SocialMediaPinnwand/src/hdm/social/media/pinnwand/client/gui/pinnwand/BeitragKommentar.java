@@ -25,12 +25,9 @@ public class BeitragKommentar extends HorizontalPanel {
 	private Label LabelKommentarAutor;
 	private Label LabelErstellungszeitpunkt;
 	private Button ButtonKommentarLoeschen;
+	final ShowBeitraege showBeitraege=null;
 	
-	public BeitragKommentar(Nutzer nutzer, final Kommentar kommentar, String inhalt, String autor, String erstellungszeitpunkt){
-		
-		LabelKommentarInhalt = new Label(inhalt);
-		LabelKommentarInhalt.setStyleName("LabelKommentarInhalt");
-		this.add(LabelKommentarInhalt);
+	public BeitragKommentar(final Nutzer nutzer, final Kommentar kommentar, String inhalt, String autor, String erstellungszeitpunkt, final ShowBeitraege showBeitraege){
 		
 		LabelKommentarAutor = new Label(autor);
 		LabelKommentarAutor.setStyleName("LabelKommentarAutor");
@@ -40,7 +37,11 @@ public class BeitragKommentar extends HorizontalPanel {
 		LabelErstellungszeitpunkt.setStyleName("LabelErstellungszeitpunkt");
 		this.add(LabelErstellungszeitpunkt);
 		
-		ButtonKommentarLoeschen = new Button("Kommentar löschen");
+		LabelKommentarInhalt = new Label(inhalt);
+		LabelKommentarInhalt.setStyleName("LabelKommentarInhalt");
+		this.add(LabelKommentarInhalt);
+		
+		ButtonKommentarLoeschen = new Button("");
 		ButtonKommentarLoeschen.setStyleName("ButtonKommentarLoeschen");
 		this.add(ButtonKommentarLoeschen);
 		ButtonKommentarLoeschen.addClickHandler(new ClickHandler() {
@@ -48,10 +49,9 @@ public class BeitragKommentar extends HorizontalPanel {
 		 * Beim Klick auf den "Löschen"-Button wird der Kommentar aus der Datenbank gelöscht.	 
 		 */
 				public void onClick(ClickEvent event) {
-				PinnwandAdministration.deleteKommentar(kommentar, callbackVoid);	
-			//	SocialMediaPinnwand sp = new SocialMediaPinnwand();
-			//	sp.refresh();
-				
+				PinnwandAdministration.deleteKommentar(kommentar, callbackVoid);
+
+				showBeitraege.refresh(nutzer);
 				}
 		});
 		

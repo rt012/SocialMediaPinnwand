@@ -27,7 +27,7 @@ public class PinnwandBeitragPanel extends HorizontalPanel{
 	 */
 	private Label beitragSchreiben = new Label("Beitrag schreiben:");
 	private final TextArea TextAreaBeitragVerfassen = new TextArea();
-	private final Button ButtonBeitragSenden = new Button("Senden");
+	private final Button ButtonBeitragSenden = new Button("");
 	
 	/**
 	 * Hilfsvariable
@@ -44,9 +44,9 @@ public class PinnwandBeitragPanel extends HorizontalPanel{
 		beitragSchreiben.setStyleName("beitragSchreiben");
 		ButtonBeitragSenden.setStyleName("beitragSenden");
 		TextAreaBeitragVerfassen.setStyleName("TextAreaBeitragVerfassen");
-		
-		add(TextAreaBeitragVerfassen);
+				
 		add(beitragSchreiben);
+		add(TextAreaBeitragVerfassen);
 		add(ButtonBeitragSenden);
 
 		/**

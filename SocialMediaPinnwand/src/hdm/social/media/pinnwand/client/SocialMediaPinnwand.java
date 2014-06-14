@@ -104,10 +104,13 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandBeitragPanel = new PinnwandBeitragPanel(SocialMediaPinnwand.this);
 		pinnwandAllgemeinPanel= new PinnwandAllgemeinPanel(SocialMediaPinnwand.this, nutzerVerwaltung, showBeitraege);
 		
+		pinnwandAllgemeinPanel.setStyleName("pinnwandAllgemein");
+		pinnwandBeitragPanel.setStyleName("beitragPanel");
 		/**
 		 * ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
 		 */
 		ScrollPanel scrollPanel = new ScrollPanel();
+		scrollPanel.setStyleName("scrollPanel");
 		showBeitraege.setWidth("100%");
 		scrollPanel.setSize("300", "200");    
 		scrollPanel.add(showBeitraege);
@@ -121,9 +124,9 @@ public class SocialMediaPinnwand implements EntryPoint {
 		
 		int rootHeightSize = rp.getOffsetHeight();
 		split.addWest(pinnwandAllgemeinPanel, 300);
-		split.addEast(vsplit, 700);
-		vsplit.addNorth(pinnwandBeitragPanel, rootHeightSize*3/10);
-		vsplit.addSouth(scrollPanel, rootHeightSize*7/10);
+		split.addEast(vsplit,700);
+		vsplit.addNorth(pinnwandBeitragPanel, 206);
+		vsplit.addSouth(scrollPanel, rootHeightSize);
 		rp.add(split);
 	}
 	/**

@@ -22,7 +22,7 @@ public class DBConnection {
 	//Datenbank URL
 	//CloudSQL
 	
-	private static String url2 = "jdbc:google:rdbms://it-projekt-2014:it-projekt/it_projekt?user=root";
+	private static String url2 = "jdbc:google:rdbms://it-projekt-2014:itprojekt/it_projekt?user=root";
 		
 
 	

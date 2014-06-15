@@ -32,18 +32,18 @@ public class Abolist extends FlexTable{
 	public Abolist(Nutzer n, SocialMediaPinnwand s, final ShowBeitraege flexTableBeitraege){		
 		this.s=s;
 		this.flexTableBeitraege = flexTableBeitraege;
-		fillAboList(s.getAktuellerNutzer());
+		refresh(s, flexTableBeitraege);
 	}
 	
 	/**
 	 * 
-	 * Aboliste füllen mit den Abos des aktuellen Nutzers
+	 * Aboliste fï¿½llen mit den Abos des aktuellen Nutzers
 	 * @param n
 	 */
 	
-	public void fillAboList(final Nutzer n){
+	public void fillAboList(final SocialMediaPinnwand s, final ShowBeitraege showbeitraege){
 		
-		PinnwandAdministration.getAboByNutzer(n.getId(), new AsyncCallback<ArrayList<Abo>>() {
+		PinnwandAdministration.getAboByNutzer(s.getAktuellerNutzer().getId(), new AsyncCallback<ArrayList<Abo>>() {
 			public void onFailure
 			(Throwable caught) {
 				Window.alert("Hoppala! Da gab es wohl ein Problem beim Laden der Aboliste-Liste... Bitte Laden Sie die Seite neu!");
@@ -52,7 +52,7 @@ public class Abolist extends FlexTable{
 			public void onSuccess(final ArrayList<Abo> result) {
 				
 				for (int i=0; i<result.size(); i++){
-					// für jeden gefundenen Nutzer legen wir eine Zeile an die einen Button zum Anzeigen der Pinnwand und ein Widget der Abozeilen Klasse beinhaltet;
+					// fï¿½r jeden gefundenen Nutzer legen wir eine Zeile an die einen Button zum Anzeigen der Pinnwand und ein Widget der Abozeilen Klasse beinhaltet;
 					final int x=i;
 					Button buttonZeigePinnwand = new Button("");
 					buttonZeigePinnwand.setStyleName("buttonZeigePinnwand");
@@ -65,18 +65,17 @@ public class Abolist extends FlexTable{
 					Abozeile a = new Abozeile(result.get(i), s, flexTableBeitraege);
 					a.setStyleName("Abozeile");
 					Abolist.this.setWidget(i,0, a);
-					Abolist.this.setWidget(i,1, buttonZeigePinnwand);
-					
-	
+					Abolist.this.setWidget(i,1, buttonZeigePinnwand); 
 					}
+				showbeitraege.refresh(s.getAktuellerNutzer());
 			}			
 		});
 		
 	} 
 	
-	public void refresh(Nutzer n){
+	public void refresh(SocialMediaPinnwand s, ShowBeitraege showbeitraege){
 		this.removeAllRows();
-		fillAboList(n);
+		fillAboList(s, showbeitraege);
 	}
 	
 	

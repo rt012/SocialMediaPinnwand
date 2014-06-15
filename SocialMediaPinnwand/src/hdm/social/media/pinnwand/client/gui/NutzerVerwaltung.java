@@ -163,7 +163,7 @@ public class NutzerVerwaltung {
 
 			@Override
 			public void onSuccess(Void result) {
-				loadLogin();
+				loadLogout();
 			}
 			
 		});

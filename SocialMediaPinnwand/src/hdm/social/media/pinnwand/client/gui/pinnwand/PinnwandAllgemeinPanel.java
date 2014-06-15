@@ -44,9 +44,9 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 	//Verweis auf CustomOracle -> Verwaltung der SuggestBox um Nutzerobjekte zu speichern
 	private CustomOracle oracle = new CustomOracle();
 	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
-	// Flextable für die Abos
+	// Flextable fï¿½r die Abos
 	private Abolist flexTableAbonniertePinnwaende;
-	//Button um den aktuellenNutzer zu löschen
+	//Button um den aktuellenNutzer zu lï¿½schen
 	private Button aktuellerNutzerloeschen = null;
 	
 	/**
@@ -70,7 +70,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		setStyleName("layout_west");
 		
 		/**
-		 * Ueberschrift etwa: "SocialMediaPinnwand Ferdinand Grüner"
+		 * Ueberschrift etwa: "SocialMediaPinnwand Ferdinand Grï¿½ner"
 		 */
 		pinnwandName.setStyleName("pinnwandName");
 		pinnwandName.setHTML("SocialMediaPinnwand von </br>"+ aktuellerNutzer.getVorname()+' '+ aktuellerNutzer.getName());
@@ -103,9 +103,10 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 			}
 
 		});
+		add(logoutButton);	
 		
 		/**
-		 * Button um aktuellen Nutzer zu löschen
+		 * Button um aktuellen Nutzer zu lï¿½schen
 		 */
 		aktuellerNutzerloeschen = new Button("");
 		aktuellerNutzerloeschen.setStyleName("deleteButton");
@@ -117,8 +118,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		});
 		add(aktuellerNutzerloeschen);	
 		
-		add(logoutButton);		
-		
+				
 		Label pinnwandSuche = new Label("Pinnwand suchen:");
 		pinnwandSuche.setStyleName("pinnwandSuche");
 		add(pinnwandSuche);
@@ -144,13 +144,12 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 
 		/**
 		 * Anzeigen einer Liste (FlexTable) mit den bereits abonnierten Pinnwaenden
-		 */
-		
-		/**
-		 * ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		 * ScrollPanel sorgt dafï¿½r, dass der FlexTable scrollbar wird.
 		 */
 		ScrollPanel scrollPanel = new ScrollPanel();
 
+	
+		
 		flexTableAbonniertePinnwaende=new Abolist(aktuellerNutzer, socialMediaPinnwand,flexTableBeitraege);
 		flexTableAbonniertePinnwaende.setStyleName("FlexTableAbonniertePinnwaende");
 		flexTableAbonniertePinnwaende.setWidth("100%");
@@ -158,7 +157,6 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		scrollPanel.setSize("300", "200");    
 		scrollPanel.add(flexTableAbonniertePinnwaende);
 		add(scrollPanel);
-		
 		
 	}
 	/**
@@ -184,6 +182,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 				Collection<CustomSuggest> nutzerCollection = suggestList;
 				oracle.setCollection(nutzerCollection);
 				SuggestBoxPinnwandSuche.ensureDebugId("cwSuggestBox");
+		
 			}
 		});
 	}
@@ -228,7 +227,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 	}
 
 	public void refreshFlexTableAbonniertePinnwaende(){
-		flexTableAbonniertePinnwaende.refresh(aktuellerNutzer);
+		flexTableAbonniertePinnwaende.refresh(socialMediaPinnwand, flexTableBeitraege);
 	}
 	
 }

@@ -53,8 +53,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	
 	@Override
 	public void deleteNutzer(Nutzer n) throws IllegalArgumentException {
-	// TODO Auto-generated method stub
-	
+		NutzerMapper.nutzerMapper().deleteNutzer(n);
 	}
 	
 	@Override
@@ -279,12 +278,12 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 		ArrayList<Abo> Abonnenten= getAboByNutzer(n.getId());
 		if(Abonnenten!=null){
 			for(Abo a: Abonnenten){
+				//Abfrage ob es überhaupt Beitraege eines Nutzers gibt, wenn ja werden diese zum Result hinzugefügt;
 				if(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant()).getId())!=null){
 					result.addAll(BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(a.getLieferant()).getId()));
 				}
 			}
 		}
-		
 		return result;
 	}
 	

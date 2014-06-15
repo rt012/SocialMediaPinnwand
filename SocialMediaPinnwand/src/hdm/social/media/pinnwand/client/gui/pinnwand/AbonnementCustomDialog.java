@@ -43,7 +43,7 @@ public class AbonnementCustomDialog  extends DialogBox{
 		setText(content);
 		
 		/**
-		 * Feuert wenn Nutzer auf Abonnieren drückt
+		 * Feuert wenn Nutzer auf Abonnieren drï¿½ckt
 		 */
 		Button abonnierenButton = new Button("Abonnieren", new ClickHandler(){
 			@Override
@@ -53,10 +53,9 @@ public class AbonnementCustomDialog  extends DialogBox{
 						Window.alert("Abonnement wurde nicht abgeschlossen");	
 					}
 					@Override
-					public void onSuccess(Abo result) {
-						Window.alert("Pinnwand abonniert");	
-						flexTableAbonniertePinnwaende.refresh(s.getAktuellerNutzer());
-						showbeitraege.refresh(s.getAktuellerNutzer());
+					public void onSuccess(Abo result) {	
+						flexTableAbonniertePinnwaende.refresh(s, showbeitraege);
+						//showbeitraege.refresh(s.getAktuellerNutzer());
 					}
 			    });	
 				hide();

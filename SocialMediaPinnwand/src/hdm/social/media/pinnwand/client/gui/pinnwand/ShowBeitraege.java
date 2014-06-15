@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
 
@@ -28,12 +29,9 @@ public class ShowBeitraege extends FlexTable{
 	
 	
 	public ShowBeitraege(Nutzer n, SocialMediaPinnwand s){
-	
-		
 		setStyleName("FlexTableBeitraege");
 		this.aktuellerNutzer = n;
 		this.s=s;
-		printOutBeitragJeNutzer(n);
 	}
 	/**
 	 * Methode welche alle Beitr�ge eines bestimmten Nutzers in der FlexTable anordnet.
@@ -43,7 +41,9 @@ public class ShowBeitraege extends FlexTable{
 		
 		if(n!=s.getAktuellerNutzer()){
 			PinnwandAdministration.getAllBeitragByNutzer(n, new AsyncCallback<ArrayList<Beitrag>>(){
-				public void onFailure(Throwable caught) {}
+				public void onFailure(Throwable caught) {
+					Window.alert("Prblem beim laden aller Beiträge " + caught.getLocalizedMessage());
+				}
 				
 				public void onSuccess(ArrayList<Beitrag> result){
 					Collections.sort(result); 
@@ -95,7 +95,9 @@ public class ShowBeitraege extends FlexTable{
 		
 		else{
 			PinnwandAdministration.getAllBeitragByAktuellerNutzer(n, new AsyncCallback<ArrayList<Beitrag>>(){
-				public void onFailure(Throwable caught) {}
+				public void onFailure(Throwable caught) {
+					Window.alert("Prblem beim laden aller Beiträge " + caught.getLocalizedMessage());
+				}
 				
 				public void onSuccess(ArrayList<Beitrag> result){
 					/**

@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 /**
- * Diese Klasse stellt den Entry point für die SocialMediaPinnwand dar. 
+ * Diese Klasse stellt den Entry point fï¿½r die SocialMediaPinnwand dar. 
  * 
  */
 public class SocialMediaPinnwand implements EntryPoint {
@@ -55,7 +55,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 	}
 
 	/**
-	 *  Stellt eine Verbindung über einen Proxy her
+	 *  Stellt eine Verbindung ï¿½ber einen Proxy her
 	 */
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 
@@ -71,7 +71,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		 * @author Eric Schmidt 
 		 */
 		/**
-		 * Überprüft den Login Status --> Nach Deploy: GWT.getHostPageBaseURL() 
+		 * ï¿½berprï¿½ft den Login Status --> Nach Deploy: GWT.getHostPageBaseURL() 
 		 */
 
 		PinnwandAdministration.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
@@ -109,7 +109,7 @@ public class SocialMediaPinnwand implements EntryPoint {
 		pinnwandAllgemeinPanel.setStyleName("pinnwandAllgemein");
 		pinnwandBeitragPanel.setStyleName("beitragPanel");
 		/**
-		 * ScrollPanel sorgt dafür, dass der FlexTable scrollbar wird.
+		 * ScrollPanel sorgt dafï¿½r, dass der FlexTable scrollbar wird.
 		 */
 		ScrollPanel scrollPanel = new ScrollPanel();
 		scrollPanel.setStyleName("scrollPanel");
@@ -123,6 +123,8 @@ public class SocialMediaPinnwand implements EntryPoint {
 
 		SplitLayoutPanel vsplit = new SplitLayoutPanel();	
 		RootLayoutPanel rp = RootLayoutPanel.get();
+		
+		rp.clear();
 		
 		int rootHeightSize = rp.getOffsetHeight();
 		split.addWest(pinnwandAllgemeinPanel, 300);

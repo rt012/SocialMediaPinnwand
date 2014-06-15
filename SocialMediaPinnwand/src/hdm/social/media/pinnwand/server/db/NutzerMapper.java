@@ -55,7 +55,7 @@ public class NutzerMapper{
 			//Suche alle Felder der Nutzertabelle anhand von ID
 			ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE email=" + email);
 
-		    //Maximal ein Rückgabewert da Id Primärschlüssel
+		    //Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			if (rs.next()) {
 		        // Ergebnis in Nutzer- Objekt umwandeln
 		        Nutzer n = new Nutzer();
@@ -94,7 +94,7 @@ public class NutzerMapper{
 				//Suche alle Felder der Nutzertabelle anhand von ID
 				ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE nutzer_ID=" + id );
 
-			    //Maximal ein Rückgabewert da Id Primärschlüssel
+			    //Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 				if (rs.next()) {
 			        // Ergebnis in Nutzer- Objekt umwandeln
 			        Nutzer n = new Nutzer();
@@ -143,7 +143,7 @@ public class NutzerMapper{
 		        n.setEmail(rs.getString("email"));
 		        n.setNickname(rs.getString("nickname"));
 		        		        
-		        //NutzerObjekte der ArrayList hinzufügen
+		        //NutzerObjekte der ArrayList hinzufï¿½gen
 		        nutzerListe.add(n);
 		      }
 			return nutzerListe;
@@ -158,7 +158,7 @@ public class NutzerMapper{
 	
 	
 	 /**
-	 * @see		countNutzer(): Zählt alle angemeldeten Nutzer
+	 * @see		countNutzer(): Zï¿½hlt alle angemeldeten Nutzer
 	 * @param 	-
 	 * @return 	int mit Anzahl
 	 */
@@ -173,7 +173,7 @@ public class NutzerMapper{
 			//Suche alle Nutzer
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM nutzer");
 
-		    //Maximal ein Rückgabewert da Id Primärschlüssel
+		    //Maximal ein Rï¿½ckgabewert da Id Primï¿½rschlï¿½ssel
 			while (rs.next()) {
 		        count=rs.getInt(1);
 		      }
@@ -184,7 +184,7 @@ public class NutzerMapper{
 	    		e.printStackTrace();
 	    }
 		
-		//Falls keines gefunden Rückgabe 0, sonst Rückgabe -1
+		//Falls keines gefunden Rï¿½ckgabe 0, sonst Rï¿½ckgabe -1
 		return count;
 		 
 	 }
@@ -206,20 +206,20 @@ public class NutzerMapper{
 			Statement stmt = con.createStatement();
 
 	      /**
-	       * ZunÃ¤chst schauen wir nach, welches der momentan höchste
-	       * Primärschlüsselwert ist.
+	       * ZunÃ¤chst schauen wir nach, welches der momentan hï¿½chste
+	       * Primï¿½rschlï¿½sselwert ist.
 	       */
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(nutzer_ID) AS maxid "
 	          + "FROM nutzer ");
 
-	      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+	      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
-		        //n erhält um 1 höhere ID als das maximale Element in der Tabelle
+		        //n erhï¿½lt um 1 hï¿½here ID als das maximale Element in der Tabelle
 	    	  	maxid=rs.getInt("maxid");
 		        n.setId(rs.getInt("maxid") + 1);
 	
 		        stmt = con.createStatement();
-		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 		        stmt.executeUpdate("INSERT INTO nutzer (nutzer_ID, vorname, name, email, nickname) "
 		            + "VALUES (" + n.getId() + ",'" + n.getVorname() + "','"
 		            + n.getName() + "','" + n.getEmail() + "','" + n.getNickname()+"')");
@@ -239,7 +239,7 @@ public class NutzerMapper{
 	
 	
 	/**
-	* @see 		deleteNutzer(Nutzer n): Löscht Nutzer aus der Datenbank
+	* @see 		deleteNutzer(Nutzer n): Lï¿½scht Nutzer aus der Datenbank
 	* @param 	Nutzerobjekt
 	* @return 	-
 	*/ 
@@ -250,8 +250,8 @@ public class NutzerMapper{
 		//Versuch der Abfrage
 	    try {
 	      Statement stmt = con.createStatement();
-	      //Lösche Nutzer aus Tabelle mit gleicher ID
-	      stmt.executeUpdate("DELETE FROM nutzer WHERE email=" + n.getEmail());
+	      //Lï¿½sche Nutzer aus Tabelle mit gleicher ID
+	      stmt.executeUpdate("DELETE FROM nutzer WHERE email=\"" + n.getEmail()+"\"");
 	    }
 	    catch (SQLException e) {
 	      e.printStackTrace();
@@ -281,7 +281,7 @@ public class NutzerMapper{
 	      e.printStackTrace();
 	    }
 
-	    // Zurückgeben des aktuellen Nutzerobjektes
+	    // Zurï¿½ckgeben des aktuellen Nutzerobjektes
 	    return getNutzerById(n.getId());
 	}
 	 

@@ -1,5 +1,6 @@
 package hdm.social.media.pinnwand.client.gui.pinnwand;
 
+import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Kommentar;
@@ -27,7 +28,7 @@ public class BeitragKommentar extends HorizontalPanel {
 	private Button ButtonKommentarLoeschen;
 	final ShowBeitraege showBeitraege=null;
 	
-	public BeitragKommentar(final Nutzer nutzer, final Kommentar kommentar, String inhalt, String autor, String erstellungszeitpunkt, final ShowBeitraege showBeitraege){
+	public BeitragKommentar(final SocialMediaPinnwand s, final Nutzer nutzer, final Kommentar kommentar, String inhalt, String autor, String erstellungszeitpunkt, final ShowBeitraege showBeitraege){
 		
 		LabelKommentarAutor = new Label(autor);
 		LabelKommentarAutor.setStyleName("LabelKommentarAutor");
@@ -48,14 +49,20 @@ public class BeitragKommentar extends HorizontalPanel {
 		/**
 		 * Beim Klick auf den "Löschen"-Button wird der Kommentar aus der Datenbank gelöscht.	 
 		 */
-				public void onClick(ClickEvent event) {
-				PinnwandAdministration.deleteKommentar(kommentar, callbackVoid);
-
-				showBeitraege.refresh(nutzer);
+			public void onClick(ClickEvent event) {
+			PinnwandAdministration.deleteKommentar(kommentar, new AsyncCallback<Void>() {
+				 public void onFailure (Throwable caught) {
+				 }
+				 
+				@Override
+				public void onSuccess(Void result) {		
+					showBeitraege.refresh(s.getAktuellerNutzer());
 				}
+			 });
+			}
 		});
 		
-		PinnwandAdministration.checkAuthorKommentar(nutzer, kommentar, new AsyncCallback<Boolean>() {
+		PinnwandAdministration.checkAutorKommentar(nutzer, kommentar, new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -100,17 +107,4 @@ public class BeitragKommentar extends HorizontalPanel {
 		LabelErstellungszeitpunkt = labelErstellungszeitpunkt;
 	}
 
-	AsyncCallback<Void> callbackVoid
-	 = new AsyncCallback<Void>() {
-	 public void onFailure
-	 (Throwable caught) {
-	 // TODO: Do something with errors.
-	 }
-	 
-	@Override
-	public void onSuccess(Void result) {
-	
-		
-	}
-	 };
 }

@@ -1,5 +1,6 @@
 package hdm.social.media.pinnwand.client.gui.pinnwand;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -7,6 +8,7 @@ import hdm.social.media.pinnwand.client.SocialMediaPinnwand;
 import hdm.social.media.pinnwand.client.gui.CustomOracle;
 import hdm.social.media.pinnwand.client.gui.CustomSuggest;
 import hdm.social.media.pinnwand.client.gui.NutzerVerwaltung;
+import hdm.social.media.pinnwand.server.db.DBConnection;
 import hdm.social.media.pinnwand.shared.PinnwandAdministration;
 import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Abo;
@@ -44,6 +46,8 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 	private final SuggestBox SuggestBoxPinnwandSuche = new SuggestBox(oracle);
 	// Flextable für die Abos
 	private Abolist flexTableAbonniertePinnwaende;
+	//Button um den aktuellenNutzer zu löschen
+	private Button aktuellerNutzerloeschen = null;
 	
 	/**
 	 * Hilfsvariablen
@@ -57,7 +61,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 	 */
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	
-	public PinnwandAllgemeinPanel(SocialMediaPinnwand socialMediaPinnwand, final NutzerVerwaltung nutzerVerwaltung, final ShowBeitraege flexTableBeitraege){
+	public PinnwandAllgemeinPanel(final SocialMediaPinnwand socialMediaPinnwand, final NutzerVerwaltung nutzerVerwaltung, final ShowBeitraege flexTableBeitraege){
 		this.socialMediaPinnwand = socialMediaPinnwand;
 		this.aktuellerNutzer = socialMediaPinnwand.getAktuellerNutzer();
 		this.flexTableBeitraege = flexTableBeitraege;
@@ -80,17 +84,18 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		add(eigenePinnwand);
 		eigenePinnwand.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event){
-				flexTableBeitraege.refresh(aktuellerNutzer);
+				flexTableBeitraege.refresh(socialMediaPinnwand.getAktuellerNutzer());
 			}
 		});
 		
+				
 		
 		/**
 		 * Logout Button
 		 */
-		Button b = new Button("");
-		b.setStyleName("buttonLogout");
-		b.addClickHandler(new ClickHandler(){
+		Button logoutButton = new Button("");
+		logoutButton.setStyleName("buttonLogout");
+		logoutButton.addClickHandler(new ClickHandler(){
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -98,12 +103,26 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 			}
 
 		});
-		add(b);		
+		
+		/**
+		 * Button um aktuellen Nutzer zu löschen
+		 */
+		aktuellerNutzerloeschen = new Button("");
+		aktuellerNutzerloeschen.setStyleName("deleteButton");
+		aktuellerNutzerloeschen.addClickHandler(new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				nutzerVerwaltung.deleteNutzer(socialMediaPinnwand.getAktuellerNutzer());
+			}	
+		});
+		add(aktuellerNutzerloeschen);	
+		
+		add(logoutButton);		
 		
 		Label pinnwandSuche = new Label("Pinnwand suchen:");
 		pinnwandSuche.setStyleName("pinnwandSuche");
 		add(pinnwandSuche);
-		
+				
 
 		/**
 		 * Block fuer SuggestBox
@@ -139,7 +158,8 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 		scrollPanel.setSize("300", "200");    
 		scrollPanel.add(flexTableAbonniertePinnwaende);
 		add(scrollPanel);
-
+		
+		
 	}
 	/**
 	 * Befï¿½llt die SuggestBox mit allen Nutzern der Anwendung
@@ -150,9 +170,8 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 
 	private void fillSuggestBox(){
 		PinnwandAdministration.getAllNutzer(new AsyncCallback<ArrayList<Nutzer>>() {
-			 public void onFailure
-			 (Throwable caught) {
-			 // TODO: Do something with errors.
+			 public void onFailure (Throwable caught) {
+			 	Window.alert("Fehler bei laden der Nutzer in SuggestBox");
 			 }
 
 			@Override
@@ -194,7 +213,7 @@ public class PinnwandAllgemeinPanel extends VerticalPanel{
 						}
 					}
 					if (!existiert){
-						DialogBox dlg = new AbonnementCustomDialog("Abonnieren", "Pinnwand von"
+						DialogBox dlg = new AbonnementCustomDialog(socialMediaPinnwand, "Abonnieren", "Pinnwand von"
 					    		+ n.getVorname() + " wirklich abonnieren?", aktuellerNutzer, n,
 					    		flexTableAbonniertePinnwaende, flexTableBeitraege);
 				        dlg.center();

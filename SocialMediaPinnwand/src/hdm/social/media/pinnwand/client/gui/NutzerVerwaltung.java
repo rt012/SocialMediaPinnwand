@@ -7,7 +7,9 @@ import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
+
 import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -60,12 +62,13 @@ public class NutzerVerwaltung {
 			PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
 				public void onFailure
 				 (Throwable caught) {
-				 // TODO: Do something with errors.
+				 	Window.alert("Fehler bei der �berpr�fung der E-Mail Adresse: EntryPoint SocialMediaPinnwand: " + caught.getMessage());
 				 }
 	
 				@Override
 				public void onSuccess(Nutzer result) {
 					if (result != null){
+
 						((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
 						((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
 					}
@@ -80,15 +83,16 @@ public class NutzerVerwaltung {
 			reportGenerator.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
 				public void onFailure
 				 (Throwable caught) {
-				 // TODO: Do something with errors.
+				 	Window.alert("Fehler bei der �berpr�fung der E-Mail Adresse: EntryPoint ReportGenerator: " + caught.getMessage());
 				 }
 	
 				@Override
 				public void onSuccess(Nutzer result) {
+
 					if (result != null){
+
 						((ReportGenerator) entryPointKlasse).loadReportGenerator();
 					}
-	
 					else{
 						createNutzer(googleNutzer);
 					}
@@ -126,13 +130,16 @@ public class NutzerVerwaltung {
 				Window.alert(nutzer.getEmail() + " " + nutzer.getName() + " " + nutzer.getVorname() + " " + nutzer.getNickname());
 				PinnwandAdministration.createNutzer(nutzer, new AsyncCallback<Nutzer>(){
 					@Override
-					public void onFailure(Throwable caught) {}
+					public void onFailure(Throwable caught) {
+						Window.alert("Problem bei erstellung des Nutzers: " + caught.getMessage());
+					}
 
 					@Override
 					public void onSuccess(Nutzer result) {
 						if (entryPointKlasse instanceof SocialMediaPinnwand){
 							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
 							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
+
 						}else{
 							((ReportGenerator) entryPointKlasse).loadReportGenerator();
 						}
@@ -143,6 +150,24 @@ public class NutzerVerwaltung {
 		});
 	}
 	
+	/**
+	 * L�scht den aktuellen Nutzer aus der Datenbank
+	 * 
+	 * @author Eric Schmidt
+	 */
+	public void deleteNutzer(Nutzer aktuellerNutzer){
+		PinnwandAdministration.deleteNutzer(aktuellerNutzer, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				loadLogin();
+			}
+			
+		});
+	}
 	/**
 	 * Sollte der User nicht bei Google angemeldet sein, 
 	 * verlinke auf login Seite von Google

@@ -80,7 +80,8 @@ h1, h2, h3, body, a, ul, li, form, input, p, div, button, button.gwt-Button{
   display: inline-block;
 }
 
-.pinnwandAllgemein > tbody tr:nth-child(3){
+.pinnwandAllgemein > tbody tr:nth-child(3),
+.pinnwandAllgemein > tbody tr:nth-child(4){
   float: right;
 }
 
@@ -104,7 +105,20 @@ h1, h2, h3, body, a, ul, li, form, input, p, div, button, button.gwt-Button{
 
 .buttonLogout{
   margin-top: 15px;
+  margin-right: 5px;
   background: url(img/logout.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  height:36px;
+  width:36px;
+  border: 1px solid #c4c4c4;;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.deleteButton{
+  margin-top: 15px;
+  background: url(img/bin.png);
   background-position: center;
   background-repeat: no-repeat;
   height:36px;
@@ -203,6 +217,8 @@ h1, h2, h3, body, a, ul, li, form, input, p, div, button, button.gwt-Button{
 .rootSplitPanel > div:nth-child(2){
   border-right: 1px solid #c4c4c4;
 }
+
+
 
 
 /*------------------------------------*\
@@ -438,25 +454,34 @@ h1, h2, h3, body, a, ul, li, form, input, p, div, button, button.gwt-Button{
 
 
 .beitragSenden:hover{
+  -moz-box-shadow: 0px 0px 3px 1px #c4c4c4;
   -webkit-box-shadow: 0px 0px 3px 1px #c4c4c4;
+  box-shadow: 0px 0px 3px 1px #c4c4c4;
 }
 
 .buttonAboLoeschen:hover,
 .ButtonKommentarLoeschen:hover,
 .ButtonBeitragLoeschen:hover,
 .dislike:hover,
-.buttonLogout:hover{
+.buttonLogout:hover,
+.deleteButton:hover{
+  -moz-box-shadow: 0px 0px 3px 1px #A13034;
   -webkit-box-shadow: 0px 0px 3px 1px #A13034;
+  box-shadow: 0px 0px 3px 1px #A13034;
 }
 
 
 .buttonEigenePinnwand:hover,
 .buttonZeigePinnwand:hover{
-  -webkit-box-shadow: 0px 0px 3px 1px #FFD700
+  -moz-box-shadow: 0px 0px 3px 1px #FFD700;
+  -webkit-box-shadow: 0px 0px 3px 1px #FFD700;
+  box-shadow: 0px 0px 3px 1px #FFD700;
 }
 
 .like:hover,
 .beitragSenden:hover,
 .ButtonBeitragKommentieren:hover{
+  -moz-box-shadow: 0px 0px 3px 1px #66CD00;
   -webkit-box-shadow: 0px 0px 3px 1px #66CD00;
+  box-shadow: 0px 0px 3px 1px #66CD00;
 }

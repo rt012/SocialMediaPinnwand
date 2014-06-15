@@ -26,31 +26,6 @@ private FlexTable FlexTableLikeListe;
 private Button ButtonSchliessen;
 
 public LikeListe(ArrayList<Like> likeListe){
-	/**
-	 *  Label für eine kurze Information über das DialogFenster
-	 */
-	LabelInformation = new Label("Nutzer, denen das gefaellt:");
-	LabelInformation.setStyleName("LabelInformation");
-	/**
-	 *  FlexTable für darstellung der Nutzer 
-	 */
-	FlexTableLikeListe = new FlexTable();
-	FlexTableLikeListe.setStyleName("FlexTableLikeListe");
-	// Durchlauf durch die LikeListe welche als Paramenter im Konstruktor übergeben wurde. Jeder Nutzer wird in einer row hinzugefügt. 
-	for(int i = 0; i < likeListe.size(); i++) {
-		FlexTableLikeListe.setHTML(i, 0, likeListe.get(i).getNutzer().getVorname()+" "+likeListe.get(i).getNutzer().getName());
-	}
-	/**
-	 *  Button mit Hilfe man die DialogBox wieder schließen kann 
-	 */
-	ButtonSchliessen = new Button("Schlie&szligen");
-	ButtonSchliessen.setStyleName("ButtonSchließen");
-	ButtonSchliessen.addClickHandler(new ClickHandler() {
-		 
-		public void onClick(ClickEvent event) {
-			hide();
-		}
-});
 	
 	/**
 	 *  DockPanel welches die zuvor initialisierten Elemente Bündelt 
@@ -63,5 +38,37 @@ public LikeListe(ArrayList<Like> likeListe){
 	dock.add(ButtonSchliessen, DockPanel.NORTH);
 	dock.setWidth("100%");
 	setWidget(dock);
+	
+	/**
+	 *  Label für eine kurze Information über das DialogFenster
+	 */
+	LabelInformation = new Label("Nutzer, denen das gefaellt:");
+	LabelInformation.setStyleName("LabelInformation");
+	
+	/**
+	 *  FlexTable für darstellung der Nutzer 
+	 */
+	FlexTableLikeListe = new FlexTable();
+	FlexTableLikeListe.setStyleName("FlexTableLikeListe");
+	
+	// Durchlauf durch die LikeListe welche als Paramenter im Konstruktor übergeben wurde. Jeder Nutzer wird in einer row hinzugefügt. 
+	for(int i = 0; i < likeListe.size(); i++) {
+		FlexTableLikeListe.setHTML(i, 0, likeListe.get(i).getNutzer().getVorname()+" "+likeListe.get(i).getNutzer().getName());
+	}
+	
+	/**
+	 *  Button mit Hilfe man die DialogBox wieder schließen kann 
+	 */
+	ButtonSchliessen = new Button("Schlie&szligen");
+	ButtonSchliessen.setStyleName("ButtonSchließen");
+	ButtonSchliessen.addClickHandler(new ClickHandler() {
+		 
+		public void onClick(ClickEvent event) {
+			hide();
+		}
+		
+	});
+	
+	
 }
 }

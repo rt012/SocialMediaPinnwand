@@ -1,2 +1,4 @@
 # Module socialmediapinnwand
 # RPC service class, partial path of RPC policy file
+hdm.social.media.pinnwand.shared.ReportGeneratorAdministration, 95DC8DB58B7264BB2E3AB7F3F973ADC0.gwt.rpc
+hdm.social.media.pinnwand.shared.PinnwandAdministration, A5D7E07F3EC94818CD2EDF361C62524D.gwt.rpc

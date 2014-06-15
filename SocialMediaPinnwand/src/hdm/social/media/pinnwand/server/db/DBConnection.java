@@ -22,8 +22,13 @@ public class DBConnection {
 	//Datenbank URL
 	//CloudSQL
 	
-	private static String url2 = "jdbc:google:rdbms://it-projekt-2014:it-projekt/it_projekt?user=root";
-		
+	private static String url = "jdbc:google:rdbms://it-projekt-2014:itprojekt/it_projekt?user=root";
+	//private static String url = "jdbc:mysql://173.194.104.192/it_projekt";
+
+	
+	//Nutzerdaten f�r DB-login
+	private static String name="root";
+	private static String password="root";	
 
 	
 	/**
@@ -38,8 +43,12 @@ public class DBConnection {
 			try {
 				//Installieren des geeigneten DB-Treibers
 				//im Moment noch standard sql-Treiber, später AppEngine Treiber
+				
 				DriverManager.registerDriver(new AppEngineDriver());
-				con = DriverManager.getConnection(url2);
+				con = DriverManager.getConnection(url);
+				
+				//DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
+				//con = DriverManager.getConnection(url,name,password);
 				System.out.println("Verbindung hergestellt");
 			} 
 			// Wenn die Verbindung scheitert

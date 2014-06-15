@@ -251,7 +251,7 @@ public class NutzerMapper{
 	    try {
 	      Statement stmt = con.createStatement();
 	      //Lösche Nutzer aus Tabelle mit gleicher ID
-	      stmt.executeUpdate("DELETE FROM nutzer WHERE nutzer_ID=" + n.getId());
+	      stmt.executeUpdate("DELETE FROM nutzer WHERE email=" + n.getEmail());
 	    }
 	    catch (SQLException e) {
 	      e.printStackTrace();

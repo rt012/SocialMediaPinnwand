@@ -35,7 +35,7 @@ public class NutzerVerwaltung {
 	private EntryPoint entryPointKlasse = null;
 	
 	/**
-	 * Klassenvariable für das Object LoginInfo welches die LogIn Informationen des Nutzers enthält
+	 * Klassenvariable fï¿½r das Object LoginInfo welches die LogIn Informationen des Nutzers enthï¿½lt
 	 *
 	 */
 	private LoginInfo loginInfo = null;
@@ -51,7 +51,7 @@ public class NutzerVerwaltung {
 	}
 	
 	/**
-	 * Prüft anhand der Email-Adresse ob der angemeldete Nutzer bereits in der Datenbank ist
+	 * Prï¿½ft anhand der Email-Adresse ob der angemeldete Nutzer bereits in der Datenbank ist
 	 * 
 	 * @author Eric Schmidt
 	 */
@@ -65,13 +65,9 @@ public class NutzerVerwaltung {
 	
 				@Override
 				public void onSuccess(Nutzer result) {
-					if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
-						if (entryPointKlasse instanceof SocialMediaPinnwand){
-							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
-							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
-						}else{
-							((ReportGenerator) entryPointKlasse).loadReportGenerator();
-						}
+					if (result != null){
+						((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+						((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
 					}
 	
 					else{
@@ -89,13 +85,8 @@ public class NutzerVerwaltung {
 	
 				@Override
 				public void onSuccess(Nutzer result) {
-					if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
-						if (entryPointKlasse instanceof SocialMediaPinnwand){
-							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
-							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
-						}else{
-							((ReportGenerator) entryPointKlasse).loadReportGenerator();
-						}
+					if (result != null){
+						((ReportGenerator) entryPointKlasse).loadReportGenerator();
 					}
 	
 					else{
@@ -115,11 +106,10 @@ public class NutzerVerwaltung {
 	private void createNutzer(final LoginInfo googleNutzer){
 		final Nutzer nutzer = new Nutzer();
 		nutzer.setEmail(googleNutzer.getEmailAddress());
-		nutzer.setErstellungsZeitpunkt(new Date());
 		/**
 		 * Fordert den Nutzer auf Vor-, Nachname und Nickname einzugeben,
-		 * da diese Information nicht über die Google API bezogen werden kann
-		 * bzw. geändert werden soll
+		 * da diese Information nicht ï¿½ber die Google API bezogen werden kann
+		 * bzw. geï¿½ndert werden soll
 		 * 
 		 * @author Eric Schmidt
 		 */
@@ -133,6 +123,7 @@ public class NutzerVerwaltung {
 				nutzer.setVorname(dialog.getVorname());
 				nutzer.setName(dialog.getNachname());
 				nutzer.setNickname(dialog.getNickname());
+				Window.alert(nutzer.getEmail() + " " + nutzer.getName() + " " + nutzer.getVorname() + " " + nutzer.getNickname());
 				PinnwandAdministration.createNutzer(nutzer, new AsyncCallback<Nutzer>(){
 					@Override
 					public void onFailure(Throwable caught) {}
@@ -141,6 +132,9 @@ public class NutzerVerwaltung {
 					public void onSuccess(Nutzer result) {
 						if (entryPointKlasse instanceof SocialMediaPinnwand){
 							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
+						}else{
+							((ReportGenerator) entryPointKlasse).loadReportGenerator();
 						}
 					}
 					

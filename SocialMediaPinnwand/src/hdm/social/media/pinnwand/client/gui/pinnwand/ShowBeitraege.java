@@ -9,14 +9,15 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
 
 /**
- * Diese Klasse ist für die Anordnung der einzelnen Beiträge zuständig.
- * Es werden die jeweiligen Beiträge ausgelesen und in einer FlexTable angeordnet. 
+ * Diese Klasse ist fï¿½r die Anordnung der einzelnen Beitrï¿½ge zustï¿½ndig.
+ * Es werden die jeweiligen Beitrï¿½ge ausgelesen und in einer FlexTable angeordnet. 
  *
  */
 
@@ -35,7 +36,7 @@ public class ShowBeitraege extends FlexTable{
 		printOutBeitragJeNutzer(n);
 	}
 	/**
-	 * Methode welche alle Beiträge eines bestimmten Nutzers in der FlexTable anordnet.
+	 * Methode welche alle Beitrï¿½ge eines bestimmten Nutzers in der FlexTable anordnet.
 	 * @param n Nutzer
 	 */
 	public void printOutBeitragJeNutzer(Nutzer n) {
@@ -59,7 +60,7 @@ public class ShowBeitraege extends FlexTable{
 							 */
 							
 							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(result.get(i).getInhalt(),
-									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),result.get(i).getErstellungsZeitpunkt().toString(),
+									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),formatDate(result.get(i).getErstellungsZeitpunkt()),
 									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
 									result.get(i),aktuellerNutzer, ShowBeitraege.this);
 							
@@ -75,7 +76,9 @@ public class ShowBeitraege extends FlexTable{
 							
 							for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
 								
-								BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(),result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+ " "  + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
+								BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(),
+										result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+ " "  + result.get(i).getKommentarListe().get(a).getNutzer().getName(), 
+										formatDate(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
 								kommentar.setStyleName("kommentar");
 								ShowBeitraege.this.setWidget(aktuelleRow, 0, kommentar);
 								aktuelleRow += 1;
@@ -103,7 +106,7 @@ public class ShowBeitraege extends FlexTable{
 							 */
 														
 							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(result.get(i).getInhalt(),
-									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),result.get(i).getErstellungsZeitpunkt().toString(),
+									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),formatDate(result.get(i).getErstellungsZeitpunkt()),
 									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
 									result.get(i),aktuellerNutzer, ShowBeitraege.this);
 							
@@ -120,7 +123,10 @@ public class ShowBeitraege extends FlexTable{
 							 */
 							if(result.get(i).getKommentarListe() != null){
 								for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-									BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+" "+result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
+									BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a),
+											result.get(i).getKommentarListe().get(a).getInhalt(), 
+											result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+" "+result.get(i).getKommentarListe().get(a).getNutzer().getName(),
+											formatDate(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
 									kommentar.setStyleName("kommentar");
 									ShowBeitraege.this.setWidget(aktuelleRow, 0, kommentar);
 									aktuelleRow += 1;
@@ -137,6 +143,20 @@ public class ShowBeitraege extends FlexTable{
 		this.clear();
 		printOutBeitragJeNutzer(n);
 	}
-
+	
+	public String formatDate(Date date){
+		//Rechnet von 1900 an
+		int y = date.getYear()+1900;
+		//Month zaehlt ab 0
+		int m = date.getMonth()+1;
+		int day = date.getDate();
+		//Zeitzone +1h
+		date.setHours(date.getHours()+1);
+		int h = date.getHours();
+		int min = date.getMinutes();
+		int sec = date.getSeconds();
+		
+		return h+"."+min+"."+sec+"   "+day+"."+m+"."+y;
+	}
 
 }

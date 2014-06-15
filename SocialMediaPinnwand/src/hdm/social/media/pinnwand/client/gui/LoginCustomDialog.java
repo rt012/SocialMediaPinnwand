@@ -19,14 +19,14 @@ public class LoginCustomDialog  extends DialogBox implements ClickHandler {
 	private TextBox nachnameTextBox, vornameTextBox, nicknameTextBox;
 	
 	/**
-	 * Erzeugt sämtliche Widgets innerhalb der DialogBox und schreibt den Nickname,
+	 * Erzeugt sï¿½mtliche Widgets innerhalb der DialogBox und schreibt den Nickname,
 	 * welche aus dem Google Nutzer gelesen wird, in eine TextBox.
 	 * 
 	 * @param nickname Der Nickname aus dem Google Nutzer
 	 */
 	public LoginCustomDialog(String nickname) {
 		setText("Sie starten die Applikation zum ersten Mal");
-		Button abonnierenButton = new Button("Erstelle einen Account", this);
+		Button anmeldenButton = new Button("Erstelle einen Account", this);
 		HTML msg = new HTML("<center>Bitte Sie untenstehnde Informationen ein</center>",true);
 		
 		HTML vornameLabel = new HTML("Vorname");
@@ -44,7 +44,7 @@ public class LoginCustomDialog  extends DialogBox implements ClickHandler {
 		
 		DockPanel dock = new DockPanel();
 		dock.setSpacing(4);
-		dock.add(abonnierenButton, DockPanel.SOUTH);
+		dock.add(anmeldenButton, DockPanel.SOUTH);
 		dock.add(msg, DockPanel.NORTH);
 		dock.add(vornameLabel, DockPanel.NORTH);
 		dock.add(vornameTextBox, DockPanel.NORTH);
@@ -52,7 +52,7 @@ public class LoginCustomDialog  extends DialogBox implements ClickHandler {
 		dock.add(nachnameTextBox, DockPanel.NORTH);
 		dock.add(nicknameLabel, DockPanel.NORTH);
 		dock.add(nicknameTextBox, DockPanel.NORTH);
-		dock.setCellHorizontalAlignment(abonnierenButton, DockPanel.ALIGN_RIGHT);
+		dock.setCellHorizontalAlignment(anmeldenButton, DockPanel.ALIGN_RIGHT);
 		dock.setWidth("100%");
 		setWidget(dock);
 	}

@@ -7,7 +7,9 @@ import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministration;
 import hdm.social.media.pinnwand.shared.ReportGeneratorAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Nutzer;
+
 import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -144,6 +146,24 @@ public class NutzerVerwaltung {
 		});
 	}
 	
+	/**
+	 * Löscht den aktuellen Nutzer aus der Datenbank
+	 * 
+	 * @author Eric Schmidt
+	 */
+	public void deleteNutzer(Nutzer aktuellerNutzer){
+		PinnwandAdministration.deleteNutzer(aktuellerNutzer, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				loadLogin();
+			}
+			
+		});
+	}
 	/**
 	 * Sollte der User nicht bei Google angemeldet sein, 
 	 * verlinke auf login Seite von Google

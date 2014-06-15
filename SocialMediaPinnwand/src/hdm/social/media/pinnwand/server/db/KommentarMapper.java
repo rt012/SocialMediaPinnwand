@@ -59,7 +59,7 @@ public class KommentarMapper {
 		        // Ergebnis in Beitrag- Objekt umwandeln
 		        Kommentar k = new Kommentar();
 		        k.setId(rs.getInt("kommentar_ID"));
-		        k.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        k.setErstellungsZeitpunkt(rs.getTimestamp("erstellung"));
 		        k.setInhalt(rs.getString("inhalt"));
 		        //k.setBeitrag(BeitragMapper.beitragMapper().getBeitragById(rs.getInt("beitrag_ID")));
 		        k.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
@@ -100,7 +100,7 @@ public class KommentarMapper {
 		        // Ergebnis in Kommentar- Objekt umwandeln
 				Kommentar k = new Kommentar();
 		        k.setId(rs.getInt("kommentar_ID"));
-		        k.setErstellungsZeitpunkt(rs.getDate("erstellung"));
+		        k.setErstellungsZeitpunkt(rs.getTimestamp("erstellung"));
 		        k.setInhalt(rs.getString("inhalt"));
 		        k.setBeitrag(beitrag);
 		        k.setNutzer(NutzerMapper.nutzerMapper().getNutzerById(rs.getInt("nutzer_ID")));
@@ -252,7 +252,7 @@ public class KommentarMapper {
 		Connection con = DBConnection.connection();
 		try {
 			Statement stmt = con.createStatement();
-			 ResultSet rs = stmt.executeQuery("SELECT * FROM `kommentar` WHERE nutzer_ID="+ nutzer.getId() +" AND kommentar_ID=" + kommentar.getId());
+			 ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE nutzer_ID="+ nutzer.getId() +" AND kommentar_ID=" + kommentar.getId());
 			 if(rs.next() == true) {
 				 return true;
 				

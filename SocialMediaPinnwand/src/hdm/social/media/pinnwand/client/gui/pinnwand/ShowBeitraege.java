@@ -10,6 +10,8 @@ import hdm.social.media.pinnwand.shared.bo.Nutzer;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import sun.util.calendar.LocalGregorianCalendar.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -58,8 +60,8 @@ public class ShowBeitraege extends FlexTable{
 							 *  Hinzufï¿½gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefï¿½gt
 							 */
 							
-							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(result.get(i).getInhalt(),
-									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),result.get(i).getErstellungsZeitpunkt().toString(),
+							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(s,result.get(i).getInhalt(),
+									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),formatDate(result.get(i).getErstellungsZeitpunkt()),
 									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
 									result.get(i),aktuellerNutzer, ShowBeitraege.this);
 							
@@ -75,7 +77,10 @@ public class ShowBeitraege extends FlexTable{
 							
 							for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
 								
-								BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(),result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+ " "  + result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
+								BeitragKommentar kommentar= new BeitragKommentar(s, aktuellerNutzer, result.get(i).getKommentarListe().get(a),
+										result.get(i).getKommentarListe().get(a).getInhalt(),
+										result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+ " "  + result.get(i).getKommentarListe().get(a).getNutzer().getName(), 
+										formatDate(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
 								kommentar.setStyleName("kommentar");
 								ShowBeitraege.this.setWidget(aktuelleRow, 0, kommentar);
 								aktuelleRow += 1;
@@ -102,8 +107,8 @@ public class ShowBeitraege extends FlexTable{
 							 *  Hinzufï¿½gen eines neuen Beitrags in der aktuellen Zeile, Dabei wird ein neues LayoutObjekt initialsiert und der FlexTable hinzugefï¿½gt
 							 */
 														
-							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(result.get(i).getInhalt(),
-									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),result.get(i).getErstellungsZeitpunkt().toString(),
+							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(s,result.get(i).getInhalt(),
+									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),formatDate(result.get(i).getErstellungsZeitpunkt()),
 									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
 									result.get(i),aktuellerNutzer, ShowBeitraege.this);
 							
@@ -120,7 +125,10 @@ public class ShowBeitraege extends FlexTable{
 							 */
 							if(result.get(i).getKommentarListe() != null){
 								for(int a = 0; a < result.get(i).getKommentarListe().size(); a++) {
-									BeitragKommentar kommentar= new BeitragKommentar(aktuellerNutzer, result.get(i).getKommentarListe().get(a), result.get(i).getKommentarListe().get(a).getInhalt(), result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+" "+result.get(i).getKommentarListe().get(a).getNutzer().getName(), String.valueOf(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
+									BeitragKommentar kommentar= new BeitragKommentar(s, aktuellerNutzer, result.get(i).getKommentarListe().get(a),
+											result.get(i).getKommentarListe().get(a).getInhalt(),
+											result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+" "+result.get(i).getKommentarListe().get(a).getNutzer().getName(),
+											formatDate(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
 									kommentar.setStyleName("kommentar");
 									ShowBeitraege.this.setWidget(aktuelleRow, 0, kommentar);
 									aktuelleRow += 1;
@@ -136,6 +144,29 @@ public class ShowBeitraege extends FlexTable{
 	public void refresh(Nutzer n){
 		this.clear();
 		printOutBeitragJeNutzer(n);
+	}
+	
+	/**
+	 * Methode die das Timestampdatum in einen angemessenen und leicht Lesbaren String verwandelt 
+	 * @param date
+	 * @return
+	 */
+	
+	@SuppressWarnings("deprecation")
+	public String formatDate(java.util.Date date){
+		//Rechnet von 1900 an
+		int y = date.getYear()+1900;
+		//Month zählt ab 0
+		int m = date.getMonth()+1;
+		
+		int day = date.getDay();
+		//Zeitzone +2h
+		int h = date.getHours()+2;
+		int min = date.getMinutes();
+		int sec = date.getSeconds();
+		
+		// Format wie: 21:15:30  21.11.1989
+		return h+":"+min+":"+sec+"  "+day+"."+m+"."+y ;
 	}
 
 

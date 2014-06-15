@@ -127,7 +127,6 @@ public class NutzerVerwaltung {
 				nutzer.setVorname(dialog.getVorname());
 				nutzer.setName(dialog.getNachname());
 				nutzer.setNickname(dialog.getNickname());
-				Window.alert(nutzer.getEmail() + " " + nutzer.getName() + " " + nutzer.getVorname() + " " + nutzer.getNickname());
 				PinnwandAdministration.createNutzer(nutzer, new AsyncCallback<Nutzer>(){
 					@Override
 					public void onFailure(Throwable caught) {
@@ -159,6 +158,7 @@ public class NutzerVerwaltung {
 		PinnwandAdministration.deleteNutzer(aktuellerNutzer, new AsyncCallback<Void>(){
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert("Fehler beim Loeschen des Nutzers: " + caught.getLocalizedMessage());
 			}
 
 			@Override

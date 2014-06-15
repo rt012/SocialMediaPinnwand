@@ -60,18 +60,14 @@ public class NutzerVerwaltung {
 			PinnwandAdministration.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
 				public void onFailure
 				 (Throwable caught) {
-				 // TODO: Do something with errors.
+				 	Window.alert("Fehler bei der Überprüfung der E-Mail Adresse: EntryPoint SocialMediaPinnwand: " + caught.getMessage());
 				 }
 	
 				@Override
 				public void onSuccess(Nutzer result) {
 					if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
-						if (entryPointKlasse instanceof SocialMediaPinnwand){
-							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
-							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
-						}else{
-							((ReportGenerator) entryPointKlasse).loadReportGenerator();
-						}
+						((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+						((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
 					}
 	
 					else{
@@ -84,20 +80,14 @@ public class NutzerVerwaltung {
 			reportGenerator.getNutzerByEmail(googleNutzer.getEmailAddress(), new AsyncCallback<Nutzer>() {
 				public void onFailure
 				 (Throwable caught) {
-				 // TODO: Do something with errors.
+				 	Window.alert("Fehler bei der Überprüfung der E-Mail Adresse: EntryPoint ReportGenerator: " + caught.getMessage());
 				 }
 	
 				@Override
 				public void onSuccess(Nutzer result) {
 					if (result != null && result.getEmail() == googleNutzer.getEmailAddress()){
-						if (entryPointKlasse instanceof SocialMediaPinnwand){
-							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
-							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();
-						}else{
-							((ReportGenerator) entryPointKlasse).loadReportGenerator();
-						}
+						((ReportGenerator) entryPointKlasse).loadReportGenerator();
 					}
-	
 					else{
 						createNutzer(googleNutzer);
 					}
@@ -135,12 +125,17 @@ public class NutzerVerwaltung {
 				nutzer.setNickname(dialog.getNickname());
 				PinnwandAdministration.createNutzer(nutzer, new AsyncCallback<Nutzer>(){
 					@Override
-					public void onFailure(Throwable caught) {}
+					public void onFailure(Throwable caught) {
+						Window.alert("Problem bei erstellung des Nutzers: " + caught.getMessage());
+					}
 
 					@Override
 					public void onSuccess(Nutzer result) {
 						if (entryPointKlasse instanceof SocialMediaPinnwand){
 							((SocialMediaPinnwand) entryPointKlasse).setAktuellerNutzer(result);
+							((SocialMediaPinnwand) entryPointKlasse).loadSocialMediaPinnwand();;
+						}else{
+							((ReportGenerator) entryPointKlasse).loadReportGenerator();
 						}
 					}
 					

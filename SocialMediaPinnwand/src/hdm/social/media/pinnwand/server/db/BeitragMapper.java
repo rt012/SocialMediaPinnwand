@@ -389,11 +389,11 @@ public class BeitragMapper {
 	   * @return true/false, je nach dem ob eingeloggter Nutzer Autor ist oder nicht.
 	   * 
 	   */
-	public boolean checkAuthor(Nutzer nutzer, Beitrag beitrag) {
+	public boolean checkAutor(Nutzer nutzer, Beitrag beitrag) {
 		Connection con = DBConnection.connection();
 		try {
 			Statement stmt = con.createStatement();
-			 ResultSet rs = stmt.executeQuery("SELECT * FROM `beitrag` WHERE pinnwand_ID="+ PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(nutzer).getId() +" AND beitrag_ID=" + beitrag.getId());
+			 ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE pinnwand_ID="+ PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(nutzer).getId() +" AND beitrag_ID=" + beitrag.getId());
 			 if(rs.next() == true) {
 				 return true;
 				

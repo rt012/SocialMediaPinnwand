@@ -294,14 +294,14 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	}
 
 	@Override
-	public boolean checkAuthor(Nutzer nutzer, Beitrag beitrag)
+	public boolean checkAutor(Nutzer nutzer, Beitrag beitrag)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return BeitragMapper.beitragMapper().checkAuthor(nutzer, beitrag);
+		return BeitragMapper.beitragMapper().checkAutor(nutzer, beitrag);
 	}
 
 	@Override
-	public boolean checkAuthorKommentar(Nutzer nutzer, Kommentar kommentar) {
+	public boolean checkAutorKommentar(Nutzer nutzer, Kommentar kommentar) {
 		// TODO Auto-generated method stub
 		return KommentarMapper.kommentarMapper().checkAutor(nutzer, kommentar);
 	}

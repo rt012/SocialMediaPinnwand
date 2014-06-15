@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -21,24 +22,37 @@ public class Abolist extends FlexTable{
 	private final SocialMediaPinnwand s;
 	private ShowBeitraege flexTableBeitraege;
 	
+	/**
+	 * Konstruktor
+	 * @param Nutzer n
+	 * @param SocialMediaPinnwand s
+	 * @param flexTableBeitraege
+	 */
+	
 	public Abolist(Nutzer n, SocialMediaPinnwand s, final ShowBeitraege flexTableBeitraege){		
 		this.s=s;
 		this.flexTableBeitraege = flexTableBeitraege;
-		fillAboList(n);
+		fillAboList(s.getAktuellerNutzer());
 	}
+	
+	/**
+	 * 
+	 * Aboliste füllen mit den Abos des aktuellen Nutzers
+	 * @param n
+	 */
 	
 	public void fillAboList(final Nutzer n){
 		
 		PinnwandAdministration.getAboByNutzer(n.getId(), new AsyncCallback<ArrayList<Abo>>() {
 			public void onFailure
 			(Throwable caught) {
-				// TODO: DO something with errors.
+				Window.alert("Hoppala! Da gab es wohl ein Problem beim Laden der Aboliste-Liste... Bitte Laden Sie die Seite neu!");
 			}
 			@Override
 			public void onSuccess(final ArrayList<Abo> result) {
 				
 				for (int i=0; i<result.size(); i++){
-					
+					// für jeden gefundenen Nutzer legen wir eine Zeile an die einen Button zum Anzeigen der Pinnwand und ein Widget der Abozeilen Klasse beinhaltet;
 					final int x=i;
 					Button buttonZeigePinnwand = new Button("");
 					buttonZeigePinnwand.setStyleName("buttonZeigePinnwand");

@@ -20,7 +20,6 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 public class Abolist extends FlexTable{
 	private final PinnwandAdministrationAsync PinnwandAdministration = GWT.create(PinnwandAdministration.class);
 	private final SocialMediaPinnwand s;
-	private ShowBeitraege flexTableBeitraege;
 	
 	/**
 	 * Konstruktor
@@ -31,7 +30,6 @@ public class Abolist extends FlexTable{
 	
 	public Abolist(Nutzer n, SocialMediaPinnwand s, final ShowBeitraege flexTableBeitraege){		
 		this.s=s;
-		this.flexTableBeitraege = flexTableBeitraege;
 		refresh(s, flexTableBeitraege);
 	}
 	
@@ -58,15 +56,15 @@ public class Abolist extends FlexTable{
 					buttonZeigePinnwand.setStyleName("buttonZeigePinnwand");
 					buttonZeigePinnwand.addClickHandler(new ClickHandler(){
 						public void onClick(ClickEvent event) {
-							flexTableBeitraege.refresh(result.get(x).getLieferant());
+							showbeitraege.refresh(result.get(x).getLieferant());
 						}
 					});
 					
-					Abozeile a = new Abozeile(result.get(i), s, flexTableBeitraege);
+					Abozeile a = new Abozeile(result.get(i), s, showbeitraege);
 					a.setStyleName("Abozeile");
 					Abolist.this.setWidget(i,0, a);
 					Abolist.this.setWidget(i,1, buttonZeigePinnwand); 
-					}
+				}
 				showbeitraege.refresh(s.getAktuellerNutzer());
 			}			
 		});

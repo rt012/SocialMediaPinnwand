@@ -198,16 +198,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	public ArrayList<Nutzer> getAllNutzer() throws IllegalArgumentException {
 		return NutzerMapper.nutzerMapper().getAllNutzer();
 	}
-	
-	
-	/*public ArrayList<Abo> getAboByNutzer(Nutzer n) {
-	  return AboMapper.aboMapper().getAboByNutzer(n.getId());
-	 }
-	 */
-	
-	public ArrayList<Abo> getAboByNutzer(){
-		return AboMapper.aboMapper().getAboByNutzer(1);
-	}
+		 
 	
 	public int countLikeByBeitrag(int id) throws IllegalArgumentException {
 		return LikeMapper.likeMapper().countLikeByBeitrag(id);
@@ -222,7 +213,7 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 	
 	@Override
 	public Nutzer getNutzerByEmail(String email){
-		return NutzerMapper.nutzerMapper().getNutzerByEmail("'"+email+"'");
+		return NutzerMapper.nutzerMapper().getNutzerByEmail(email);
 	}
 	
 	
@@ -251,6 +242,10 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 			return loginInfo;
 	}
 	
+	/**
+	 * Gibt an ob Beitraege breits geliked sind
+	 * @see hdm.social.media.pinnwand.shared.PinnwandAdministration#checkIfliked(hdm.social.media.pinnwand.shared.bo.Nutzer, hdm.social.media.pinnwand.shared.bo.Beitrag)
+	 */
 	@Override
 	public boolean checkIfliked(Nutzer n, Beitrag b)
 			throws IllegalArgumentException {
@@ -258,19 +253,27 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 		return LikeMapper.likeMapper().checkIfLiked(n, b);
 	}
 	
+	/**
+	 * Gibt alle abos des Nutzers zurück
+	 */
 	
 	@Override
 	public ArrayList<Abo> getAboByNutzer(int id) throws IllegalArgumentException {
 		return AboMapper.aboMapper().getAboByNutzer(id);
 	}
 	
+	/**
+	 * Gibt alle Beitraege eines Nutzers zurück
+	 */
 	@Override
 	public ArrayList<Beitrag> getAllBeitragByNutzer(Nutzer n) throws IllegalArgumentException{
 		ArrayList<Beitrag> a = BeitragMapper.beitragMapper().getBeitragByPinnwand(PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n).getId());
 		return a;
 	}
 	
-	
+	/**
+	 * Gibt alle Beitraege das aktuellen Nutzers zurück und ergänzt diese durch die Beitraege anderer Nutzer
+	 */
 	@Override
 	public ArrayList<Beitrag> getAllBeitragByAktuellerNutzer(Nutzer n) throws IllegalArgumentException{
 		
@@ -287,18 +290,25 @@ public class PinnwandAdministrationImpl extends RemoteServiceServlet implements 
 		return result;
 	}
 	
+	/**
+	 * Gibt die zu einem Nutzer gehörige Pinnwand zurück;
+	 */
 	@Override
 	public Pinnwand getPinnwandByNutzer(Nutzer n){
 		return PinnwandMapper.pinnwandMapper().getPinnwandByNutzer(n);
 	}
-
+	
+	/**
+	 * Überprüft den Autor eines Beitrags
+	 */
 	@Override
-	public boolean checkAutor(Nutzer nutzer, Beitrag beitrag)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public boolean checkAutor(Nutzer nutzer, Beitrag beitrag)throws IllegalArgumentException {
 		return BeitragMapper.beitragMapper().checkAutor(nutzer, beitrag);
 	}
-
+	
+	/**
+	 * Überprüft den Autor eines Kommentars
+	 */
 	@Override
 	public boolean checkAutorKommentar(Nutzer nutzer, Kommentar kommentar) {
 		// TODO Auto-generated method stub

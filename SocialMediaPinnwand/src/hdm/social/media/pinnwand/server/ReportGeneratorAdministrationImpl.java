@@ -38,8 +38,8 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 
 	
 	/**
-	   * Ein ReportGenerator benötigt Zugriff auf die BankAdministration, da diese die
-	   * essentiellen Methoden für die Koexistenz von Datenobjekten (vgl.
+	   * Ein ReportGenerator benï¿½tigt Zugriff auf die BankAdministration, da diese die
+	   * essentiellen Methoden fï¿½r die Koexistenz von Datenobjekten (vgl.
 	   * bo-Package) bietet.
 	   */
 	  private PinnwandAdministration administration = null;
@@ -51,7 +51,7 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 	   * ist ein solcher No-Argument-Konstruktor anzulegen. Ein Aufruf eines anderen
 	   * Konstruktors ist durch die Client-seitige Instantiierung durch
 	   * <code>GWT.create(Klassenname.class)</code> nach derzeitigem Stand nicht
-	   * möglich.
+	   * mï¿½glich.
 	   * </p>
 	   * <p>
 	   * Es bietet sich also an, eine separate Instanzenmethode zu erstellen, die
@@ -69,7 +69,7 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 	   */
 	  public void init() throws IllegalArgumentException {
 	    /*
-	     * Ein ReportGeneratorImpl-Objekt instantiiert für seinen Eigenbedarf eine
+	     * Ein ReportGeneratorImpl-Objekt instantiiert fï¿½r seinen Eigenbedarf eine
 	     * Pinnwand-Instanz.
 	     */
 	    PinnwandAdministrationImpl a = new PinnwandAdministrationImpl();
@@ -78,7 +78,7 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 	  }
 
 	  /**
-	   * Auslesen der zugehörigen BankAdministration (interner Gebrauch).
+	   * Auslesen der zugehï¿½rigen BankAdministration (interner Gebrauch).
 	   * 
 	   * @return das BankVerwaltungsobjekt
 	   */
@@ -88,7 +88,7 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 
 
 	/**
-	 * Erstelle einen String welches durch den Report als HTML repräsentiert 
+	 * Erstelle einen String welches durch den Report als HTML reprï¿½sentiert 
 	 * 
 	 * @param datumVon definiert den Anfang der Suchanfrage
 	 * @param datumBis definiert das Ende der Suchanfrage
@@ -100,16 +100,16 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 	      return null;
 
 	    /**
-	     * Zunächst legen wir uns einen leeren Report an.
+	     * Zunï¿½chst legen wir uns einen leeren Report an.
 	     */
 	    BeitragReport result = new BeitragReport();
 
-	    // Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-	    result.setTitle("Alle Beiträge");
+	    // Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift).
+	    result.setTitle("Alle Beitraege");
 
 
 	    /**
-	     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+	     * Datum der Erstellung hinzufï¿½gen. new Date() erzeugt autom. einen
 	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 	     */
 	    result.setCreated(new Date());
@@ -122,17 +122,17 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 	    CompositeParagraph header = new CompositeParagraph();
 
 	    /**
-	     * Zeitraum der Report Suchanfrage in die Kopfzeile hinzufügen
+	     * Zeitraum der Report Suchanfrage in die Kopfzeile hinzufï¿½gen
 	     */
 	    header.addSubParagraph(new SimpleParagraph("Zeitraum Von: " + datumVon + " Bis: "
 	        + datumBis));
 
 
-	    // Hinzufügen der zusammengestellten Kopfdaten zu dem Report
+	    // Hinzufï¿½gen der zusammengestellten Kopfdaten zu dem Report
 	    result.setHeaderData(header);
 
 	    /**
-	     * Zunächst legen wir eine Kopfzeile für die Nutzer-Tabelle an.
+	     * Zunï¿½chst legen wir eine Kopfzeile fï¿½r die Nutzer-Tabelle an.
 	     */
 	    Row headline = new Row();
 
@@ -140,18 +140,18 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 	     * Wir wollen Zeilen mit 4 Spalten in der Tabelle erzeugen. In die erste
 	     * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
 	     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
-	     * Überschriften ab.
+	     * ï¿½berschriften ab.
 	     */
 	    headline.addColumn(new Column("Nutzer"));
 	    headline.addColumn(new Column("Inhalt"));
 	    headline.addColumn(new Column("Like-Anzahl"));
 	    headline.addColumn(new Column("Kommentaranzahl"));
 
-	    // Hinzufügen der Kopfzeile
+	    // Hinzufï¿½gen der Kopfzeile
 	    result.addRow(headline);
 
 	    /**
-	     * Nun werden sämtliche Beiträge innerhalb eines Zeitraumes ausgelesen und Autor, Inhalt, Likes und 
+	     * Nun werden sï¿½mtliche Beitrï¿½ge innerhalb eines Zeitraumes ausgelesen und Autor, Inhalt, Likes und 
 	     * die Anzahl der Kommentare in die Tabelle eingetragen.
 	     */
 	    ArrayList<Beitrag> beitraege  = BeitragMapper.beitragMapper().getBeitraegeBetweenTwoDates(datumVon, datumBis);
@@ -162,32 +162,32 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 	      // Eine leere Zeile anlegen.
 	      Row accountRow = new Row();
 
-	      // Erste Spalte: Nachname und Vorname hinzufügen
+	      // Erste Spalte: Nachname und Vorname hinzufï¿½gen
 	      accountRow.addColumn(new Column(beitrag.getPinnwand().getNutzer().getVorname() + " " 
 	    		  + beitrag.getPinnwand().getNutzer().getName()));
 
-	      // Zweite Spalte: Inhalt hinzufügen
+	      // Zweite Spalte: Inhalt hinzufï¿½gen
 	      
 	      accountRow.addColumn(new Column(beitrag.getInhalt()));
 	      
-	      // Dritte Spalte: Like-Anzahl hinzufügen
+	      // Dritte Spalte: Like-Anzahl hinzufï¿½gen
 	      accountRow.addColumn(new Column(String.valueOf(beitrag.getLikeList().size())));
 	      
-	      // Dritte Spalte: Kommentar-Anzahl hinzufügen
+	      // Dritte Spalte: Kommentar-Anzahl hinzufï¿½gen
 	      accountRow.addColumn(new Column(String.valueOf(beitrag.getKommentarListe().size())));
 
-	      // und schließlich die Zeile dem Report hinzufügen.
+	      // und schlieï¿½lich die Zeile dem Report hinzufï¿½gen.
 	      result.addRow(accountRow); 
 	    }
 	    
 	    /**
-	     * Übergebe den erstellten Report dem HTMLReportWriter um HTML zu erzeugen
+	     * ï¿½bergebe den erstellten Report dem HTMLReportWriter um HTML zu erzeugen
 	     */
 	    HTMLReportWriter writer = new HTMLReportWriter();
 	    writer.process(result);
 	    
 	    /**
-	     * Zum Schluss müssen wir noch den fertigen HTML-Report zurückgeben.
+	     * Zum Schluss mï¿½ssen wir noch den fertigen HTML-Report zurï¿½ckgeben.
 	     */
 	    return writer.getReportText();
 	  }
@@ -199,15 +199,15 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 		      return null;
 
 		    /**
-		     * Zunächst legen wir uns einen leeren Report an.
+		     * Zunï¿½chst legen wir uns einen leeren Report an.
 		     */
 		    NutzerReport result = new NutzerReport();
 
-		    // Jeder Report hat einen Titel (Bezeichnung / Überschrift)
-		    result.setTitle("Informationen über " + n.getVorname() + " " + n.getName());
+		    // Jeder Report hat einen Titel (Bezeichnung / ï¿½berschrift)
+		    result.setTitle("Informationen ï¿½ber " + n.getVorname() + " " + n.getName());
 
 		    /**
-		     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+		     * Datum der Erstellung hinzufï¿½gen. new Date() erzeugt autom. einen
 		     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 		     */
 		    result.setCreated(new Date());
@@ -230,11 +230,11 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 		    header.addSubParagraph(new SimpleParagraph("Zeitraum Von: " + datumVon + " Bis: "
 			        + datumBis));
 
-		    // Hinzufügen der zusammengestellten Kopfdaten zu dem Report
+		    // Hinzufï¿½gen der zusammengestellten Kopfdaten zu dem Report
 		    result.setHeaderData(header);
 
 		    /**
-		     * Zunächst legen wir eine Kopfzeile für die Konto-Tabelle an.
+		     * Zunï¿½chst legen wir eine Kopfzeile fï¿½r die Konto-Tabelle an.
 		     */
 		    Row headline = new Row();
 
@@ -242,14 +242,14 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 		     * Wir wollen Zeilen mit 4 Spalten in der Tabelle erzeugen. In die erste
 		     * Spalte schreiben wir die jeweilige Kontonummer und in die zweite den
 		     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
-		     * Überschriften ab.
+		     * ï¿½berschriften ab.
 		     */
 		    headline.addColumn(new Column("Abonnentenanzahl"));
 		    headline.addColumn(new Column("Beitragsanzahl"));
 		    headline.addColumn(new Column("Likes bekommen"));
 		    headline.addColumn(new Column("Likes gegeben"));
 
-		    // Hinzufügen der Kopfzeile
+		    // Hinzufï¿½gen der Kopfzeile
 		    result.addRow(headline);   
 		    
 		    Row accountRow = new Row();
@@ -292,12 +292,12 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 		     */
 		    accountRow.addColumn(new Column(String.valueOf(LikeMapper.likeMapper().getLikeCountByNutzer(n, datumVon, datumBis))));
 		
-		    // und schließlich die Zeile dem Report hinzufügen.
+		    // und schlieï¿½lich die Zeile dem Report hinzufï¿½gen.
 		    result.addRow(accountRow);
 		    HTMLReportWriter writer = new HTMLReportWriter();
 		    writer.process(result);
 		    /*
-		     * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
+		     * Zum Schluss mï¿½ssen wir noch den fertigen Report zurï¿½ckgeben.
 		     */
 		    return writer.getReportText();
 	}
@@ -328,29 +328,28 @@ public class ReportGeneratorAdministrationImpl extends RemoteServiceServlet impl
 		return array;
 	}
 			
-			@Override
-			public LoginInfo login(String requestUri) {
-				UserService userService = UserServiceFactory.getUserService();
-				User user = userService.getCurrentUser();
-				LoginInfo loginInfo = new LoginInfo();
+	@Override
+	public LoginInfo login(String requestUri) {
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		LoginInfo loginInfo = new LoginInfo();
 
-				if (user != null) {
-					loginInfo.setLoggedIn(true);
-				    loginInfo.setEmailAddress(user.getEmail());
-				    loginInfo.setNickname(user.getNickname());
-				    loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
-				}else {
-				    loginInfo.setLoggedIn(false);
-				    loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
-				}
-					return loginInfo;
-			}
+		if (user != null) {
+			loginInfo.setLoggedIn(true);
+		    loginInfo.setEmailAddress(user.getEmail());
+		    loginInfo.setNickname(user.getNickname());
+		    loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
+		}else {
+		    loginInfo.setLoggedIn(false);
+		    loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
+		}
+			return loginInfo;
+	}
 
-			@Override
-			public Nutzer getNutzerByEmail(String email)
-					throws IllegalArgumentException {
-				return NutzerMapper.nutzerMapper().getNutzerByEmail("'"+email+"'");
-			}
+	@Override
+	public Nutzer getNutzerByEmail(String email) throws IllegalArgumentException {
+		return NutzerMapper.nutzerMapper().getNutzerByEmail(email);
+	}
 	
 	
 }

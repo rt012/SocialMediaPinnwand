@@ -1,12 +1,14 @@
 package hdm.social.media.pinnwand.client.gui.pinnwand;
 
 
+import hdm.social.media.pinnwand.shared.PinnwandAdministration;
+import hdm.social.media.pinnwand.shared.PinnwandAdministrationAsync;
 import hdm.social.media.pinnwand.shared.bo.Kommentar;
-
 import hdm.social.media.pinnwand.shared.bo.Like;
 
 import java.util.ArrayList;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -15,11 +17,12 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 /**
- * Diese Klasse repräsentiert eine DialogBox welche eine Liste von Nutzern anzeigt welche einen bestimmten Beitrag geliked haben
+ * Diese Klasse reprï¿½sentiert eine DialogBox welche eine Liste von Nutzern anzeigt welche einen bestimmten Beitrag geliked haben
  * @author remi
  *
  */
 public class LikeListe extends DialogBox  {
+	
 
 private Label LabelInformation;
 private FlexTable FlexTableLikeListe;
@@ -27,8 +30,40 @@ private Button ButtonSchliessen;
 
 public LikeListe(ArrayList<Like> likeListe){
 	
+	
 	/**
-	 *  DockPanel welches die zuvor initialisierten Elemente Bündelt 
+	 *  Label fï¿½r eine kurze Information ï¿½ber das DialogFenster
+	 */
+	LabelInformation = new Label("Nutzer, denen das gefaellt:");
+	LabelInformation.setStyleName("LabelInformation");
+	
+	/**
+	 *  FlexTable fï¿½r darstellung der Nutzer 
+	 */
+	FlexTableLikeListe = new FlexTable();
+	FlexTableLikeListe.setStyleName("FlexTableLikeListe");
+	
+	// Durchlauf durch die LikeListe welche als Paramenter im Konstruktor ï¿½bergeben wurde. Jeder Nutzer wird in einer row hinzugefï¿½gt. 
+	for(int i = 0; i < likeListe.size(); i++) {
+		FlexTableLikeListe.setHTML(i, 0, likeListe.get(i).getNutzer().getVorname()+" "+likeListe.get(i).getNutzer().getName());
+	}
+	
+	/**
+	 *  Button mit Hilfe man die DialogBox wieder schlieï¿½en kann 
+	 */
+	ButtonSchliessen = new Button("Schlie&szligen");
+	ButtonSchliessen.setStyleName("ButtonSchliessen");
+	ButtonSchliessen.addClickHandler(new ClickHandler() {
+		 
+		public void onClick(ClickEvent event) {
+			hide();
+		}
+		
+	});	
+	
+
+	/**
+	 *  DockPanel welches die zuvor initialisierten Elemente Bï¿½ndelt 
 	 */
 	
 	DockPanel dock = new DockPanel();
@@ -38,37 +73,6 @@ public LikeListe(ArrayList<Like> likeListe){
 	dock.add(ButtonSchliessen, DockPanel.NORTH);
 	dock.setWidth("100%");
 	setWidget(dock);
-	
-	/**
-	 *  Label für eine kurze Information über das DialogFenster
-	 */
-	LabelInformation = new Label("Nutzer, denen das gefaellt:");
-	LabelInformation.setStyleName("LabelInformation");
-	
-	/**
-	 *  FlexTable für darstellung der Nutzer 
-	 */
-	FlexTableLikeListe = new FlexTable();
-	FlexTableLikeListe.setStyleName("FlexTableLikeListe");
-	
-	// Durchlauf durch die LikeListe welche als Paramenter im Konstruktor übergeben wurde. Jeder Nutzer wird in einer row hinzugefügt. 
-	for(int i = 0; i < likeListe.size(); i++) {
-		FlexTableLikeListe.setHTML(i, 0, likeListe.get(i).getNutzer().getVorname()+" "+likeListe.get(i).getNutzer().getName());
-	}
-	
-	/**
-	 *  Button mit Hilfe man die DialogBox wieder schließen kann 
-	 */
-	ButtonSchliessen = new Button("Schlie&szligen");
-	ButtonSchliessen.setStyleName("ButtonSchließen");
-	ButtonSchliessen.addClickHandler(new ClickHandler() {
-		 
-		public void onClick(ClickEvent event) {
-			hide();
-		}
-		
-	});
-	
-	
+
 }
 }

@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
- * Diese Klasse ist die Basisklasse aller Beiträge. Jeder Beitrag ist ein HorizontalPanel und lässt sich 
+ * Diese Klasse ist die Basisklasse aller Beitrï¿½ge. Jeder Beitrag ist ein HorizontalPanel und lï¿½sst sich 
  * somit unter GWT entsprechend anordnen 
  * @author remi
  *
@@ -81,17 +81,17 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		  */
 		 LabelBeitragLikeAnzahl = new Label(LikeAnzahl);
 		 LabelBeitragLikeAnzahl.setStyleName("LabelBeitragLikeAnzahl");
-		 this.add(LabelBeitragLikeAnzahl);
 		 LabelBeitragLikeAnzahl.addClickHandler(new ClickHandler() {
 		 /**
-		  *  Bei Klick auf die Likeanzahl, öffnet sich eine Dialogbox, welche die likenden Nutzer anzeigt
+		  *  Bei Klick auf die Likeanzahl, ï¿½ffnet sich eine Dialogbox, welche die likenden Nutzer anzeigt
 		  */
-				public void onClick(ClickEvent event) {
-					final LikeListe dialog = new LikeListe(beitrag.getLikeList());
-					DialogBox dlb = dialog;
-					dlb.center();
-				}
-		});
+			public void onClick(ClickEvent event) {
+				final LikeListe dialog = new LikeListe(beitrag.getLikeList());
+				DialogBox dlb = dialog;
+				dlb.center();
+			}
+		 });
+		 this.add(LabelBeitragLikeAnzahl);
 		
 		 /**
 		 * Anzeige des Inhalts 
@@ -101,14 +101,14 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		 this.add(LabelBeitragsInhalt);
 	
 		/**
-		 * Button für "Gefällt mir
+		 * Button fï¿½r "Gefï¿½llt mir
 		 */
 		 ButtonBeitragGefaelltMir = new Button("");
 		 ButtonBeitragGefaelltMir.setStyleName("ButtonBeitragGefaelltMir");
 		 this.add(ButtonBeitragGefaelltMir);
 		 
 		 /**
-		  *  Methode welche überprüft ob der Nutzer den Beitrag schon geliked hat oder nicht
+		  *  Methode welche ï¿½berprï¿½ft ob der Nutzer den Beitrag schon geliked hat oder nicht
 		  */
 		 PinnwandAdministration.checkIfliked(this.nutzer, this.beitrag, new AsyncCallback<Boolean>() {
 			 public void onFailure (Throwable caught) {
@@ -133,13 +133,13 @@ public class PinnwandBeitrag extends HorizontalPanel {
 
 		 
 		 /**
-		  * Button für Kommentieren
+		  * Button fï¿½r Kommentieren
 		  */
 		  ButtonBeitragKommentieren = new Button("");
 		  ButtonBeitragKommentieren.setStyleName("ButtonBeitragKommentieren");
 		  this.add(ButtonBeitragKommentieren);
 		  ButtonBeitragKommentieren.addClickHandler(new ClickHandler() {
-				// Öffnet eine Dialog Box mit einer TextArea, um einen Kommentar zu schreiben
+				// ï¿½ffnet eine Dialog Box mit einer TextArea, um einen Kommentar zu schreiben
 				public void onClick(ClickEvent event) {
 					final KommentarPosten dialog = new KommentarPosten(s, beitrag, showBeitraege);
 					DialogBox dlb = dialog;
@@ -149,14 +149,14 @@ public class PinnwandBeitrag extends HorizontalPanel {
 		});
 		
 	  /**
-	   * Button um Beitrag zu löschen
+	   * Button um Beitrag zu lï¿½schen
 	   */
 		  
 		  ButtonBeitragLoeschen = new Button("");
 		  ButtonBeitragLoeschen.setStyleName("ButtonBeitragLoeschen");
 		  this.add(ButtonBeitragLoeschen);
 		  ButtonBeitragLoeschen.addClickHandler(new ClickHandler() {
-				 // Nach click auf den "Beitrag Löschen"-Button wird der ausgewählte Beitrag gelöscht
+				 // Nach click auf den "Beitrag Lï¿½schen"-Button wird der ausgewï¿½hlte Beitrag gelï¿½scht
 				public void onClick(ClickEvent event) {
 				PinnwandAdministration.deleteBeitrag(beitrag, new AsyncCallback<Void>() {
 					 public void onFailure
@@ -233,12 +233,12 @@ public class PinnwandBeitrag extends HorizontalPanel {
 
 
 	/**
-	 *  Methode welche den Button zu einem "Gefällt mir" - Button macht
+	 *  Methode welche den Button zu einem "Gefï¿½llt mir" - Button macht
 	 */
 	 public void setButtonToLike() {
 		 ButtonBeitragGefaelltMir.setStyleName("like"); 
 		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
-			 // Beim Click auf den Button wird der Like hinzugefügt und die Methode setButtonToDislike aufgerufen 
+			 // Beim Click auf den Button wird der Like hinzugefï¿½gt und die Methode setButtonToDislike aufgerufen 
 				public void onClick(ClickEvent event) {
 					Like l = new Like();
 					l.setBeitrag(beitrag);
@@ -259,13 +259,13 @@ public class PinnwandBeitrag extends HorizontalPanel {
 	 }
 	 
 	 /**
-	  *  Methode welche aus dem Button ein "Gefällt mir nicht mehr" - Button macht
+	  *  Methode welche aus dem Button ein "Gefï¿½llt mir nicht mehr" - Button macht
 	  */
 	public void setButtonToDislike() {
 		 
 		 ButtonBeitragGefaelltMir.setStyleName("dislike");
 		 ButtonBeitragGefaelltMir.addClickHandler(new ClickHandler() {
-			 // Löscht den Like und setzt den Button wieder auf "Gefällt mir"
+			 // Lï¿½scht den Like und setzt den Button wieder auf "Gefï¿½llt mir"
 				public void onClick(ClickEvent event) {
 					Like l = new Like();
 					l.setBeitrag(beitrag);

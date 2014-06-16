@@ -42,7 +42,6 @@ public class ShowBeitraege extends FlexTable{
 		if(n!=s.getAktuellerNutzer()){
 			PinnwandAdministration.getAllBeitragByNutzer(n, new AsyncCallback<ArrayList<Beitrag>>(){
 				public void onFailure(Throwable caught) {
-					Window.alert("Prblem beim laden aller Beiträge " + caught.getLocalizedMessage());
 				}
 				
 				public void onSuccess(ArrayList<Beitrag> result){
@@ -63,7 +62,7 @@ public class ShowBeitraege extends FlexTable{
 							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(s,result.get(i).getInhalt(),
 
 									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),formatDate(result.get(i).getErstellungsZeitpunkt()),
-									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
+									result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
 									result.get(i),aktuellerNutzer, ShowBeitraege.this);
 							
 							pinnwandBeitrag.setStyleName("pinnwandBeitrag");
@@ -80,7 +79,6 @@ public class ShowBeitraege extends FlexTable{
 								
 								BeitragKommentar kommentar= new BeitragKommentar(s, aktuellerNutzer, result.get(i).getKommentarListe().get(a),
 										result.get(i).getKommentarListe().get(a).getInhalt(),
-
 										result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+ " "  + result.get(i).getKommentarListe().get(a).getNutzer().getName(), 
 										formatDate(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
 								kommentar.setStyleName("kommentar");
@@ -96,7 +94,6 @@ public class ShowBeitraege extends FlexTable{
 		else{
 			PinnwandAdministration.getAllBeitragByAktuellerNutzer(n, new AsyncCallback<ArrayList<Beitrag>>(){
 				public void onFailure(Throwable caught) {
-					Window.alert("Prblem beim laden aller Beiträge " + caught.getLocalizedMessage());
 				}
 				
 				public void onSuccess(ArrayList<Beitrag> result){
@@ -115,7 +112,7 @@ public class ShowBeitraege extends FlexTable{
 							PinnwandBeitrag pinnwandBeitrag=new PinnwandBeitrag(s,result.get(i).getInhalt(),
 
 									result.get(i).getPinnwand().getNutzer().getVorname() +" "+ result.get(i).getPinnwand().getNutzer().getName(),formatDate(result.get(i).getErstellungsZeitpunkt()),
-									+ result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
+									result.get(i).getLikeList().size()+" Person(en) gefaellt das.",
 									result.get(i),aktuellerNutzer, ShowBeitraege.this);
 							
 							pinnwandBeitrag.setStyleName("pinnwandBeitrag");
@@ -135,7 +132,6 @@ public class ShowBeitraege extends FlexTable{
 
 									BeitragKommentar kommentar= new BeitragKommentar(s, aktuellerNutzer, result.get(i).getKommentarListe().get(a),
 											result.get(i).getKommentarListe().get(a).getInhalt(),
-
 											result.get(i).getKommentarListe().get(a).getNutzer().getVorname()+" "+result.get(i).getKommentarListe().get(a).getNutzer().getName(),
 											formatDate(result.get(i).getKommentarListe().get(a).getErstellungsZeitpunkt()), ShowBeitraege.this);
 									kommentar.setStyleName("kommentar");
@@ -170,8 +166,7 @@ public class ShowBeitraege extends FlexTable{
 		int m = date.getMonth()+1;
 		
 		int day = date.getDate();
-		//Zeitzone +2h
-		int h = date.getHours()+1;
+		int h = date.getHours();
 		int min = date.getMinutes();
 		int sec = date.getSeconds();
 		

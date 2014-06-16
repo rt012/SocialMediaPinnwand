@@ -53,7 +53,7 @@ public class NutzerMapper{
 		try{
 			Statement stmt = con.createStatement();
 			//Suche alle Felder der Nutzertabelle anhand von ID
-			ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE email=" + email);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM nutzer WHERE email=\"" + email+"\"");
 
 		    //Maximal ein R�ckgabewert da Id Prim�rschl�ssel
 			if (rs.next()) {
